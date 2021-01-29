@@ -8,4 +8,8 @@
     <string name="masukkan_password">Masukkan Password</string>
     <string name="belum_memiliki_akun_registrasi">Belum memiliki akun? Registrasi</string>
     <string name="sclean">SCLEAN</string>
+    <string name="title_activity_main">MainActivity</string>
+    <string name="title_home">Home</string>
+    <string name="title_dashboard">Dashboard</string>
+    <string name="title_notifications">Notifications</string>
 </resources>
