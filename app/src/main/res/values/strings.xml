@@ -1,0 +1,11 @@
+<resources>
+    <string name="app_name">LaundryApp</string>
+    <string name="email">Email</string>
+    <string name="login">Login</string>
+    <string name="sign_up">Sign up?</string>
+    <string name="password">Password</string>
+    <string name="masukkan_email">Masukkan Email</string>
+    <string name="masukkan_password">Masukkan Password</string>
+    <string name="belum_memiliki_akun_registrasi">Belum memiliki akun? Registrasi</string>
+    <string name="sclean">SCLEAN</string>
+</resources>
