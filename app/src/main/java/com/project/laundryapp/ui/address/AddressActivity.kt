@@ -5,6 +5,8 @@ import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.util.Log
 import com.project.laundryapp.R
+import com.project.laundryapp.core.data.Resource
+import com.project.laundryapp.core.data.local.User
 import com.project.laundryapp.core.data.remote.ApiResponse
 import com.project.laundryapp.core.data.remote.response.UserResponse
 import com.project.laundryapp.databinding.ActivityAddressBinding
@@ -29,7 +31,7 @@ class AddressActivity : AppCompatActivity() {
 
     private fun setupUI() {
         binding.btAddressSave.setOnClickListener {
-            val user = UserResponse(
+            val user = User(
                 alamat = binding.etAddressFullName.text.toString(),
                 kota = binding.etAddressCity.text.toString(),
                 kecamatan = binding.etAddressDistricts.text.toString(),
@@ -47,23 +49,26 @@ class AddressActivity : AppCompatActivity() {
     }
 
     private fun observeUserRegister() {
-        viewModel.userData.observe(this, { userResponse ->
-            when(userResponse) {
-                is ApiResponse.Loading -> {
+        viewModel.userData.observe(this, { dataPacket ->
+            when(dataPacket) {
+                is Resource.Loading -> {
                     Log.d("USER STATUS", "Loading")
                 }
 
-                is ApiResponse.Success -> {
-                    Log.d("USER STATUS", """
-                        ${userResponse.data.data.alamat}
-                    """.trimIndent())
-                    if(userResponse.data.message.contains("Berhasil", ignoreCase = true)) {
-                        startActivity(Intent(this, MainActivity::class.java))
+                is Resource.Success -> {
+                    val user = dataPacket.data
+
+                    Log.d("USER STATUS", "" + dataPacket.message)
+
+                    if(user != null) {
+                        Log.d("USER STATUS", "" + user.id)
+                        Log.d("USER STATUS", "" + user.password)
+                        //startActivity(Intent(this, AddressActivity::class.java))
                     }
                 }
 
-                is ApiResponse.Error -> {
-                    Log.d("USER STATUS", userResponse.message)
+                is Resource.Error -> {
+                    Log.d("USER STATUS", "" + dataPacket.message)
                 }
             }
         })

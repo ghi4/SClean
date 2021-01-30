@@ -4,16 +4,18 @@ import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.asLiveData
 import androidx.lifecycle.switchMap
+import com.project.laundryapp.core.data.LaundryRepository
+import com.project.laundryapp.core.data.local.User
 import com.project.laundryapp.core.data.remote.RemoteDataSource
 import com.project.laundryapp.core.data.remote.response.UserResponse
 
-class AddressViewModel(private val remoteDataSource: RemoteDataSource): ViewModel() {
+class AddressViewModel(private val laundryRepository: LaundryRepository): ViewModel() {
 
-    private val addressUser = MutableLiveData<UserResponse>()
+    private val addressUser = MutableLiveData<User>()
     
     var userData = addressUser.switchMap {
-        remoteDataSource.postAddress(
-            UserResponse(
+        laundryRepository.postAddress(
+            User(
                 alamat = it.alamat,
                 kota = it.kota,
                 kecamatan = it.kecamatan,
@@ -25,7 +27,7 @@ class AddressViewModel(private val remoteDataSource: RemoteDataSource): ViewMode
         ).asLiveData()
     }
 
-    fun addressUser(userResponse: UserResponse) {
-        addressUser.postValue(userResponse)
+    fun addressUser(user: User) {
+        addressUser.postValue(user)
     }
 }

@@ -1,5 +1,6 @@
 package com.project.laundryapp.di
 
+import com.project.laundryapp.core.data.LaundryRepository
 import com.project.laundryapp.core.data.remote.RemoteDataSource
 import com.project.laundryapp.core.data.remote.retrofit.RetrofitInterface
 import com.project.laundryapp.ui.address.AddressViewModel
@@ -23,6 +24,7 @@ val networkModule = module {
 
 val repositoryModule = module {
     single { RemoteDataSource(get()) }
+    single { LaundryRepository(get()) }
 }
 
 val viewModelModule = module {

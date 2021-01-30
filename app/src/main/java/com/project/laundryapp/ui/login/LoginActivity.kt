@@ -5,6 +5,8 @@ import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.util.Log
 import com.project.laundryapp.R
+import com.project.laundryapp.core.data.Resource
+import com.project.laundryapp.core.data.local.User
 import com.project.laundryapp.core.data.remote.ApiResponse
 import com.project.laundryapp.core.data.remote.response.UserResponse
 import com.project.laundryapp.databinding.ActivityLoginBinding
@@ -31,7 +33,7 @@ class LoginActivity : AppCompatActivity() {
 
     private fun setupUI() {
         binding.btLogin.setOnClickListener {
-            val user = UserResponse(
+            val user = User(
                 email = binding.etEmail.text.toString(),
                 password = binding.etPassword.text.toString()
             )
@@ -44,30 +46,26 @@ class LoginActivity : AppCompatActivity() {
     }
 
     private fun observeUserLogin() {
-        viewModel.userData.observe(this, { userResponse ->
-            when(userResponse) {
-                is ApiResponse.Loading -> {
+        viewModel.userData.observe(this, { dataPacket ->
+            when(dataPacket) {
+                is Resource.Loading -> {
                     Log.d("USER STATUS", "Loading")
                 }
 
-                is ApiResponse.Success -> {
-                    val responseStatus = userResponse.data
-                    val user = responseStatus.data.user
+                is Resource.Success -> {
+                    val user = dataPacket.data
 
-                    Log.d("USER STATUS", "" + responseStatus.message)
-                    Log.d("USER STATUS", "" + responseStatus.error)
+                    Log.d("USER STATUS", "" + dataPacket.message)
 
-                    if(userResponse.data.message.contains("Success", ignoreCase = true)) {
-                        if (!user.id.isNullOrEmpty()) {
-                            Log.d("USER STATUS", user.id.toString())
-                            val intent = Intent(this, AddressActivity::class.java)
-                            startActivity(intent)
-                        }
+                    if(user != null) {
+                            Log.d("USER STATUS", "" + user.id)
+                            Log.d("USER STATUS", "" + user.password)
+                            //startActivity(Intent(this, AddressActivity::class.java))
                     }
                 }
 
-                is ApiResponse.Error -> {
-                    Log.d("USER STATUS", userResponse.message)
+                is Resource.Error -> {
+                    Log.d("USER STATUS", "" + dataPacket.message)
                 }
             }
         })

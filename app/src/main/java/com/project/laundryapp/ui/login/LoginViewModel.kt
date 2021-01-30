@@ -4,23 +4,25 @@ import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.asLiveData
 import androidx.lifecycle.switchMap
+import com.project.laundryapp.core.data.LaundryRepository
+import com.project.laundryapp.core.data.local.User
 import com.project.laundryapp.core.data.remote.RemoteDataSource
 import com.project.laundryapp.core.data.remote.response.UserResponse
 
-class LoginViewModel(private val remoteDataSource: RemoteDataSource): ViewModel() {
+class LoginViewModel(private val laundryRepository: LaundryRepository): ViewModel() {
 
-    private val loginUser = MutableLiveData<UserResponse>()
+    private val loginUser = MutableLiveData<User>()
 
     var userData = loginUser.switchMap {
-        remoteDataSource.postLogin(
-            UserResponse(
+        laundryRepository.postLogin(
+            User(
                 email = it.email,
                 password = it.password,
             )
         ).asLiveData()
     }
 
-    fun loginUser(userResponse: UserResponse) {
-        loginUser.postValue(userResponse)
+    fun loginUser(user: User) {
+        loginUser.postValue(user)
     }
 }

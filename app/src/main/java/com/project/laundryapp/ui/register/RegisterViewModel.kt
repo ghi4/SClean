@@ -4,16 +4,18 @@ import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.asLiveData
 import androidx.lifecycle.switchMap
+import com.project.laundryapp.core.data.LaundryRepository
+import com.project.laundryapp.core.data.local.User
 import com.project.laundryapp.core.data.remote.RemoteDataSource
 import com.project.laundryapp.core.data.remote.response.UserResponse
 
-class RegisterViewModel(private val remoteDataSource: RemoteDataSource): ViewModel() {
+class RegisterViewModel(private val laundryRepository: LaundryRepository): ViewModel() {
 
-    private val registerUser = MutableLiveData<UserResponse>()
+    private val registerUser = MutableLiveData<User>()
 
     var userData = registerUser.switchMap {
-        remoteDataSource.postRegister(
-            UserResponse(
+        laundryRepository.postRegister(
+            User(
                 email = it.email,
                 namaLengkap = it.namaLengkap,
                 nomorHp = it.nomorHp,
@@ -22,7 +24,7 @@ class RegisterViewModel(private val remoteDataSource: RemoteDataSource): ViewMod
         ).asLiveData()
     }
 
-    fun registerUser(userResponse: UserResponse) {
-        registerUser.postValue(userResponse)
+    fun registerUser(user: User) {
+        registerUser.postValue(user)
     }
 }
