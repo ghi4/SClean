@@ -14,12 +14,18 @@
     <fragment
         android:id="@+id/navigation_dashboard"
         android:name="com.project.laundryapp.ui.ui.laundry.LaundryFragment"
-        android:label="@string/title_dashboard"
+        android:label="@string/location"
         tools:layout="@layout/fragment_laundry" />
 
     <fragment
         android:id="@+id/navigation_notifications"
         android:name="com.project.laundryapp.ui.ui.history.HistoryFragment"
-        android:label="@string/title_notifications"
+        android:label="@string/history"
         tools:layout="@layout/fragment_history" />
+
+    <fragment
+        android:id="@+id/navigation_profile"
+        android:name="com.project.laundryapp.ui.ui.profile.ProfileFragment"
+        android:label="@string/profile"
+        tools:layout="@layout/fragment_profile" />
 </navigation>

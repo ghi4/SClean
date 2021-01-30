@@ -91,7 +91,7 @@
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_weight="1"
-                    android:text="Estimasi Selesai" />
+                    android:text="@string/estimasi_selesai" />
 
                 <TextView
                     android:id="@+id/tv_payment_estimationDays"
@@ -99,7 +99,7 @@
                     android:layout_height="wrap_content"
                     android:layout_weight="1"
                     android:gravity="end"
-                    android:text="5 Hari" />
+                    android:text="@string/_5_hari" />
             </LinearLayout>
 
             <LinearLayout
@@ -112,7 +112,7 @@
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_weight="1"
-                    android:text="Sub Total" />
+                    android:text="@string/sub_total" />
 
                 <TextView
                     android:id="@+id/tv_payment_subTotal"
@@ -120,7 +120,7 @@
                     android:layout_height="wrap_content"
                     android:layout_weight="1"
                     android:gravity="end"
-                    android:text="Rp 12.000,-" />
+                    android:text="@string/rp_12_000" />
             </LinearLayout>
 
             <LinearLayout
@@ -133,7 +133,7 @@
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_weight="1"
-                    android:text="Biaya Pengantaran" />
+                    android:text="@string/biaya_pengantaran" />
 
                 <TextView
                     android:id="@+id/tv_payment_shipment"
@@ -141,7 +141,7 @@
                     android:layout_height="wrap_content"
                     android:layout_weight="1"
                     android:gravity="end"
-                    android:text="Rp 10.000,-" />
+                    android:text="@string/rp_10_000" />
             </LinearLayout>
 
             <LinearLayout
@@ -154,7 +154,7 @@
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_weight="1"
-                    android:text="Total Bayar"
+                    android:text="@string/total_bayar"
                     android:textSize="18sp"
                     android:textStyle="bold" />
 
@@ -164,7 +164,7 @@
                     android:layout_height="wrap_content"
                     android:layout_weight="1"
                     android:gravity="end"
-                    android:text="Rp 22.000,-"
+                    android:text="@string/rp_22_000"
                     android:textSize="18sp"
                     android:textStyle="bold" />
             </LinearLayout>
@@ -173,7 +173,7 @@
                 android:id="@+id/bt_payment_confirmation"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:text="Konfirmasi" />
+                android:text="@string/konfirmasi" />
         </LinearLayout>
     </androidx.constraintlayout.widget.ConstraintLayout>
 </ScrollView>
