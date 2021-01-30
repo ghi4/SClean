@@ -6,8 +6,6 @@ import androidx.lifecycle.asLiveData
 import androidx.lifecycle.switchMap
 import com.project.laundryapp.core.data.LaundryRepository
 import com.project.laundryapp.core.data.local.User
-import com.project.laundryapp.core.data.remote.RemoteDataSource
-import com.project.laundryapp.core.data.remote.response.UserResponse
 
 class RegisterViewModel(private val laundryRepository: LaundryRepository): ViewModel() {
 

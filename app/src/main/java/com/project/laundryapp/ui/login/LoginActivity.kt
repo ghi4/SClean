@@ -1,17 +1,13 @@
 package com.project.laundryapp.ui.login
 
 import android.content.Intent
-import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.util.Log
+import androidx.appcompat.app.AppCompatActivity
 import com.project.laundryapp.R
 import com.project.laundryapp.core.data.Resource
 import com.project.laundryapp.core.data.local.User
-import com.project.laundryapp.core.data.remote.ApiResponse
-import com.project.laundryapp.core.data.remote.response.UserResponse
 import com.project.laundryapp.databinding.ActivityLoginBinding
-import com.project.laundryapp.ui.MainActivity
-import com.project.laundryapp.ui.address.AddressActivity
 import com.project.laundryapp.ui.register.RegisterActivity
 import org.koin.android.ext.android.inject
 

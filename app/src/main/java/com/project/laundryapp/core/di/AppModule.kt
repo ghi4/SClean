@@ -1,11 +1,10 @@
-package com.project.laundryapp.di
+package com.project.laundryapp.core.di
 
 import com.project.laundryapp.core.data.LaundryRepository
 import com.project.laundryapp.core.data.remote.RemoteDataSource
 import com.project.laundryapp.core.data.remote.retrofit.RetrofitInterface
 import com.project.laundryapp.ui.address.AddressViewModel
 import com.project.laundryapp.ui.login.LoginViewModel
-import com.project.laundryapp.ui.register.RegisterActivity
 import com.project.laundryapp.ui.register.RegisterViewModel
 import org.koin.android.viewmodel.dsl.viewModel
 import org.koin.dsl.module

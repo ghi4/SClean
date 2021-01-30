@@ -1,7 +1,6 @@
 package com.project.laundryapp.core.data.remote.retrofit
 
 import com.project.laundryapp.core.data.remote.response.StatusResponse
-import retrofit2.Call
 import retrofit2.http.Field
 import retrofit2.http.FormUrlEncoded
 import retrofit2.http.POST
