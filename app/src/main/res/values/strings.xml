@@ -81,4 +81,8 @@
     <string name="history">History</string>
     <string name="profile">Profile</string>
     <string name="temukan">Temukan</string>
+    <string name="beranda">Beranda</string>
+    <string name="riwayat">Riwayat</string>
+    <string name="akun">Akun</string>
+    <string name="sclean_logo">SClean Logo</string>
 </resources>

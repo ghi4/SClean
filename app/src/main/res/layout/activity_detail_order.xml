@@ -174,7 +174,8 @@
                 android:id="@+id/bt_payment_cancel"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:text="@string/batalkan" />
+                android:text="@string/batalkan"
+                android:theme="@style/Button.Red" />
         </LinearLayout>
     </androidx.constraintlayout.widget.ConstraintLayout>
 

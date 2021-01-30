@@ -1,0 +1,9 @@
+<?xml version="1.0" encoding="utf-8"?>
+<shape xmlns:android="http://schemas.android.com/apk/res/android">
+    <corners android:radius="3dp"/>
+    <stroke android:color="@color/black_light" android:width="1dp"/>
+    <padding android:top="@dimen/edittext_box"
+        android:bottom="@dimen/edittext_box"
+        android:left="@dimen/edittext_box"
+        android:right="@dimen/edittext_box"/>
+</shape>

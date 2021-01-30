@@ -8,7 +8,7 @@
     <fragment
         android:id="@+id/navigation_home"
         android:name="com.project.laundryapp.ui.ui.home.HomeFragment"
-        android:label="@string/title_home"
+        android:label="@string/beranda"
         tools:layout="@layout/fragment_home" />
 
     <fragment
@@ -20,12 +20,12 @@
     <fragment
         android:id="@+id/navigation_history"
         android:name="com.project.laundryapp.ui.ui.history.HistoryFragment"
-        android:label="@string/history"
+        android:label="@string/riwayat"
         tools:layout="@layout/fragment_history" />
 
     <fragment
         android:id="@+id/navigation_profile"
         android:name="com.project.laundryapp.ui.ui.profile.ProfileFragment"
-        android:label="@string/profile"
+        android:label="@string/akun"
         tools:layout="@layout/fragment_profile" />
 </navigation>

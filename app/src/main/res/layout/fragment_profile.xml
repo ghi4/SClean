@@ -94,7 +94,8 @@
                 android:id="@+id/bt_logout"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:text="@string/keluar" />
+                android:text="@string/keluar"
+                android:theme="@style/Button.White" />
 
         </LinearLayout>
     </androidx.constraintlayout.widget.ConstraintLayout>

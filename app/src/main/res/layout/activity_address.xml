@@ -46,89 +46,101 @@
                 android:id="@+id/et_address_fullName"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
+                android:autofillHints=""
+                android:background="@drawable/edittext_box"
                 android:ems="10"
                 android:hint="@string/masukkan_alamat_lengkap"
-                android:inputType="textPersonName"
-                android:autofillHints="" />
+                android:inputType="textPersonName" />
 
             <TextView
                 android:id="@+id/textView11"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
+                android:layout_marginTop="7dp"
                 android:text="@string/kota" />
 
             <EditText
                 android:id="@+id/et_address_city"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
+                android:autofillHints=""
+                android:background="@drawable/edittext_box"
                 android:ems="10"
                 android:hint="@string/masukkan_kota"
-                android:inputType="textPersonName"
-                android:autofillHints="" />
+                android:inputType="textPersonName" />
 
             <TextView
                 android:id="@+id/textView12"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
+                android:layout_marginTop="7dp"
                 android:text="@string/kecamatan" />
 
             <EditText
                 android:id="@+id/et_address_districts"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
+                android:autofillHints=""
+                android:background="@drawable/edittext_box"
                 android:ems="10"
                 android:hint="@string/masukkan_kecamatan"
-                android:inputType="textPersonName"
-                android:autofillHints="" />
+                android:inputType="textPersonName" />
 
             <TextView
                 android:id="@+id/textView13"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
+                android:layout_marginTop="7dp"
                 android:text="@string/kelurahan" />
 
             <EditText
                 android:id="@+id/et_address_subDistrict"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
+                android:autofillHints=""
+                android:background="@drawable/edittext_box"
                 android:ems="10"
                 android:hint="@string/masukkan_kelurahan"
-                android:inputType="textPersonName"
-                android:autofillHints="" />
+                android:inputType="textPersonName" />
 
             <TextView
                 android:id="@+id/textView14"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
+                android:layout_marginTop="7dp"
                 android:text="@string/kode_pos" />
 
             <EditText
                 android:id="@+id/et_address_postalCode"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
+                android:autofillHints=""
+                android:background="@drawable/edittext_box"
                 android:ems="10"
                 android:hint="@string/masukkan_kode_pos"
-                android:inputType="textPersonName"
-                android:autofillHints="" />
+                android:inputType="textPersonName" />
 
             <TextView
                 android:id="@+id/textView15"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
+                android:layout_marginTop="7dp"
                 android:text="@string/keterangan_alamat" />
 
             <EditText
                 android:id="@+id/et_address_information"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
+                android:autofillHints=""
+                android:background="@drawable/edittext_box"
                 android:ems="10"
                 android:hint="@string/keterangan"
-                android:inputType="textPersonName"
-                android:autofillHints="" />
+                android:inputType="textPersonName" />
 
             <LinearLayout
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
+                android:layout_marginTop="7dp"
                 android:orientation="horizontal">
 
                 <Button
@@ -136,7 +148,8 @@
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_weight="3"
-                    android:text="@string/lewati" />
+                    android:text="@string/lewati"
+                    android:theme="@style/Button.White" />
 
                 <Space
                     android:layout_width="wrap_content"
