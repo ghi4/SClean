@@ -5,7 +5,7 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:fillViewport="true"
-    tools:context=".ui.ui.AccountFragment">
+    tools:context=".ui.ui.profile.ProfileFragment">
 
     <androidx.constraintlayout.widget.ConstraintLayout
         android:layout_width="match_parent"
@@ -16,6 +16,7 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginTop="110dp"
+            android:contentDescription="@string/profile_photo"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintHorizontal_bias="0.5"
             app:layout_constraintStart_toStartOf="parent"
@@ -27,7 +28,7 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginTop="8dp"
-            android:text="Budi Jaya Kusuma"
+            android:text="@string/profile_name"
             app:layout_constraintEnd_toEndOf="@+id/iv_profile_image"
             app:layout_constraintStart_toStartOf="@+id/iv_profile_image"
             app:layout_constraintTop_toBottomOf="@+id/iv_profile_image" />
@@ -47,47 +48,53 @@
                 android:id="@+id/textView21"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:text="Email" />
+                android:text="@string/email" />
 
             <EditText
                 android:id="@+id/et_profile_email"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
+                android:autofillHints="@string/email"
                 android:ems="10"
+                android:hint="@string/masukkan_email"
                 android:inputType="textEmailAddress" />
 
             <TextView
                 android:id="@+id/textView22"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:text="Nomor HP" />
+                android:text="@string/nomor_hp" />
 
             <EditText
                 android:id="@+id/et_profile_phone"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
+                android:autofillHints="phone"
                 android:ems="10"
+                android:hint="@string/masukkan_nomor_hp"
                 android:inputType="phone" />
 
             <TextView
                 android:id="@+id/textView23"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:text="TextView" />
+                android:text="@string/alamat" />
 
             <EditText
                 android:id="@+id/et_profile_address"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
+                android:autofillHints="address"
                 android:ems="10"
                 android:gravity="start|top"
+                android:hint="@string/masukkan_alamat"
                 android:inputType="textMultiLine" />
 
             <Button
                 android:id="@+id/bt_logout"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:text="Keluar" />
+                android:text="@string/keluar" />
 
         </LinearLayout>
     </androidx.constraintlayout.widget.ConstraintLayout>

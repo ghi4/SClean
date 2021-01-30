@@ -48,7 +48,8 @@
                 android:layout_height="wrap_content"
                 android:ems="10"
                 android:hint="Masukkan Alamat Lengkap"
-                android:inputType="textPersonName" />
+                android:inputType="textPersonName"
+                android:autofillHints="" />
 
             <TextView
                 android:id="@+id/textView11"
@@ -62,7 +63,8 @@
                 android:layout_height="wrap_content"
                 android:ems="10"
                 android:hint="Masukkan Kota"
-                android:inputType="textPersonName" />
+                android:inputType="textPersonName"
+                android:autofillHints="" />
 
             <TextView
                 android:id="@+id/textView12"
@@ -76,7 +78,8 @@
                 android:layout_height="wrap_content"
                 android:ems="10"
                 android:hint="Masukkan Kecamatan"
-                android:inputType="textPersonName" />
+                android:inputType="textPersonName"
+                android:autofillHints="" />
 
             <TextView
                 android:id="@+id/textView13"
@@ -90,7 +93,8 @@
                 android:layout_height="wrap_content"
                 android:ems="10"
                 android:hint="Masukkan Kelurahan"
-                android:inputType="textPersonName" />
+                android:inputType="textPersonName"
+                android:autofillHints="" />
 
             <TextView
                 android:id="@+id/textView14"
@@ -104,7 +108,8 @@
                 android:layout_height="wrap_content"
                 android:ems="10"
                 android:hint="Masukkan Kode Pos"
-                android:inputType="textPersonName" />
+                android:inputType="textPersonName"
+                android:autofillHints="" />
 
             <TextView
                 android:id="@+id/textView15"
@@ -118,7 +123,8 @@
                 android:layout_height="wrap_content"
                 android:ems="10"
                 android:hint="Keterangan"
-                android:inputType="textPersonName" />
+                android:inputType="textPersonName"
+                android:autofillHints="" />
 
             <LinearLayout
                 android:layout_width="match_parent"

@@ -48,7 +48,8 @@
                 android:layout_height="wrap_content"
                 android:ems="10"
                 android:hint="Masukkan Nama Lengkap"
-                android:inputType="textPersonName" />
+                android:inputType="textPersonName"
+                android:autofillHints="" />
 
             <TextView
                 android:id="@+id/textView5"
@@ -62,7 +63,8 @@
                 android:layout_height="wrap_content"
                 android:ems="10"
                 android:hint="Masukkan Email"
-                android:inputType="textEmailAddress" />
+                android:inputType="textEmailAddress"
+                android:autofillHints="" />
 
             <TextView
                 android:id="@+id/textView6"
@@ -76,7 +78,8 @@
                 android:layout_height="wrap_content"
                 android:ems="10"
                 android:hint="Masukkan Nomor HP"
-                android:inputType="phone" />
+                android:inputType="phone"
+                android:autofillHints="" />
 
             <TextView
                 android:id="@+id/textView7"
@@ -90,7 +93,8 @@
                 android:layout_height="wrap_content"
                 android:ems="10"
                 android:hint="Masukkan Password"
-                android:inputType="textPassword" />
+                android:inputType="textPassword"
+                android:autofillHints="" />
 
             <TextView
                 android:id="@+id/textView8"
@@ -104,7 +108,8 @@
                 android:layout_height="wrap_content"
                 android:ems="10"
                 android:hint="Masukkan Ulang Password"
-                android:inputType="textPassword" />
+                android:inputType="textPassword"
+                android:autofillHints="" />
 
             <Button
                 android:id="@+id/bt_registration"
