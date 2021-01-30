@@ -15,6 +15,7 @@ import org.koin.android.ext.android.inject
 
 class AddressActivity : AppCompatActivity() {
 
+    private var keyId: String = ""
     private val viewModel: AddressViewModel by inject()
     private lateinit var binding: ActivityAddressBinding
 
@@ -25,13 +26,17 @@ class AddressActivity : AppCompatActivity() {
         binding = ActivityAddressBinding.inflate(layoutInflater)
         setContentView(binding.root)
 
+        keyId = intent.getStringExtra("KEY_ID").toString()
+
         setupUI()
         observeUserRegister()
     }
 
     private fun setupUI() {
         binding.btAddressSave.setOnClickListener {
+            Log.d("Address", "" + keyId)
             val user = User(
+                id = keyId,
                 alamat = binding.etAddressFullName.text.toString(),
                 kota = binding.etAddressCity.text.toString(),
                 kecamatan = binding.etAddressDistricts.text.toString(),

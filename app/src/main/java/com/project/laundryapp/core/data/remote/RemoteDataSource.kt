@@ -45,9 +45,14 @@ class RemoteDataSource(private val retrofitService: RetrofitInterface) {
                     user.password.toString(),
                     user.nomorHp.toString()
                 )
+
+                Log.d("RemoteData", "" + response.error)
+                Log.d("RemoteData", "" + response.message)
+
                 emit(ApiResponse.Success(response))
 
             } catch (e: Exception) {
+                Log.d("RemoteData", "" + e.toString())
                 emit(ApiResponse.Error(noInternet))
             }
         }.flowOn(Dispatchers.IO)
@@ -65,9 +70,14 @@ class RemoteDataSource(private val retrofitService: RetrofitInterface) {
                     user.kodePos.toString(),
                     user.keteranganAlamat.toString()
                 )
+
+                Log.d("RemoteData", "" + response.error)
+                Log.d("RemoteData", "" + response.message)
+
                 emit(ApiResponse.Success(response))
 
             } catch (e: Exception) {
+                Log.d("RemoteData", "" + e.toString())
                 emit(ApiResponse.Error(noInternet))
             }
         }.flowOn(Dispatchers.IO)

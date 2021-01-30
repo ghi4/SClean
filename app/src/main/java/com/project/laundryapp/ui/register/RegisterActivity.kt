@@ -66,7 +66,9 @@ class RegisterActivity : AppCompatActivity() {
                         if (!user.id.isNullOrEmpty()) {
                             Log.d("USER STATUS", "" + user.id)
                             Log.d("USER STATUS", "" + user.password)
-                            startActivity(Intent(this, AddressActivity::class.java))
+                            val intent = Intent(this, AddressActivity::class.java)
+                            intent.putExtra("KEY_ID", user.id)
+                            startActivity(intent)
                         }
                     }
                 }
