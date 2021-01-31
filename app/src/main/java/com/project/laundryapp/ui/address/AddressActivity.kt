@@ -119,7 +119,7 @@ class AddressActivity : AppCompatActivity() {
                 """.trimIndent())
                 viewModel.addressUser(user)
             } else {
-                Toast.makeText(this, "Periksa kembali data Anda.", Toast.LENGTH_SHORT).show()
+                Toast.makeText(this, "Periksa kembali userData Anda.", Toast.LENGTH_SHORT).show()
             }
         }
 

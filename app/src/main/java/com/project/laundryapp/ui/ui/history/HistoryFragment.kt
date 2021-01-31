@@ -53,8 +53,6 @@ class HistoryFragment : Fragment() {
             )
         }
 
-        historyAdapter.setList(dummyData)
-
         with(binding) {
             rvHistoryLaundry.layoutManager = LinearLayoutManager(context)
             rvHistoryLaundry.hasFixedSize()

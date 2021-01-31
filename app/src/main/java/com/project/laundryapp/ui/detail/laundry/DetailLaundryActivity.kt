@@ -2,11 +2,73 @@ package com.project.laundryapp.ui.detail.laundry
 
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
+import android.util.Log
 import com.project.laundryapp.R
+import com.project.laundryapp.core.data.Resource
+import com.project.laundryapp.core.data.remote.response.LaundryDataResponse
+import com.project.laundryapp.databinding.ActivityDetailLaundryBinding
+import org.koin.android.ext.android.inject
 
 class DetailLaundryActivity : AppCompatActivity() {
+
+    private val viewModel: DetailLaundryViewModel by inject()
+    private lateinit var binding: ActivityDetailLaundryBinding
+
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        setContentView(R.layout.activity_detail_laundry)
+
+        binding = ActivityDetailLaundryBinding.inflate(layoutInflater)
+        setContentView(binding.root)
+
+        val laundryId = intent.getStringExtra("KEY_INI")
+        Log.d("HHWZ", "DETAIL ID: $laundryId")
+        if (laundryId != null) {
+            viewModel.triggerCall(laundryId)
+        }
+
+        setupUI()
+        getData()
+    }
+
+    private fun getData() {
+        viewModel.laundryDetail.observe(this, {data ->
+            Log.d("HHWZ", "" + data.toString())
+            when(data) {
+                is Resource.Loading -> {
+                    Log.d("HHWZ", "ON LOADING")
+                }
+
+                is Resource.Success -> {
+                    val dataStatus = data.data
+                    val dataLaundry = dataStatus?.data
+
+                    Log.d("HHWZ", "AAA: $data")
+                    Log.d("HHWZ", "BBB: " + dataStatus.toString())
+                    Log.d("HHWZ", "CCC: " + dataLaundry.toString())
+
+                    if(dataLaundry != null){
+                        with(binding){
+                            val openingHours = "Buka: ${dataLaundry.jamBuka} - ${dataLaundry.jamTutup}"
+                            tvDetailTitle.text = dataLaundry.namaLaundry
+                            tvDetailAddress.text = dataLaundry.alamat
+                            tvDetailCount.text = 100.toString()
+                            tvDetailRating.text = 4.5.toString()
+                            tvDetailDescription.text = dataLaundry.deskripsi
+                            tvDetailOpeningHours.text = openingHours
+                        }
+                    }
+
+
+                }
+
+                is Resource.Error -> {
+                    Log.d("HHWZ", data.message.toString() )
+                }
+            }
+        })
+    }
+
+    private fun setupUI() {
+
     }
 }

@@ -1,9 +1,10 @@
 package com.project.laundryapp.core.data.remote.retrofit
 
-import com.project.laundryapp.core.data.remote.response.StatusResponse
-import retrofit2.http.Field
-import retrofit2.http.FormUrlEncoded
-import retrofit2.http.POST
+import com.project.laundryapp.core.data.remote.response.LaundryServiceResponse
+import com.project.laundryapp.core.data.remote.response.LaundryStatusDetail
+import com.project.laundryapp.core.data.remote.response.LaundryStatusResponse
+import com.project.laundryapp.core.data.remote.response.UserStatusResponse
+import retrofit2.http.*
 
 interface RetrofitInterface {
 
@@ -12,7 +13,7 @@ interface RetrofitInterface {
     suspend fun postLogin(
         @Field("email") email: String,
         @Field("password") password: String
-    ): StatusResponse
+    ): UserStatusResponse
 
     @POST("register")
     @FormUrlEncoded
@@ -21,7 +22,7 @@ interface RetrofitInterface {
         @Field("email") email: String,
         @Field("password") password: String,
         @Field("nomor_hp") nomorHp: String
-    ): StatusResponse
+    ): UserStatusResponse
 
     @POST("update_alamat")
     @FormUrlEncoded
@@ -33,5 +34,21 @@ interface RetrofitInterface {
         @Field("kelurahan") nomorHp: String,
         @Field("kode_pos") kodePos: String,
         @Field("keterangan_alamat") keteranganAlamat: String
-    ): StatusResponse
+    ): UserStatusResponse
+
+    @POST("input_pesanan")
+    @FormUrlEncoded
+    suspend fun inputOrder(
+        @Field("id_laundry") idLaundry: String,
+        @Field("id_user") idUser: String,
+        @Field("daftar_layanan") laundryServiceResponse: LaundryServiceResponse
+    ): LaundryStatusResponse
+
+    @GET("laundry_all")
+    suspend fun getLaundryList(): LaundryStatusResponse
+
+    @GET("laundry_detail")
+    suspend fun getLaundryDetail(
+        @Query("id") idLaundry: String
+    ): LaundryStatusDetail
 }

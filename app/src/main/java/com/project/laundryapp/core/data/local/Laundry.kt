@@ -1,19 +1,21 @@
 package com.project.laundryapp.core.data.local
 
 data class Laundry(
-    var idLaundry: String,
+    var idLaundry: String? = "Unknown",
 
-    var namaLaundry: String,
+    var namaLaundry: String? = "Unknown",
 
-    var nomorTelepon: String,
+    var nomorTelepon: String? = "Unknown",
 
-    var jamBuka: String,
+    var jamBuka: String? = "Unknown",
 
-    var jamTutup: String,
+    var jamTutup: String? = "Unknown",
 
-    var alamat: String,
+    var alamat: String? = "Unknown",
 
-    var deskripsi: String,
+    var deskripsi: String? = "Unknown",
 
-    var foto: String
+    var foto: String? = "Unknown",
+
+    var daftarLayanan: List<LaundryService>? = emptyList()
 )

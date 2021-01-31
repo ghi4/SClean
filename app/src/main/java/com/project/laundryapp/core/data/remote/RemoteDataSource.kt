@@ -2,7 +2,9 @@ package com.project.laundryapp.core.data.remote
 
 import android.util.Log
 import com.project.laundryapp.core.data.local.User
-import com.project.laundryapp.core.data.remote.response.StatusResponse
+import com.project.laundryapp.core.data.remote.response.LaundryStatusDetail
+import com.project.laundryapp.core.data.remote.response.LaundryStatusResponse
+import com.project.laundryapp.core.data.remote.response.UserStatusResponse
 import com.project.laundryapp.core.data.remote.retrofit.RetrofitInterface
 import com.project.laundryapp.core.utils.ResponseMessage
 import kotlinx.coroutines.Dispatchers
@@ -13,7 +15,7 @@ import kotlinx.coroutines.flow.flowOn
 class RemoteDataSource(private val retrofitService: RetrofitInterface) {
     private val noInternet = "Masalah koneksi internet."
 
-    fun postLogin(user: User): Flow<ApiResponse<StatusResponse>> {
+    fun postLogin(user: User): Flow<ApiResponse<UserStatusResponse>> {
         return flow {
             try {
                 val response = retrofitService.postLogin(
@@ -21,6 +23,9 @@ class RemoteDataSource(private val retrofitService: RetrofitInterface) {
                     user.password.toString(),
                 )
 
+                Log.d("RemoteData", "" + response)
+                Log.d("RemoteData", "" + response.userData)
+                Log.d("RemoteData", "" + response.userData.idUser)
                 Log.d("RemoteData", "" + response.error)
                 Log.d("RemoteData", "" + response.message)
 
@@ -38,7 +43,7 @@ class RemoteDataSource(private val retrofitService: RetrofitInterface) {
         }.flowOn(Dispatchers.IO)
     }
 
-    fun postRegister(user: User): Flow<ApiResponse<StatusResponse>> {
+    fun postRegister(user: User): Flow<ApiResponse<UserStatusResponse>> {
         return flow {
             try {
                 val response = retrofitService.postRegister(
@@ -60,7 +65,7 @@ class RemoteDataSource(private val retrofitService: RetrofitInterface) {
         }.flowOn(Dispatchers.IO)
     }
 
-    fun postAddress(user: User): Flow<ApiResponse<StatusResponse>> {
+    fun postAddress(user: User): Flow<ApiResponse<UserStatusResponse>> {
         return flow {
             try {
                 val response = retrofitService.postAddress(
@@ -80,6 +85,31 @@ class RemoteDataSource(private val retrofitService: RetrofitInterface) {
 
             } catch (e: Exception) {
                 Log.d("RemoteData", "" + e.toString())
+                emit(ApiResponse.Error(noInternet))
+            }
+        }.flowOn(Dispatchers.IO)
+    }
+
+    fun getLaundryList(): Flow<ApiResponse<LaundryStatusResponse>> {
+        return flow {
+            try {
+                val response = retrofitService.getLaundryList()
+                Log.d("RemoteData", "" + response.toString())
+                Log.d("RemoteData", "" + response.data.toString())
+                emit(ApiResponse.Success(response))
+            } catch (e: Exception) {
+                Log.d("RemoteData", "" + e.toString())
+                emit(ApiResponse.Error(noInternet))
+            }
+        }.flowOn(Dispatchers.IO)
+    }
+
+    fun getLaundryDetail(laundryId: String): Flow<ApiResponse<LaundryStatusDetail>> {
+        return flow {
+            try {
+                val response = retrofitService.getLaundryDetail(laundryId)
+                emit(ApiResponse.Success(response))
+            } catch (e: Exception) {
                 emit(ApiResponse.Error(noInternet))
             }
         }.flowOn(Dispatchers.IO)

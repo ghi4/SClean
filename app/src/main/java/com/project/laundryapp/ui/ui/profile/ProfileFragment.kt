@@ -1,5 +1,6 @@
 package com.project.laundryapp.ui.ui.profile
 
+import android.content.Intent
 import androidx.lifecycle.ViewModelProvider
 import android.os.Bundle
 import android.util.Log
@@ -10,6 +11,7 @@ import android.view.ViewGroup
 import com.project.laundryapp.R
 import com.project.laundryapp.core.data.local.User
 import com.project.laundryapp.databinding.FragmentProfileBinding
+import com.project.laundryapp.ui.login.LoginActivity
 import com.project.laundryapp.utils.Utils
 import com.squareup.picasso.Picasso
 import org.koin.android.ext.android.inject
@@ -56,7 +58,14 @@ class ProfileFragment : Fragment() {
                     .error(R.drawable.gravatar)
                     .placeholder(R.drawable.gravatar)
                     .into(binding.ivProfileImage)
+
+            btLogout.setOnClickListener {
+                Utils.putSharedPref(requireActivity(), User())
+                startActivity(Intent(requireActivity(), LoginActivity::class.java))
+            }
         }
+
+
     }
 
 }

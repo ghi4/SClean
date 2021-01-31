@@ -1,25 +1,25 @@
 package com.project.laundryapp.core.data.local
 
 data class LaundryOrder(
-    var idPesanan: String,
+    var idPesanan: String? = "Unknown",
 
-    var nomorPesanan: String,
+    var nomorPesanan: String? = "Unknown",
 
-    var idUser: String,
+    var idUser: String? = "Unknown",
 
-    var idLaundry: String,
+    var idLaundry: String? = "Unknown",
 
-    var tanggalPesan: String,
+    var tanggalPesan: String? = "Unknown",
 
-    var total: String,
+    var total: String? = "Unknown",
 
-    var status: String,
+    var status: String? = "Unknown",
 
-    var tanggalBayar: String,
+    var tanggalBayar: String? = "Unknown",
 
-    var tanggalStatus: String,
+    var tanggalStatus: String? = "Unknown",
 
-    var tanggalPengantaran: String,
+    var tanggalPengantaran: String? = "Unknown",
 
-    var catatanOrder: String
+    var catatanOrder: String? = "Unknown"
 )

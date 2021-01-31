@@ -1,6 +1,8 @@
 package com.project.laundryapp.ui.ui.home
 
+import android.content.Intent
 import android.os.Bundle
+import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -9,13 +11,17 @@ import androidx.recyclerview.widget.LinearLayoutManager
 import com.project.laundryapp.R
 import com.project.laundryapp.core.adapter.BannerAdapter
 import com.project.laundryapp.core.adapter.LaundryTopAdapter
+import com.project.laundryapp.core.data.Resource
 import com.project.laundryapp.core.data.local.Laundry
+import com.project.laundryapp.core.data.remote.ApiResponse
+import com.project.laundryapp.core.data.remote.response.LaundryDataResponse
 import com.project.laundryapp.databinding.FragmentHomeBinding
+import com.project.laundryapp.ui.detail.laundry.DetailLaundryActivity
 import org.koin.android.ext.android.inject
 
 class HomeFragment : Fragment() {
 
-//    private val viewModel: HomeViewModel by inject()
+    private val viewModel: HomeViewModel by inject()
     private lateinit var binding: FragmentHomeBinding
     private lateinit var bannerAdapter: BannerAdapter
     private lateinit var laundryTopAdapter: LaundryTopAdapter
@@ -31,7 +37,36 @@ class HomeFragment : Fragment() {
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
+        viewModel.triggerCall()
         setupUI()
+        getData()
+    }
+
+    private fun getData() {
+        viewModel.laundryData.observe(viewLifecycleOwner, {data ->
+            Log.d("HHWZ", "" + data.toString())
+            when(data) {
+                is Resource.Loading -> {
+                    Log.d("HHWZ", "ON LOADING")
+                }
+
+                is Resource.Success -> {
+                    val dataStatus = data.data
+                    val dataLaundry = dataStatus?.data
+
+                    Log.d("HHWZ", "AAA: $data")
+                    Log.d("HHWZ", "BBB: " + dataStatus.toString())
+                    Log.d("HHWZ", "CCC: " + dataLaundry.toString())
+
+                    laundryTopAdapter.setList(dataLaundry as ArrayList<LaundryDataResponse>)
+
+                }
+
+                is Resource.Error -> {
+                    Log.d("HHWZ", data.message.toString() )
+                }
+            }
+        })
     }
 
     private fun setupUI() {
@@ -53,10 +88,12 @@ class HomeFragment : Fragment() {
         }
 
         bannerAdapter.setList(dummy)
-        laundryTopAdapter.setList(dummy)
 
         laundryTopAdapter.onItemClick = {selectedData ->
-
+            val intent = Intent(requireContext(), DetailLaundryActivity::class.java)
+            Log.d("HHWZ", "HOME: ${selectedData.idLaundry}")
+            intent.putExtra("KEY_INI", selectedData.idLaundry)
+            startActivity(intent)
         }
 
         with(binding) {

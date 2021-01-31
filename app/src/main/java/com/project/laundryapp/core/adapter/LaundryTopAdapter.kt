@@ -5,15 +5,15 @@ import android.view.View
 import android.view.ViewGroup
 import androidx.recyclerview.widget.RecyclerView
 import com.project.laundryapp.R
-import com.project.laundryapp.core.data.local.Laundry
+import com.project.laundryapp.core.data.remote.response.LaundryDataResponse
 import com.project.laundryapp.databinding.ItemLaundryHorizontalBinding
 
 class LaundryTopAdapter : RecyclerView.Adapter<LaundryTopAdapter.LaundryTopViewHolder>() {
 
-    private var dataList = ArrayList<Laundry>()
-    var onItemClick: ((Laundry) -> Unit)? = null
+    private var dataList = ArrayList<LaundryDataResponse>()
+    var onItemClick: ((LaundryDataResponse) -> Unit)? = null
 
-    fun setList(data: ArrayList<Laundry>) {
+    fun setList(data: ArrayList<LaundryDataResponse>) {
         dataList.clear()
         dataList.addAll(data)
         notifyDataSetChanged()
@@ -32,7 +32,7 @@ class LaundryTopAdapter : RecyclerView.Adapter<LaundryTopAdapter.LaundryTopViewH
 
     inner class LaundryTopViewHolder(itemView: View): RecyclerView.ViewHolder(itemView) {
         private val binding = ItemLaundryHorizontalBinding.bind(itemView)
-        fun bind(data: Laundry) {
+        fun bind(data: LaundryDataResponse) {
             with(binding) {
                 val openingHours = "Buka: ${data.jamBuka} - ${data.jamTutup}"
                 tvLaundryTitle.text = data.namaLaundry

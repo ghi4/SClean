@@ -2,7 +2,7 @@ package com.project.laundryapp.core.data.remote.response
 
 import com.google.gson.annotations.SerializedName
 
-data class DataResponse(
+data class UserDataResponse(
     @SerializedName("user")
     var user: UserResponse,
 

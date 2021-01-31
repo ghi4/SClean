@@ -99,7 +99,7 @@ class RegisterActivity : AppCompatActivity() {
                 )
                 viewModel.registerUser(userRegister)
             } else {
-                Toast.makeText(this, "Periksa kembali data Anda.", Toast.LENGTH_SHORT).show()
+                Toast.makeText(this, "Periksa kembali userData Anda.", Toast.LENGTH_SHORT).show()
             }
         }
 
