@@ -75,4 +75,7 @@ dependencies {
 
     //Convert Flow to LiveData
     implementation "androidx.lifecycle:lifecycle-livedata-ktx:2.2.0"
+
+    //Circular Image
+    implementation 'de.hdodenhof:circleimageview:3.1.0'
 }

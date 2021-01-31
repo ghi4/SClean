@@ -23,16 +23,23 @@
                 android:layout_marginStart="5dp"
                 android:layout_marginEnd="5dp"
                 android:layout_weight="1"
-                android:text="@string/laundry_title" />
+                android:text="@string/laundry_title"
+                android:textSize="16sp" />
 
             <TextView
                 android:id="@+id/tv_history_status"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_marginStart="5dp"
-                android:layout_marginEnd="5dp"
+                android:layout_marginStart="7dp"
+                android:layout_marginEnd="7dp"
                 android:layout_weight="1"
+                android:background="#9CCC65"
+                android:backgroundTint="#9CCC65"
                 android:gravity="end"
+                android:paddingStart="3dp"
+                android:paddingTop="3dp"
+                android:paddingEnd="7dp"
+                android:paddingBottom="3dp"
                 android:text="@string/selesai" />
         </LinearLayout>
 

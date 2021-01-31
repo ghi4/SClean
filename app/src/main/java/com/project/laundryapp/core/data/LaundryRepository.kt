@@ -17,7 +17,7 @@ class LaundryRepository(private val remoteDataSource: RemoteDataSource) {
             }
 
             override fun convertCallResult(data: StatusResponse): Flow<User> {
-                val result = DataMapper.remoteUserToLocal(data.data.user)
+                val result = DataMapper.remoteUserToLocal(data.data)
                 return flow { emit(result) }
             }
         }.asFlow()

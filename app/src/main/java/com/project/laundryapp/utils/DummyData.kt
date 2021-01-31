@@ -1,4 +1,4 @@
-package com.project.laundryapp
+package com.project.laundryapp.utils
 
 data class DummyData(
     var abc: String

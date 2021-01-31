@@ -4,6 +4,7 @@ import android.util.Log
 import com.project.laundryapp.core.data.local.User
 import com.project.laundryapp.core.data.remote.response.StatusResponse
 import com.project.laundryapp.core.data.remote.retrofit.RetrofitInterface
+import com.project.laundryapp.core.utils.ResponseMessage
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.flow
@@ -23,13 +24,14 @@ class RemoteDataSource(private val retrofitService: RetrofitInterface) {
                 Log.d("RemoteData", "" + response.error)
                 Log.d("RemoteData", "" + response.message)
 
-                if(response.error == "null") {
+                if(ResponseMessage.isSuccess(response.message)) {
                     emit(ApiResponse.Success(response))
                 } else {
                     emit(ApiResponse.Error(response.message))
                 }
 
             } catch (e: Exception) {
+                Log.d("RemoteData", "" + e.toString())
                 Log.d("RemoteData", "" + e.toString())
                 emit(ApiResponse.Error(noInternet))
             }

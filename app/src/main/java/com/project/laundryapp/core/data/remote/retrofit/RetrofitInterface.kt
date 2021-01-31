@@ -27,7 +27,7 @@ interface RetrofitInterface {
     @FormUrlEncoded
     suspend fun postAddress(
         @Field("id_user") idUser: String,
-        @Field("alamat") namaLengkap: String,
+        @Field("alamat") alamatLengkap: String,
         @Field("kota") email: String,
         @Field("kecamatan") password: String,
         @Field("kelurahan") nomorHp: String,

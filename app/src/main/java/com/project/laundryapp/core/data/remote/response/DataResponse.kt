@@ -21,6 +21,9 @@ data class DataResponse(
     @SerializedName("create_date")
      val createDate:String,
 
+    @SerializedName("photo")
+    var photo: String,
+
     @SerializedName("alamat")
      val alamat:String,
 

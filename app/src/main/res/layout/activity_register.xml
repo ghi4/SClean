@@ -143,6 +143,6 @@
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toTopOf="parent"
             app:srcCompat="@drawable/logo_sclean"
-            android:contentDescription="TODO" />
+            android:contentDescription="@string/sclean_logo" />
     </androidx.constraintlayout.widget.ConstraintLayout>
 </ScrollView>
