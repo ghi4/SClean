@@ -4,6 +4,7 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    android:fillViewport="true"
     tools:context=".ui.detail.laundry.DetailLaundryActivity">
 
     <androidx.constraintlayout.widget.ConstraintLayout
@@ -46,12 +47,15 @@
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_weight="1"
-                    android:text="@string/laundry_title" />
+                    android:text="@string/laundry_title"
+                    android:textSize="16sp"
+                    android:textStyle="bold" />
 
                 <TextView
                     android:id="@+id/tv_detail_count"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
+                    android:layout_gravity="end"
                     android:layout_weight="1"
                     android:gravity="center_vertical"
                     android:text="@string/order_count"
@@ -71,7 +75,8 @@
                 android:id="@+id/tv_detail_address"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:text="@string/laundry_address" />
+                android:text="@string/laundry_address"
+                android:textStyle="italic" />
 
             <TextView
                 android:id="@+id/tv_detail_openingHours"
@@ -83,7 +88,10 @@
                 android:id="@+id/textView24"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:text="@string/deskripsi" />
+                android:layout_marginTop="5dp"
+                android:layout_marginBottom="5dp"
+                android:text="@string/deskripsi"
+                android:textStyle="bold" />
 
             <TextView
                 android:id="@+id/tv_detail_description"
@@ -95,17 +103,33 @@
                 android:id="@+id/textView31"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:text="@string/layanan" />
+                android:layout_marginTop="5dp"
+                android:text="@string/layanan"
+                android:textStyle="bold" />
         </LinearLayout>
 
         <androidx.recyclerview.widget.RecyclerView
+            android:id="@+id/rv_detail_serviceList"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
+            android:layout_marginStart="8dp"
+            android:layout_marginEnd="8dp"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintHorizontal_bias="0.5"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toBottomOf="@+id/linearLayout"
+            tools:itemCount="0"
             tools:listitem="@layout/item_laundry_service" />
+
+        <Button
+            android:id="@+id/button"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:text="Button"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintHorizontal_bias="0.5"
+            app:layout_constraintStart_toStartOf="parent" />
 
     </androidx.constraintlayout.widget.ConstraintLayout>
 

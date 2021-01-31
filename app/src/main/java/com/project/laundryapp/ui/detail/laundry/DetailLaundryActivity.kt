@@ -3,9 +3,12 @@ package com.project.laundryapp.ui.detail.laundry
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.util.Log
+import androidx.recyclerview.widget.LinearLayoutManager
 import com.project.laundryapp.R
+import com.project.laundryapp.core.adapter.LaundryServiceAdapter
 import com.project.laundryapp.core.data.Resource
 import com.project.laundryapp.core.data.remote.response.LaundryDataResponse
+import com.project.laundryapp.core.data.remote.response.LaundryServiceResponse
 import com.project.laundryapp.databinding.ActivityDetailLaundryBinding
 import org.koin.android.ext.android.inject
 
@@ -13,6 +16,7 @@ class DetailLaundryActivity : AppCompatActivity() {
 
     private val viewModel: DetailLaundryViewModel by inject()
     private lateinit var binding: ActivityDetailLaundryBinding
+    private lateinit var serviceAdapter: LaundryServiceAdapter
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -28,6 +32,17 @@ class DetailLaundryActivity : AppCompatActivity() {
 
         setupUI()
         getData()
+    }
+
+    private fun setupUI() {
+        serviceAdapter = LaundryServiceAdapter()
+
+        with(binding) {
+            rvDetailServiceList.layoutManager = LinearLayoutManager(this@DetailLaundryActivity)
+            rvDetailServiceList.hasFixedSize()
+            rvDetailServiceList.adapter = serviceAdapter
+            rvDetailServiceList.isNestedScrollingEnabled = false
+        }
     }
 
     private fun getData() {
@@ -56,6 +71,8 @@ class DetailLaundryActivity : AppCompatActivity() {
                             tvDetailDescription.text = dataLaundry.deskripsi
                             tvDetailOpeningHours.text = openingHours
                         }
+
+                        serviceAdapter.setList(dataLaundry.laundryService as ArrayList<LaundryServiceResponse>)
                     }
 
 
@@ -66,9 +83,5 @@ class DetailLaundryActivity : AppCompatActivity() {
                 }
             }
         })
-    }
-
-    private fun setupUI() {
-
     }
 }
