@@ -12,14 +12,20 @@ data class LaundryServiceResponse(
     @SerializedName("nama_layanan")
      val namaLayanan: String? = "Unknown",
 
+    @SerializedName("daftar_layanan")
+    val daftarLayanan: LaundryServiceInput? = null,
+
     @SerializedName("estimasi")
      val estimasi: String? = "Unknown",
 
     @SerializedName("harga")
-     val harga: String? = "Unknown",
+     val harga: Int? = 0,
 
     @SerializedName("satuan")
      val satuan: String? = "Unknown",
+
+    @SerializedName("qty")
+    var qty: Int? = 0,
 
     @SerializedName("create_date")
      val createDate: String? = "Unknown",

@@ -4,6 +4,7 @@ import com.project.laundryapp.core.data.local.Laundry
 import com.project.laundryapp.core.data.local.User
 import com.project.laundryapp.core.data.remote.ApiResponse
 import com.project.laundryapp.core.data.remote.RemoteDataSource
+import com.project.laundryapp.core.data.remote.response.LaundryServiceInput
 import com.project.laundryapp.core.data.remote.response.LaundryStatusDetail
 import com.project.laundryapp.core.data.remote.response.LaundryStatusResponse
 import com.project.laundryapp.core.data.remote.response.UserStatusResponse
@@ -73,6 +74,19 @@ class LaundryRepository(private val remoteDataSource: RemoteDataSource) {
             override fun convertCallResult(data: LaundryStatusDetail): Flow<LaundryStatusDetail> {
                 return flow { emit(data) }
             }
+        }.asFlow()
+    }
+
+    fun postOrder(idLaundry: String, idUser: String, serviceList: LaundryServiceInput): Flow<Resource<LaundryStatusResponse>> {
+        return object : RemoteResource<LaundryStatusResponse, LaundryStatusResponse>() {
+            override fun createCall(): Flow<ApiResponse<LaundryStatusResponse>> {
+                return remoteDataSource.postOrder(idLaundry, idUser, serviceList)
+            }
+
+            override fun convertCallResult(data: LaundryStatusResponse): Flow<LaundryStatusResponse> {
+                return flow { emit(data) }
+            }
+
         }.asFlow()
     }
 

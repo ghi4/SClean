@@ -7,7 +7,9 @@ import androidx.recyclerview.widget.LinearLayoutManager
 import com.project.laundryapp.R
 import com.project.laundryapp.core.adapter.LaundryServiceAdapter
 import com.project.laundryapp.core.data.Resource
+import com.project.laundryapp.core.data.local.LaundryService
 import com.project.laundryapp.core.data.remote.response.LaundryDataResponse
+import com.project.laundryapp.core.data.remote.response.LaundryServiceInput
 import com.project.laundryapp.core.data.remote.response.LaundryServiceResponse
 import com.project.laundryapp.databinding.ActivityDetailLaundryBinding
 import org.koin.android.ext.android.inject
@@ -17,6 +19,8 @@ class DetailLaundryActivity : AppCompatActivity() {
     private val viewModel: DetailLaundryViewModel by inject()
     private lateinit var binding: ActivityDetailLaundryBinding
     private lateinit var serviceAdapter: LaundryServiceAdapter
+
+    private var serviceSelected = ArrayList<LaundryServiceInput>()
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -42,6 +46,36 @@ class DetailLaundryActivity : AppCompatActivity() {
             rvDetailServiceList.hasFixedSize()
             rvDetailServiceList.adapter = serviceAdapter
             rvDetailServiceList.isNestedScrollingEnabled = false
+        }
+
+        serviceAdapter.onItemClick = {onChangedService ->
+            val serviceData = LaundryServiceInput(
+                onChangedService.namaLayanan.toString(),
+                onChangedService.qty,
+                onChangedService.harga
+            )
+
+            //Prevent duplicate data
+            if(serviceSelected.isEmpty())
+                serviceSelected.add(serviceData)
+            else {
+                var isNotDuplicate = true
+                for(i in 0 until serviceSelected.size){
+                    if(serviceSelected[i].idLayanan == serviceData.idLayanan) {
+                        isNotDuplicate = false
+                        serviceSelected[i] = serviceData
+                        break
+                    }
+                }
+                if (isNotDuplicate)
+                    serviceSelected.add(serviceData)
+            }
+
+            Log.d("MYGGWP", "RAW: " + onChangedService.toString())
+            Log.d("MYGGWP", "LIST: " + serviceSelected.toString())
+        }
+
+        binding.btDetailOrder.setOnClickListener {
         }
     }
 
@@ -74,8 +108,6 @@ class DetailLaundryActivity : AppCompatActivity() {
 
                         serviceAdapter.setList(dataLaundry.laundryService as ArrayList<LaundryServiceResponse>)
                     }
-
-
                 }
 
                 is Resource.Error -> {

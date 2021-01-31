@@ -2,6 +2,7 @@ package com.project.laundryapp.core.data.remote
 
 import android.util.Log
 import com.project.laundryapp.core.data.local.User
+import com.project.laundryapp.core.data.remote.response.LaundryServiceInput
 import com.project.laundryapp.core.data.remote.response.LaundryStatusDetail
 import com.project.laundryapp.core.data.remote.response.LaundryStatusResponse
 import com.project.laundryapp.core.data.remote.response.UserStatusResponse
@@ -108,6 +109,21 @@ class RemoteDataSource(private val retrofitService: RetrofitInterface) {
         return flow {
             try {
                 val response = retrofitService.getLaundryDetail(laundryId)
+                emit(ApiResponse.Success(response))
+            } catch (e: Exception) {
+                emit(ApiResponse.Error(noInternet))
+            }
+        }.flowOn(Dispatchers.IO)
+    }
+
+    fun postOrder(
+        idLaundry: String,
+        idUser: String,
+        serviceList: LaundryServiceInput
+    ): Flow<ApiResponse<LaundryStatusResponse>> {
+        return flow {
+            try {
+                val response = retrofitService.postOrder(idLaundry, idUser, serviceList)
                 emit(ApiResponse.Success(response))
             } catch (e: Exception) {
                 emit(ApiResponse.Error(noInternet))

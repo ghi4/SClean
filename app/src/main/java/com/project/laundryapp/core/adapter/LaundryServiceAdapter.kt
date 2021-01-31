@@ -35,23 +35,29 @@ class LaundryServiceAdapter : RecyclerView.Adapter<LaundryServiceAdapter.Laundry
         private val binding = ItemLaundryServiceBinding.bind(itemView)
         fun bind(data: LaundryServiceResponse) {
             with(binding) {
-                val estimasi = "(Estimasi ${data.estimasi} hari"
+                val estimasi = "(Estimasi ${data.estimasi} hari)"
                 val price = "Rp. ${data.harga}"
                 var count = 0
                 tvServiceName.text = data.namaLayanan
                 tvServiceEstimation.text = estimasi
                 tvServicePrice.text = price
-                tvServiceCount.text = count.toString()
+                tvServiceCount.text = data.qty.toString()
 
                 btServiceAdd.setOnClickListener {
                     count++
                     tvServiceCount.text = count.toString()
+
+                    data.qty = count
+                    onItemClick?.invoke(data)
                 }
 
                 btServiceReduce.setOnClickListener {
                     if(count > 0) {
                         count--
                         tvServiceCount.text = count.toString()
+
+                        data.qty = count
+                        onItemClick?.invoke(data)
                     }
                 }
             }
