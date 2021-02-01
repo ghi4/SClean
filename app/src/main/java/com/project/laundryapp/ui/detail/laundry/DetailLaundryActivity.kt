@@ -67,12 +67,16 @@ class DetailLaundryActivity : AppCompatActivity() {
                         isNotDuplicate = false
                         serviceOrdered[i] = serviceData
                     }
-                    if(serviceOrdered[i].jumlah == 0){
-                        serviceOrdered.removeAt(i)
-                    }
                 }
                 if (isNotDuplicate)
                     serviceOrdered.add(serviceData)
+            }
+
+            //Prevent "jumlah = 0" in the list
+            for(i in 0 until serviceOrdered.size){
+                if(serviceOrdered[i].jumlah == 0){
+                    serviceOrdered.removeAt(i)
+                }
             }
 
         }
@@ -122,7 +126,9 @@ class DetailLaundryActivity : AppCompatActivity() {
 
                     if(dataLaundry != null){
                         with(binding){
-                            val openingHours = "Buka: ${dataLaundry.jamBuka} - ${dataLaundry.jamTutup}"
+                            val open = Utils.parseHours(dataLaundry.jamBuka.toString())
+                            val close = Utils.parseHours(dataLaundry.jamTutup.toString())
+                            val openingHours = "Buka: $open - $close"
                             tvDetailTitle.text = dataLaundry.namaLaundry
                             tvDetailAddress.text = dataLaundry.alamat
                             tvDetailCount.text = 100.toString()

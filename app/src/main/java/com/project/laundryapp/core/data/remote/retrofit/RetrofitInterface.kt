@@ -38,7 +38,7 @@ interface RetrofitInterface {
     @FormUrlEncoded
     suspend fun postOrder(
         @Field("id_laundry") idLaundry: String,
-        @Field("daftar_layanan") laundryService: List<LaundryOrderInput>,
+        @Field("daftar_layanan") laundryService: String,
         @Field("id_user") idUser: String
     ): LaundryStatusListResponse
 

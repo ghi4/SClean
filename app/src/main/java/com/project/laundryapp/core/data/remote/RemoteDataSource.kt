@@ -124,15 +124,18 @@ class RemoteDataSource(private val retrofitService: RetrofitInterface) {
             
             ==========================================
             ${Gson().toJson(serviceList).toString()}
+            
+            ${Gson().toJson(serviceList.toList()).toString()}
             ===========================================
         """.trimIndent())
         return flow {
             try {
-                val response = retrofitService.postOrder(idLaundry, serviceList.toList(), idUser)
+                val serviceListJson = Gson().toJson(serviceList.toList())
+                val response = retrofitService.postOrder(idLaundry, serviceListJson, idUser)
                 emit(ApiResponse.Success(response))
             } catch (e: Exception) {
-                Log.d("PAYMENT", e.toString())
-                emit(ApiResponse.Error(noInternet))
+                Log.d("INPUT DATA", e.toString())
+                emit(ApiResponse.Error(e.toString()))
             }
         }.flowOn(Dispatchers.IO)
     }

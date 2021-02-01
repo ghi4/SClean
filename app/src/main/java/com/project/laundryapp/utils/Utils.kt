@@ -80,6 +80,14 @@ object Utils {
         return "$qty $weightType"
     }
 
+    fun findBiggest(input1: Int, input2: Int): Int {
+        return if(input1>input2){
+            input1
+        } else {
+            input2
+        }
+    }
+
     fun isEmailValid(input: String): Boolean{
         return android.util.Patterns.EMAIL_ADDRESS.matcher(input).matches()
     }
