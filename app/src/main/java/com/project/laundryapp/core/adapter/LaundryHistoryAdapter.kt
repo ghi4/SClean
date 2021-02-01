@@ -7,6 +7,7 @@ import androidx.recyclerview.widget.RecyclerView
 import com.project.laundryapp.R
 import com.project.laundryapp.core.data.remote.response.laundry.LaundryHistoryResponse
 import com.project.laundryapp.databinding.ItemHistoryLaundryBinding
+import com.project.laundryapp.utils.Utils
 
 class LaundryHistoryAdapter : RecyclerView.Adapter<LaundryHistoryAdapter.LaundryHistoryResponseTopViewHolder>() {
 
@@ -34,8 +35,9 @@ class LaundryHistoryAdapter : RecyclerView.Adapter<LaundryHistoryAdapter.Laundry
         private val binding = ItemHistoryLaundryBinding.bind(itemView)
         fun bind(data: LaundryHistoryResponse) {
             with(binding) {
+                val price = data.total?.toDouble() ?: 0
                 tvHistoryTitle.text = data.namaLaundry
-                tvHistoryPrice.text = data.total
+                tvHistoryPrice.text = Utils.parseIntToCurrency(price.toInt())
                 tvHistoryDate.text = data.tglPesan
                 tvHistoryStatus.text = data.status
             }

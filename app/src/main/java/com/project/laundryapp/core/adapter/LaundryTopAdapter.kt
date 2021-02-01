@@ -8,6 +8,7 @@ import com.project.laundryapp.R
 import com.project.laundryapp.core.data.remote.response.laundry.LaundryDataResponse
 import com.project.laundryapp.databinding.ItemLaundryHorizontalBinding
 import com.project.laundryapp.utils.Const
+import com.project.laundryapp.utils.Utils
 import com.squareup.picasso.Picasso
 
 class LaundryTopAdapter : RecyclerView.Adapter<LaundryTopAdapter.LaundryTopViewHolder>() {
@@ -36,7 +37,9 @@ class LaundryTopAdapter : RecyclerView.Adapter<LaundryTopAdapter.LaundryTopViewH
         private val binding = ItemLaundryHorizontalBinding.bind(itemView)
         fun bind(data: LaundryDataResponse) {
             with(binding) {
-                val openingHours = "Buka: ${data.jamBuka} - ${data.jamTutup}"
+                val open = Utils.parseHours(data.jamBuka.toString())
+                val close = Utils.parseHours(data.jamTutup.toString())
+                val openingHours = "Buka: $open - $close"
                 tvLaundryTitle.text = data.namaLaundry
                 tvLaundryAddress.text = data.alamat
                 tvLaundryOpeningHours.text = openingHours

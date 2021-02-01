@@ -6,6 +6,8 @@ import android.util.Log
 import android.widget.Toast
 import com.google.gson.Gson
 import com.project.laundryapp.core.data.local.User
+import java.text.NumberFormat
+import java.util.*
 
 object Utils {
 
@@ -56,7 +58,6 @@ object Utils {
         }
     }
 
-
     //Convert from 08:00:00 to 08:00
     fun parseHours(input: String): String {
         return try {
@@ -65,6 +66,18 @@ object Utils {
         } catch (e: Exception) {
             input
         }
+    }
+
+    fun parseIntToCurrency(input: Int?): String {
+        val format = NumberFormat.getCurrencyInstance()
+        format.currency = Currency.getInstance("IDR")
+        format.minimumFractionDigits = 0
+        val resultDot = format.format(input).replace(',', '.')
+        return resultDot.replace("IDR", "Rp")
+    }
+
+    fun parseIntToWeight(qty: Int?, weightType: String): String{
+        return "$qty $weightType"
     }
 
     fun isEmailValid(input: String): Boolean{

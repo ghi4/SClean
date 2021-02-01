@@ -8,6 +8,7 @@ import com.project.laundryapp.R
 import com.project.laundryapp.core.data.remote.response.laundry.LaundryDataResponse
 import com.project.laundryapp.core.data.remote.response.laundry.LaundryOrderInput
 import com.project.laundryapp.databinding.ItemLaundryOrderBinding
+import com.project.laundryapp.utils.Utils
 
 class LaundryOrderAdapter : RecyclerView.Adapter<LaundryOrderAdapter.LaundryOrderViewHolder>(){
 
@@ -28,10 +29,10 @@ class LaundryOrderAdapter : RecyclerView.Adapter<LaundryOrderAdapter.LaundryOrde
                 val price = data.harga ?: 0
                 val qty = data.jumlah ?: 0
                 val totalPrice = price * qty
-                val orderCount = "$qty Kg x Rp $price"
+                val orderCount = "$qty Kg x ${Utils.parseIntToCurrency(price)}"
 
                 tvOrderServiceName.text = data.idLayanan
-                tvOrderTotalPrice.text = totalPrice.toString()
+                tvOrderTotalPrice.text = Utils.parseIntToCurrency(totalPrice)
                 tvOrderCount.text = orderCount
             }
         }

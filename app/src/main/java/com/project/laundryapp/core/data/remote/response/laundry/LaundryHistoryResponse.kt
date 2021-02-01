@@ -4,52 +4,52 @@ import com.google.gson.annotations.SerializedName
 
 data class LaundryHistoryResponse(
     @SerializedName("id_pesanan")
-    val idPesanan:String,
+    val idPesanan:String? = "Unknown",
 
     @SerializedName("nomor_pesanan")
-    val nomorPesanan:String,
+    val nomorPesanan:String? = "Unknown",
 
     @SerializedName("id_user")
-    val idUser:String,
+    val idUser:String? = "Unknown",
 
     @SerializedName("id_laundry")
-    val idLaundry:String,
+    val idLaundry:String? = "Unknown",
 
     @SerializedName("tgl_pesan")
-    val tglPesan:String,
+    val tglPesan:String? = "Unknown",
 
     @SerializedName("total")
-    val total:String,
+    val total:String? = "Unknown",
 
     @SerializedName("status")
-    val status:String,
+    val status:String? = "Unknown",
 
     @SerializedName("tgl_bayar")
-    val tglBayar:Any,
+    val tglBayar:String? = "Unknown",
 
     @SerializedName("tgl_status")
-    val tglStatus:Any,
+    val tglStatus:String? = "Unknown",
 
     @SerializedName("tgl_pengantaran")
-    val tglPengantaran:Any,
+    val tglPengantaran:String? = "Unknown",
 
     @SerializedName("catatan_order")
-    val catatanOrder:Any,
+    val catatanOrder:String? = "Unknown",
 
     @SerializedName("nama_laundry")
-    val namaLaundry:String,
+    val namaLaundry:String? = "Unknown",
 
     @SerializedName("alamat")
-    val alamat:String,
+    val alamat:String? = "Unknown",
 
     @SerializedName("jam_buka")
-    val jamBuka:String,
+    val jamBuka:String? = "Unknown",
 
     @SerializedName("jam_tutup")
-    val jamTutup:String,
+    val jamTutup:String? = "Unknown",
 
     @SerializedName("nomor_telepon")
-    val nomorTelepon:String,
+    val nomorTelepon:String? = "Unknown", 
 
     @SerializedName("daftar_layanan")
     val daftarLayanan: List<LaundryServiceResponse>? = null

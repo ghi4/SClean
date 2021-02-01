@@ -24,7 +24,8 @@
                 android:layout_marginEnd="5dp"
                 android:layout_weight="1"
                 android:text="@string/laundry_title"
-                android:textSize="16sp" />
+                android:textSize="16sp"
+                android:textStyle="bold" />
 
             <TextView
                 android:id="@+id/tv_history_status"

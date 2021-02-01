@@ -14,7 +14,7 @@
             android:id="@+id/iv_laundryV_image"
             android:layout_width="match_parent"
             android:layout_height="match_parent"
-            android:layout_weight="4"
+            android:layout_weight="3"
             android:adjustViewBounds="true"
             android:contentDescription="@string/laundry_image"
             android:scaleType="fitCenter"
@@ -33,14 +33,16 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:text="@string/laundry_title"
-                android:textSize="16sp" />
+                android:textSize="16sp"
+                android:textStyle="bold" />
 
             <TextView
                 android:id="@+id/tv_laundryV_address"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:maxLines="2"
-                android:text="@string/laundry_address" />
+                android:text="@string/laundry_address"
+                android:textStyle="italic" />
 
             <LinearLayout
                 android:layout_width="match_parent"
@@ -61,6 +63,7 @@
                     android:layout_weight="1"
                     android:gravity="center_vertical"
                     android:text="@string/order_count"
+                    android:visibility="invisible"
                     app:drawableLeftCompat="@drawable/ic_baseline_emoji_emotions_24" />
 
                 <TextView
@@ -70,6 +73,7 @@
                     android:layout_weight="1"
                     android:gravity="center_vertical"
                     android:text="@string/rating_value"
+                    android:visibility="invisible"
                     app:drawableLeftCompat="@drawable/ic_baseline_stars_24" />
             </LinearLayout>
         </LinearLayout>

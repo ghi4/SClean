@@ -6,6 +6,7 @@ import android.os.Bundle
 import android.util.Log
 import android.widget.Toast
 import androidx.recyclerview.widget.LinearLayoutManager
+import com.project.laundryapp.R
 import com.project.laundryapp.core.adapter.LaundryServiceAdapter
 import com.project.laundryapp.core.data.Resource
 import com.project.laundryapp.core.data.remote.response.laundry.LaundryOrderInput
@@ -14,6 +15,7 @@ import com.project.laundryapp.databinding.ActivityDetailLaundryBinding
 import com.project.laundryapp.ui.payment.PaymentActivity
 import com.project.laundryapp.utils.Const
 import com.project.laundryapp.utils.Utils
+import com.squareup.picasso.Picasso
 import org.koin.android.ext.android.inject
 
 class DetailLaundryActivity : AppCompatActivity() {
@@ -64,7 +66,9 @@ class DetailLaundryActivity : AppCompatActivity() {
                     if(serviceOrdered[i].idLayanan == serviceData.idLayanan) {
                         isNotDuplicate = false
                         serviceOrdered[i] = serviceData
-                        break
+                    }
+                    if(serviceOrdered[i].jumlah == 0){
+                        serviceOrdered.removeAt(i)
                     }
                 }
                 if (isNotDuplicate)
@@ -74,10 +78,15 @@ class DetailLaundryActivity : AppCompatActivity() {
         }
 
         binding.btDetailOrder.setOnClickListener {
-            val intent = Intent(this, PaymentActivity::class.java)
-            intent.putExtra(Const.KEY_LAUNDRY_ID, laundryId)
-            intent.putExtra(Const.KEY_SERVICE_ORDERED, serviceOrdered)
-            startActivity(intent)
+
+            if(serviceOrdered.isNotEmpty()){
+                val intent = Intent(this, PaymentActivity::class.java)
+                intent.putExtra(Const.KEY_LAUNDRY_ID, laundryId)
+                intent.putExtra(Const.KEY_SERVICE_ORDERED, serviceOrdered)
+                startActivity(intent)
+            } else {
+                Utils.showToast(this, "Tidak ada layanan terpilih.")
+            }
         }
     }
 
@@ -120,6 +129,13 @@ class DetailLaundryActivity : AppCompatActivity() {
                             tvDetailRating.text = 4.5.toString()
                             tvDetailDescription.text = dataLaundry.deskripsi
                             tvDetailOpeningHours.text = openingHours
+
+                            Picasso.get()
+                                .load(Const.URL_BASE_IMAGE + Const.URL_SPECIFIED_IMAGE + dataLaundry.photo)
+                                .placeholder(R.drawable.wide_image_placeholder)
+                                .error(R.drawable.wide_image_placeholder)
+                                .resize(Const.SQUARE_TARGET_SIZE, Const.SQUARE_TARGET_SIZE)
+                                .into(ivDetailImage)
                         }
 
                         serviceAdapter.setList(dataLaundry.laundryService as ArrayList<LaundryServiceResponse>)

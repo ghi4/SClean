@@ -7,6 +7,7 @@ import androidx.recyclerview.widget.RecyclerView
 import com.project.laundryapp.R
 import com.project.laundryapp.core.data.remote.response.laundry.LaundryServiceResponse
 import com.project.laundryapp.databinding.ItemLaundryServiceBinding
+import com.project.laundryapp.utils.Utils
 
 class LaundryServiceAdapter : RecyclerView.Adapter<LaundryServiceAdapter.LaundryServiceViewHolder>() {
 
@@ -35,11 +36,10 @@ class LaundryServiceAdapter : RecyclerView.Adapter<LaundryServiceAdapter.Laundry
         fun bind(data: LaundryServiceResponse) {
             with(binding) {
                 val estimasi = "(Estimasi ${data.estimasi} hari)"
-                val price = "Rp. ${data.harga}"
                 var count = 0
                 tvServiceName.text = data.namaLayanan
                 tvServiceEstimation.text = estimasi
-                tvServicePrice.text = price
+                tvServicePrice.text = Utils.parseIntToCurrency(data.harga)
                 tvServiceCount.text = data.qty.toString()
 
                 btServiceAdd.setOnClickListener {

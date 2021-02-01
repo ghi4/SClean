@@ -18,8 +18,6 @@ class PaymentActivity : AppCompatActivity() {
     private val viewModel: PaymentViewModel by inject()
     private lateinit var binding: ActivityPaymentBinding
     private lateinit var orderAdapter: LaundryOrderAdapter
-    private val estimationDays = 5
-    private val shipmentPrice = 10000
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -28,7 +26,10 @@ class PaymentActivity : AppCompatActivity() {
         setContentView(binding.root)
 
         setupUI()
+        getData()
+    }
 
+    private fun getData() {
         viewModel.orderResponse.observe(this, {data ->
             Log.d("DETAIL LAUNDRY TAG", """
                 BASE:
@@ -71,35 +72,37 @@ class PaymentActivity : AppCompatActivity() {
         val user = Utils.getSharedPref(this)
 
         orderAdapter = LaundryOrderAdapter()
-        if (orderedService != null) {
-            orderAdapter.setList(orderedService)
-        }
+        orderAdapter.setList(orderedService as ArrayList<LaundryOrderInput>)
 
         with(binding){
-            var totalPrice = 0
+            val totalPrice: Int
             var subTotalPrice = 0
 
-            orderedService?.map {
+            //Counting totalPrice
+            orderedService.map {
                 val price = it.harga ?: 0
                 val qty = it.jumlah ?: 0
                 subTotalPrice += price * qty
             }
-            totalPrice = subTotalPrice + shipmentPrice
+            totalPrice = subTotalPrice + Const.SHIPMENT_PRICE
 
+            //Initializing value
             tvUserAddress.text = user.alamat
+            tvPaymentSubTotal.text = Utils.parseIntToCurrency(subTotalPrice)
+            tvPaymentShipment.text = Utils.parseIntToCurrency(Const.SHIPMENT_PRICE)
+            tvPaymentTotal.text = Utils.parseIntToCurrency(totalPrice)
 
-            tvPaymentSubTotal.text = "Rp $subTotalPrice"
-            tvPaymentShipment.text = "Rp $shipmentPrice"
-            tvPaymentTotal.text = "Rp $totalPrice"
-
+            //RecyclerView
             rvPaymentOrderList.layoutManager = LinearLayoutManager(this@PaymentActivity)
             rvPaymentOrderList.hasFixedSize()
             rvPaymentOrderList.adapter = orderAdapter
 
+            //Change Address
             tvChangeAddress.setOnClickListener {
 
             }
 
+            //Payment Confirmation
             btPaymentConfirmation.setOnClickListener {
                 val data = LaundryServiceResponse(
                     idLayanan = user.id,

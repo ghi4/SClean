@@ -23,10 +23,10 @@
             <ImageView
                 android:id="@+id/iv_detail_image"
                 android:layout_width="0dp"
-                android:layout_height="wrap_content"
+                android:layout_height="300dp"
                 android:adjustViewBounds="true"
                 android:contentDescription="@string/laundry_image"
-                android:scaleType="fitCenter"
+                android:scaleType="centerCrop"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintHorizontal_bias="0.5"
                 app:layout_constraintStart_toStartOf="parent"
