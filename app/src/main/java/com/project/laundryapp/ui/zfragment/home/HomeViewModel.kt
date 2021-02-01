@@ -1,9 +1,9 @@
-package com.project.laundryapp.ui.ui.laundry
+package com.project.laundryapp.ui.zfragment.home
 
 import androidx.lifecycle.*
 import com.project.laundryapp.core.data.LaundryRepository
 
-class LaundryViewModel(private val laundryRepository: LaundryRepository) : ViewModel() {
+class HomeViewModel(private val laundryRepository: LaundryRepository) : ViewModel() {
 
     private var triggerCall = MutableLiveData<Unit>()
 

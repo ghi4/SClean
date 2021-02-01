@@ -1,5 +1,6 @@
-package com.project.laundryapp.ui.ui.laundry
+package com.project.laundryapp.ui.zfragment.find
 
+import android.content.Intent
 import android.os.Bundle
 import android.util.Log
 import android.view.LayoutInflater
@@ -7,17 +8,18 @@ import android.view.View
 import android.view.ViewGroup
 import androidx.fragment.app.Fragment
 import androidx.recyclerview.widget.LinearLayoutManager
-import com.project.laundryapp.R
 import com.project.laundryapp.core.adapter.LaundrySideAdapter
 import com.project.laundryapp.core.data.Resource
-import com.project.laundryapp.core.data.local.Laundry
-import com.project.laundryapp.core.data.remote.response.LaundryDataResponse
+import com.project.laundryapp.core.data.remote.response.laundry.LaundryDataResponse
 import com.project.laundryapp.databinding.FragmentLaundryBinding
+import com.project.laundryapp.ui.detail.laundry.DetailLaundryActivity
+import com.project.laundryapp.utils.Const
+import com.project.laundryapp.utils.Utils
 import org.koin.android.ext.android.inject
 
-class LaundryFragment : Fragment() {
+class FindFragment : Fragment() {
 
-    private val viewModel: LaundryViewModel by inject()
+    private val viewModel: FindViewModel by inject()
     private lateinit var binding: FragmentLaundryBinding
     private lateinit var laundrySideAdapter: LaundrySideAdapter
 
@@ -32,33 +34,47 @@ class LaundryFragment : Fragment() {
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
+
+        viewModel.triggerCall()
         setupUI()
         getData()
     }
 
     private fun getData() {
-        viewModel.triggerCall()
         viewModel.laundryData.observe(viewLifecycleOwner, {data ->
-            Log.d("HHWZ", "" + data.toString())
+            Log.d("FIND TAG", """
+                    BASE:
+                    $data
+                    
+                    MESSAGE:
+                    ${data.message}
+                    
+                    MESSAGE RESPONSE:
+                    ${data.data?.message}
+                                        
+                    MESSAGE ERROR
+                    ${data.data?.error}
+                    
+                    RESOURCE:
+                    ${data.data}
+                    
+                    DATA LIST:
+                    ${data.data?.data}
+                """.trimIndent())
             when(data) {
                 is Resource.Loading -> {
-                    Log.d("HHWZ", "ON LOADING")
+                    Utils.showToast(requireContext(), "Memuat data.")
                 }
 
                 is Resource.Success -> {
                     val dataStatus = data.data
                     val dataLaundry = dataStatus?.data
 
-                    Log.d("HHWZ", "AAA: $data")
-                    Log.d("HHWZ", "BBB: " + dataStatus.toString())
-                    Log.d("HHWZ", "CCC: " + dataLaundry.toString())
-
                     laundrySideAdapter.setList(dataLaundry as ArrayList<LaundryDataResponse>)
-
                 }
 
                 is Resource.Error -> {
-                    Log.d("HHWZ", data.message.toString())
+                    Utils.showToast(requireContext(), data.message.toString())
                 }
             }
         })
@@ -68,27 +84,17 @@ class LaundryFragment : Fragment() {
     private fun setupUI() {
         laundrySideAdapter = LaundrySideAdapter()
 
-        val dummy = ArrayList<Laundry>()
-        for (i in 1..10) {
-            dummy.add(
-                Laundry(
-                "AAA",
-                "TOKO A",
-                "62887",
-                "08:00",
-                "20:00,",
-                "Jl Raya di Jakarta",
-                "Lorem ipsum",
-                "abc"
-                )
-            )
-        }
-
         with(binding) {
             rvLaundry.layoutManager = LinearLayoutManager(context)
             rvLaundry.hasFixedSize()
             rvLaundry.adapter = laundrySideAdapter
             rvLaundry.isNestedScrollingEnabled = false
+        }
+
+        laundrySideAdapter.onItemClick = {selectedData ->
+            val intent = Intent(requireContext(), DetailLaundryActivity::class.java)
+            intent.putExtra(Const.KEY_LAUNDRY_ID, selectedData.idLaundry)
+            startActivity(intent)
         }
     }
 }

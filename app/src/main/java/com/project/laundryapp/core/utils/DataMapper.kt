@@ -1,10 +1,7 @@
 package com.project.laundryapp.core.utils
 
-import com.project.laundryapp.core.data.local.Laundry
 import com.project.laundryapp.core.data.local.User
-import com.project.laundryapp.core.data.remote.response.UserDataResponse
-import com.project.laundryapp.core.data.remote.response.LaundryDataResponse
-import com.project.laundryapp.core.data.remote.response.UserResponse
+import com.project.laundryapp.core.data.remote.response.user.UserDataResponse
 
 object DataMapper {
     fun remoteUserToLocal(input: UserDataResponse?): User = User(

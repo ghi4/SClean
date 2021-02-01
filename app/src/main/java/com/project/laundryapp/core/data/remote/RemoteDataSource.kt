@@ -1,13 +1,13 @@
 package com.project.laundryapp.core.data.remote
 
 import android.util.Log
+import com.google.gson.Gson
 import com.project.laundryapp.core.data.local.User
-import com.project.laundryapp.core.data.remote.response.LaundryServiceInput
-import com.project.laundryapp.core.data.remote.response.LaundryStatusDetail
-import com.project.laundryapp.core.data.remote.response.LaundryStatusResponse
-import com.project.laundryapp.core.data.remote.response.UserStatusResponse
+import com.project.laundryapp.core.data.remote.response.laundry.*
+import com.project.laundryapp.core.data.remote.response.user.UserStatusResponse
 import com.project.laundryapp.core.data.remote.retrofit.RetrofitInterface
 import com.project.laundryapp.core.utils.ResponseMessage
+import com.project.laundryapp.utils.Utils
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.flow
@@ -30,16 +30,11 @@ class RemoteDataSource(private val retrofitService: RetrofitInterface) {
                 Log.d("RemoteData", "" + response.error)
                 Log.d("RemoteData", "" + response.message)
 
-                if(ResponseMessage.isSuccess(response.message)) {
-                    emit(ApiResponse.Success(response))
-                } else {
-                    emit(ApiResponse.Error(response.message))
-                }
+                emit(ApiResponse.Success(response))
 
             } catch (e: Exception) {
-                Log.d("RemoteData", "" + e.toString())
-                Log.d("RemoteData", "" + e.toString())
-                emit(ApiResponse.Error(noInternet))
+                Log.d("RemoteData", "GGWP" + e.toString())
+                emit(ApiResponse.Error(Utils.parseError(e.toString())))
             }
         }.flowOn(Dispatchers.IO)
     }
@@ -91,7 +86,7 @@ class RemoteDataSource(private val retrofitService: RetrofitInterface) {
         }.flowOn(Dispatchers.IO)
     }
 
-    fun getLaundryList(): Flow<ApiResponse<LaundryStatusResponse>> {
+    fun getLaundryList(): Flow<ApiResponse<LaundryStatusListResponse>> {
         return flow {
             try {
                 val response = retrofitService.getLaundryList()
@@ -105,7 +100,7 @@ class RemoteDataSource(private val retrofitService: RetrofitInterface) {
         }.flowOn(Dispatchers.IO)
     }
 
-    fun getLaundryDetail(laundryId: String): Flow<ApiResponse<LaundryStatusDetail>> {
+    fun getLaundryDetail(laundryId: String): Flow<ApiResponse<LaundryStatusResponse>> {
         return flow {
             try {
                 val response = retrofitService.getLaundryDetail(laundryId)
@@ -119,13 +114,58 @@ class RemoteDataSource(private val retrofitService: RetrofitInterface) {
     fun postOrder(
         idLaundry: String,
         idUser: String,
-        serviceList: LaundryServiceInput
-    ): Flow<ApiResponse<LaundryStatusResponse>> {
+        serviceList: ArrayList<LaundryOrderInput>
+    ): Flow<ApiResponse<LaundryStatusListResponse>> {
+        Log.d("PAYMENT", """
+            ===========================================
+            $idLaundry
+            $idUser
+            ${serviceList.toString()}
+            
+            ==========================================
+            ${Gson().toJson(serviceList).toString()}
+            ===========================================
+        """.trimIndent())
         return flow {
             try {
-                val response = retrofitService.postOrder(idLaundry, idUser, serviceList)
+                val response = retrofitService.postOrder(idLaundry, serviceList.toList(), idUser)
                 emit(ApiResponse.Success(response))
             } catch (e: Exception) {
+                Log.d("PAYMENT", e.toString())
+                emit(ApiResponse.Error(noInternet))
+            }
+        }.flowOn(Dispatchers.IO)
+    }
+
+    fun getLaundryHistoryByIdUser(idUser: String): Flow<ApiResponse<LaundryHistoryStatusListResponse>> {
+        return flow {
+            try {
+                val response = retrofitService.getLaundryHistoryByUserId(idUser)
+                Log.d("HISTORY LAUNDRY", """
+                    ${response.toString()}
+                """.trimIndent())
+                emit(ApiResponse.Success(response))
+            } catch (e: Exception) {
+                Log.d("HISTORY LAUNDRY", """
+                    ${e.toString()}
+                """.trimIndent())
+                emit(ApiResponse.Error(noInternet))
+            }
+        }.flowOn(Dispatchers.IO)
+    }
+
+    fun getLaundryHistoryDetailByHistoryId(idHistory: String): Flow<ApiResponse<LaundryHistoryStatusResponse>> {
+        return flow {
+            try {
+                val response = retrofitService.getLaundryHistoryDetailByHistoryId(idHistory)
+                Log.d("HISTORY LAUNDRY", """
+                    ${response.toString()}
+                """.trimIndent())
+                emit(ApiResponse.Success(response))
+            } catch (e: Exception) {
+                Log.d("HISTORY LAUNDRY", """
+                    ${e.toString()}
+                """.trimIndent())
                 emit(ApiResponse.Error(noInternet))
             }
         }.flowOn(Dispatchers.IO)

@@ -1,17 +1,19 @@
 package com.project.laundryapp.ui.detail.laundry
 
+import android.content.Intent
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.util.Log
+import android.widget.Toast
 import androidx.recyclerview.widget.LinearLayoutManager
-import com.project.laundryapp.R
 import com.project.laundryapp.core.adapter.LaundryServiceAdapter
 import com.project.laundryapp.core.data.Resource
-import com.project.laundryapp.core.data.local.LaundryService
-import com.project.laundryapp.core.data.remote.response.LaundryDataResponse
-import com.project.laundryapp.core.data.remote.response.LaundryServiceInput
-import com.project.laundryapp.core.data.remote.response.LaundryServiceResponse
+import com.project.laundryapp.core.data.remote.response.laundry.LaundryOrderInput
+import com.project.laundryapp.core.data.remote.response.laundry.LaundryServiceResponse
 import com.project.laundryapp.databinding.ActivityDetailLaundryBinding
+import com.project.laundryapp.ui.payment.PaymentActivity
+import com.project.laundryapp.utils.Const
+import com.project.laundryapp.utils.Utils
 import org.koin.android.ext.android.inject
 
 class DetailLaundryActivity : AppCompatActivity() {
@@ -20,7 +22,7 @@ class DetailLaundryActivity : AppCompatActivity() {
     private lateinit var binding: ActivityDetailLaundryBinding
     private lateinit var serviceAdapter: LaundryServiceAdapter
 
-    private var serviceSelected = ArrayList<LaundryServiceInput>()
+    private var serviceOrdered = ArrayList<LaundryOrderInput>()
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -28,17 +30,15 @@ class DetailLaundryActivity : AppCompatActivity() {
         binding = ActivityDetailLaundryBinding.inflate(layoutInflater)
         setContentView(binding.root)
 
-        val laundryId = intent.getStringExtra("KEY_INI")
-        Log.d("HHWZ", "DETAIL ID: $laundryId")
+        val laundryId = intent.getStringExtra(Const.KEY_LAUNDRY_ID)
         if (laundryId != null) {
             viewModel.triggerCall(laundryId)
+            setupUI(laundryId)
+            getData()
         }
-
-        setupUI()
-        getData()
     }
 
-    private fun setupUI() {
+    private fun setupUI(laundryId: String) {
         serviceAdapter = LaundryServiceAdapter()
 
         with(binding) {
@@ -48,52 +48,68 @@ class DetailLaundryActivity : AppCompatActivity() {
             rvDetailServiceList.isNestedScrollingEnabled = false
         }
 
-        serviceAdapter.onItemClick = {onChangedService ->
-            val serviceData = LaundryServiceInput(
-                onChangedService.namaLayanan.toString(),
-                onChangedService.qty,
-                onChangedService.harga
+        serviceAdapter.onItemClick = {data ->
+            val serviceData = LaundryOrderInput(
+                data.namaLayanan.toString(),
+                data.qty,
+                data.harga
             )
 
             //Prevent duplicate data
-            if(serviceSelected.isEmpty())
-                serviceSelected.add(serviceData)
+            if(serviceOrdered.isEmpty())
+                serviceOrdered.add(serviceData)
             else {
                 var isNotDuplicate = true
-                for(i in 0 until serviceSelected.size){
-                    if(serviceSelected[i].idLayanan == serviceData.idLayanan) {
+                for(i in 0 until serviceOrdered.size){
+                    if(serviceOrdered[i].idLayanan == serviceData.idLayanan) {
                         isNotDuplicate = false
-                        serviceSelected[i] = serviceData
+                        serviceOrdered[i] = serviceData
                         break
                     }
                 }
                 if (isNotDuplicate)
-                    serviceSelected.add(serviceData)
+                    serviceOrdered.add(serviceData)
             }
 
-            Log.d("MYGGWP", "RAW: " + onChangedService.toString())
-            Log.d("MYGGWP", "LIST: " + serviceSelected.toString())
         }
 
         binding.btDetailOrder.setOnClickListener {
+            val intent = Intent(this, PaymentActivity::class.java)
+            intent.putExtra(Const.KEY_LAUNDRY_ID, laundryId)
+            intent.putExtra(Const.KEY_SERVICE_ORDERED, serviceOrdered)
+            startActivity(intent)
         }
     }
 
     private fun getData() {
         viewModel.laundryDetail.observe(this, {data ->
-            Log.d("HHWZ", "" + data.toString())
+            Log.d("DETAIL LAUNDRY TAG", """
+                BASE:
+                $data
+                
+                RESOURCE:
+                ${data.data}
+                
+                MESSAGE:
+                ${data.message}
+                
+                MESSAGE RESPONSE:
+                ${data.data?.message}
+                                
+                MESSAGE ERROR:
+                ${data.data?.error}
+                
+                DATA:
+                ${data.data?.data}
+            """.trimIndent())
             when(data) {
                 is Resource.Loading -> {
-                    Log.d("HHWZ", "ON LOADING")
+                    Utils.showToast(this, "Memuat data.")
                 }
 
                 is Resource.Success -> {
                     val dataStatus = data.data
                     val dataLaundry = dataStatus?.data
-
-                    Log.d("HHWZ", "AAA: $data")
-                    Log.d("HHWZ", "BBB: " + dataStatus.toString())
-                    Log.d("HHWZ", "CCC: " + dataLaundry.toString())
 
                     if(dataLaundry != null){
                         with(binding){
@@ -108,10 +124,11 @@ class DetailLaundryActivity : AppCompatActivity() {
 
                         serviceAdapter.setList(dataLaundry.laundryService as ArrayList<LaundryServiceResponse>)
                     }
+
                 }
 
                 is Resource.Error -> {
-                    Log.d("HHWZ", data.message.toString() )
+                    Utils.showToast(this, data.message.toString())
                 }
             }
         })

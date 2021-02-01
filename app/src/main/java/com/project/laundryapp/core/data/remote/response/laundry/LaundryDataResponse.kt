@@ -1,4 +1,4 @@
-package com.project.laundryapp.core.data.remote.response
+package com.project.laundryapp.core.data.remote.response.laundry
 
 import com.google.gson.annotations.SerializedName
 

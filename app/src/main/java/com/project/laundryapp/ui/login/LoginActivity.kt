@@ -1,20 +1,16 @@
 package com.project.laundryapp.ui.login
 
-import android.content.Context
 import android.content.Intent
 import android.os.Bundle
 import android.util.Log
 import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
-import androidx.core.widget.doOnTextChanged
 import com.project.laundryapp.R
 import com.project.laundryapp.core.data.Resource
 import com.project.laundryapp.core.data.local.User
 import com.project.laundryapp.databinding.ActivityLoginBinding
 import com.project.laundryapp.ui.MainActivity
-import com.project.laundryapp.ui.address.AddressActivity
 import com.project.laundryapp.ui.register.RegisterActivity
-import com.project.laundryapp.utils.Const
 import com.project.laundryapp.utils.Utils
 import org.koin.android.ext.android.inject
 
@@ -31,14 +27,17 @@ class LoginActivity : AppCompatActivity() {
         setContentView(binding.root)
 
         setupUI()
-        observeUserLogin()
+        getData()
     }
 
     private fun setupUI() {
 
         //Button Login
         binding.btLogin.setOnClickListener {
+            //Clean warning from EditText
             resetWarning()
+
+            //Check input validity
             if(isInputValid()) {
                 val user = User(
                         email = binding.etEmail.text.toString(),
@@ -46,7 +45,7 @@ class LoginActivity : AppCompatActivity() {
                 )
                 viewModel.loginUser(user)
             } else {
-                Toast.makeText(this, "Periksa kembali userData Anda.", Toast.LENGTH_SHORT).show()
+                Toast.makeText(this, "Periksa kembali data Anda.", Toast.LENGTH_SHORT).show()
             }
         }
 
@@ -56,37 +55,43 @@ class LoginActivity : AppCompatActivity() {
         }
     }
 
-    private fun observeUserLogin() {
+    private fun getData() {
         viewModel.userData.observe(this, { dataPacket ->
+
+            Log.d("LOGIN TAG", """
+                BASE:
+                $dataPacket
+                
+                MESSAGE:
+                ${dataPacket.message}
+                
+                DATA:
+                ${dataPacket.data}
+                
+            """.trimIndent())
+
             when(dataPacket) {
                 is Resource.Loading -> {
-                    Log.d("USER STATUS", "Loading")
+                    Utils.showToast(this, "Mohon tunggu.")
                 }
 
                 is Resource.Success -> {
                     val user = dataPacket.data
 
-                    Log.d("USER STATUS", "" + dataPacket.message)
-
                     if(user != null) {
-                        Log.d("Fragment", """
-                            LOGIN ACTIVITY
-                                ${user.id},
-                                ${user.email},
-                                ${user.namaLengkap},
-                                ${user.photo}
-                            """.trimIndent())
-
-                        Log.d("USER STATUS", "" + user.id)
-                        Log.d("USER STATUS", "" + user.password)
-
+                        //Save data to shared preference
                         Utils.putSharedPref(this, user)
-                        startActivity(Intent(this, MainActivity::class.java))
+
+                        Utils.showToast(this, "Selamat datang kembali!")
+
+                        //Intent to MainActivity
+                        val intent = Intent(this, MainActivity::class.java)
+                        startActivity(intent)
                     }
                 }
 
                 is Resource.Error -> {
-                    Log.d("USER STATUS", "" + dataPacket.message)
+                    Utils.showToast(this, dataPacket.message.toString())
                 }
             }
         })

@@ -9,9 +9,9 @@ import com.project.laundryapp.core.data.local.User
 
 class AddressViewModel(private val laundryRepository: LaundryRepository): ViewModel() {
 
-    private val addressUser = MutableLiveData<User>()
+    private val user = MutableLiveData<User>()
     
-    var userData = addressUser.switchMap {
+    var userData = user.switchMap {
         laundryRepository.postAddress(
             User(
                 alamat = it.alamat,
@@ -25,7 +25,7 @@ class AddressViewModel(private val laundryRepository: LaundryRepository): ViewMo
         ).asLiveData()
     }
 
-    fun addressUser(user: User) {
-        addressUser.postValue(user)
+    fun triggerPost(user: User) {
+        this.user.postValue(user)
     }
 }

@@ -1,4 +1,4 @@
-package com.project.laundryapp.ui.ui.home
+package com.project.laundryapp.ui.zfragment.home
 
 import android.content.Intent
 import android.os.Bundle
@@ -8,15 +8,15 @@ import android.view.View
 import android.view.ViewGroup
 import androidx.fragment.app.Fragment
 import androidx.recyclerview.widget.LinearLayoutManager
-import com.project.laundryapp.R
 import com.project.laundryapp.core.adapter.BannerAdapter
 import com.project.laundryapp.core.adapter.LaundryTopAdapter
 import com.project.laundryapp.core.data.Resource
 import com.project.laundryapp.core.data.local.Laundry
-import com.project.laundryapp.core.data.remote.ApiResponse
-import com.project.laundryapp.core.data.remote.response.LaundryDataResponse
+import com.project.laundryapp.core.data.remote.response.laundry.LaundryDataResponse
 import com.project.laundryapp.databinding.FragmentHomeBinding
 import com.project.laundryapp.ui.detail.laundry.DetailLaundryActivity
+import com.project.laundryapp.utils.Const
+import com.project.laundryapp.utils.Utils
 import org.koin.android.ext.android.inject
 
 class HomeFragment : Fragment() {
@@ -37,6 +37,7 @@ class HomeFragment : Fragment() {
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
+
         viewModel.triggerCall()
         setupUI()
         getData()
@@ -44,35 +45,71 @@ class HomeFragment : Fragment() {
 
     private fun getData() {
         viewModel.laundryData.observe(viewLifecycleOwner, {data ->
-            Log.d("HHWZ", "" + data.toString())
+            Log.d("HOME TAG", """
+                        BASE:
+                        $data
+                        
+                        MESSAGE:
+                        ${data.message}
+                        
+                        MESSAGE RESPONSE:
+                        ${data.data?.message}
+                        
+                        MESSAGE ERROR:
+                        ${data.data?.error}
+                        
+                        DATA:
+                        ${data.data?.data}
+                        
+                        DATA SIZE:
+                        ${data.data?.data?.size}
+                    """.trimIndent())
             when(data) {
                 is Resource.Loading -> {
-                    Log.d("HHWZ", "ON LOADING")
+                    Utils.showToast(requireContext(), "Memuat data.")
                 }
 
                 is Resource.Success -> {
                     val dataStatus = data.data
                     val dataLaundry = dataStatus?.data
 
-                    Log.d("HHWZ", "AAA: $data")
-                    Log.d("HHWZ", "BBB: " + dataStatus.toString())
-                    Log.d("HHWZ", "CCC: " + dataLaundry.toString())
-
                     laundryTopAdapter.setList(dataLaundry as ArrayList<LaundryDataResponse>)
-
                 }
 
                 is Resource.Error -> {
-                    Log.d("HHWZ", data.message.toString() )
+                    Utils.showToast(requireContext(), data.message.toString())
                 }
             }
         })
     }
 
     private fun setupUI() {
+        //Adapter
         bannerAdapter = BannerAdapter()
         laundryTopAdapter = LaundryTopAdapter()
 
+        //Set data banner
+        bannerAdapter.setList(dummy())
+
+        //Binding
+        with(binding) {
+            rvHomeRecommendation.layoutManager = LinearLayoutManager(context)
+            rvHomeRecommendation.hasFixedSize()
+            rvHomeRecommendation.adapter = laundryTopAdapter
+            rvHomeRecommendation.isNestedScrollingEnabled = false
+
+            vpHomeBanner.adapter = bannerAdapter
+        }
+
+        //When list data clicked
+        laundryTopAdapter.onItemClick = {selectedData ->
+            val intent = Intent(requireContext(), DetailLaundryActivity::class.java)
+            intent.putExtra(Const.KEY_LAUNDRY_ID, selectedData.idLaundry)
+            startActivity(intent)
+        }
+    }
+
+    private fun dummy(): ArrayList<Laundry> {
         val dummy = ArrayList<Laundry>()
         for (i in 1..10) {
             dummy.add(Laundry(
@@ -87,22 +124,6 @@ class HomeFragment : Fragment() {
             ))
         }
 
-        bannerAdapter.setList(dummy)
-
-        laundryTopAdapter.onItemClick = {selectedData ->
-            val intent = Intent(requireContext(), DetailLaundryActivity::class.java)
-            Log.d("HHWZ", "HOME: ${selectedData.idLaundry}")
-            intent.putExtra("KEY_INI", selectedData.idLaundry)
-            startActivity(intent)
-        }
-
-        with(binding) {
-            rvHomeRecommendation.layoutManager = LinearLayoutManager(context)
-            rvHomeRecommendation.hasFixedSize()
-            rvHomeRecommendation.adapter = laundryTopAdapter
-            rvHomeRecommendation.isNestedScrollingEnabled = false
-
-            vpHomeBanner.adapter = bannerAdapter
-        }
+        return dummy
     }
 }

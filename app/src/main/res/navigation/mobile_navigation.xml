@@ -7,25 +7,25 @@
 
     <fragment
         android:id="@+id/navigation_home"
-        android:name="com.project.laundryapp.ui.ui.home.HomeFragment"
+        android:name="com.project.laundryapp.ui.zfragment.home.HomeFragment"
         android:label="@string/beranda"
         tools:layout="@layout/fragment_home" />
 
     <fragment
         android:id="@+id/navigation_laundry"
-        android:name="com.project.laundryapp.ui.ui.laundry.LaundryFragment"
+        android:name="com.project.laundryapp.ui.zfragment.find.FindFragment"
         android:label="@string/temukan"
         tools:layout="@layout/fragment_laundry" />
 
     <fragment
         android:id="@+id/navigation_history"
-        android:name="com.project.laundryapp.ui.ui.history.HistoryFragment"
+        android:name="com.project.laundryapp.ui.zfragment.history.HistoryFragment"
         android:label="@string/riwayat"
         tools:layout="@layout/fragment_history" />
 
     <fragment
         android:id="@+id/navigation_profile"
-        android:name="com.project.laundryapp.ui.ui.profile.ProfileFragment"
+        android:name="com.project.laundryapp.ui.zfragment.profile.ProfileFragment"
         android:label="@string/akun"
         tools:layout="@layout/fragment_profile" />
 </navigation>

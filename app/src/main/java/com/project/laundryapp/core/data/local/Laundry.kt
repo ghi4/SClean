@@ -15,7 +15,5 @@ data class Laundry(
 
     var deskripsi: String? = "Unknown",
 
-    var foto: String? = "Unknown",
-
-    var daftarLayanan: List<LaundryService>? = emptyList()
+    var foto: String? = "Unknown"
 )

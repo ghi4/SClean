@@ -3,11 +3,15 @@ package com.project.laundryapp.utils
 import android.app.Activity
 import android.content.Context
 import android.util.Log
+import android.widget.Toast
 import com.google.gson.Gson
 import com.project.laundryapp.core.data.local.User
-import java.util.*
 
 object Utils {
+
+    fun showToast(context: Context, message: String) {
+        Toast.makeText(context, message, Toast.LENGTH_SHORT).show()
+    }
 
     fun putSharedPref(activity: Activity, user: User){
         Log.d("Fragment", """
@@ -36,7 +40,31 @@ object Utils {
         } else {
             User()
         }
+    }
 
+    fun parseError(input: String): String {
+        return when {
+            input.contains("402") -> {
+                "Periksa kembali email dan password."
+            }
+            input.contains("Unable to resolve host") -> {
+                "Masalah koneksi"
+            }
+            else -> {
+                input
+            }
+        }
+    }
+
+
+    //Convert from 08:00:00 to 08:00
+    fun parseHours(input: String): String {
+        return try {
+            val splitResult = input.split(":")
+            splitResult[0] + ":" + splitResult[1]
+        } catch (e: Exception) {
+            input
+        }
     }
 
     fun isEmailValid(input: String): Boolean{

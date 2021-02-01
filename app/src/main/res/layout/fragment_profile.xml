@@ -5,7 +5,7 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:fillViewport="true"
-    tools:context=".ui.ui.profile.ProfileFragment">
+    tools:context=".ui.zfragment.profile.ProfileFragment">
 
     <androidx.constraintlayout.widget.ConstraintLayout
         android:layout_width="match_parent"
@@ -22,14 +22,14 @@
             android:contentDescription="@string/profile_photo"
             app:civ_border_color="@color/black_light"
             app:civ_border_width="2dp"
-            app:layout_constraintBottom_toTopOf="@+id/textView20"
+            app:layout_constraintBottom_toTopOf="@+id/tv_profile_fullName"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toTopOf="parent"
             tools:src="@tools:sample/avatars" />
 
         <TextView
-            android:id="@+id/textView20"
+            android:id="@+id/tv_profile_fullName"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginTop="8dp"
@@ -49,7 +49,7 @@
             android:orientation="vertical"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/textView20">
+            app:layout_constraintTop_toBottomOf="@+id/tv_profile_fullName">
 
             <TextView
                 android:id="@+id/textView21"
@@ -62,6 +62,7 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:autofillHints="@string/email"
+                android:clickable="false"
                 android:ems="10"
                 android:hint="@string/masukkan_email"
                 android:inputType="textEmailAddress" />

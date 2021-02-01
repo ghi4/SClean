@@ -5,7 +5,6 @@ import android.os.Bundle
 import android.util.Log
 import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
-import androidx.core.widget.doOnTextChanged
 import com.project.laundryapp.R
 import com.project.laundryapp.core.data.Resource
 import com.project.laundryapp.core.data.local.User
@@ -28,7 +27,7 @@ class RegisterActivity : AppCompatActivity() {
         setContentView(binding.root)
 
         setupUI()
-        observeUserRegister()
+        getData()
 
     }
 
@@ -108,31 +107,42 @@ class RegisterActivity : AppCompatActivity() {
         }
     }
 
-    private fun observeUserRegister() {
+    private fun getData() {
         viewModel.userData.observe(this, { dataPacket ->
+            Log.d("REGISTER TAG", """
+                BASE:
+                $dataPacket
+                
+                MESSAGE:
+                ${dataPacket.message}
+                
+                DATA:
+                ${dataPacket.data}
+                
+            """.trimIndent())
+
             when(dataPacket) {
                 is Resource.Loading -> {
-                    Log.d("USER STATUS", "Loading")
+                    Utils.showToast(this, "Mohon tunggu.")
                 }
 
                 is Resource.Success -> {
                     val user = dataPacket.data
 
-                    Log.d("USER STATUS", "" + dataPacket.message)
+                    if(user != null && !user.id.isNullOrEmpty()) {
+                        //Save data to shared preference
+                        Utils.putSharedPref(this, user)
 
-                    if(user != null) {
-                        if (!user.id.isNullOrEmpty()) {
-                            Log.d("USER STATUS", "" + user.id)
-                            Log.d("USER STATUS", "" + user.password)
-                            val intent = Intent(this, AddressActivity::class.java)
-                            intent.putExtra("KEY_ID", user.id)
-                            startActivity(intent)
-                        }
+                        Utils.showToast(this, "Registrasi sukses!")
+
+                        //Intent to AddressActivity
+                        val intent = Intent(this, AddressActivity::class.java)
+                        startActivity(intent)
                     }
                 }
 
                 is Resource.Error -> {
-                    Log.d("USER STATUS", "" + dataPacket.message)
+                    Utils.showToast(this, dataPacket.message.toString())
                 }
             }
         })

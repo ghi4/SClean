@@ -5,8 +5,7 @@ import android.view.View
 import android.view.ViewGroup
 import androidx.recyclerview.widget.RecyclerView
 import com.project.laundryapp.R
-import com.project.laundryapp.core.data.remote.response.LaundryServiceResponse
-import com.project.laundryapp.databinding.ItemLaundryOrderBinding
+import com.project.laundryapp.core.data.remote.response.laundry.LaundryServiceResponse
 import com.project.laundryapp.databinding.ItemLaundryServiceBinding
 
 class LaundryServiceAdapter : RecyclerView.Adapter<LaundryServiceAdapter.LaundryServiceViewHolder>() {

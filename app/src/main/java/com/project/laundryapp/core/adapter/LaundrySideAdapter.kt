@@ -5,8 +5,11 @@ import android.view.View
 import android.view.ViewGroup
 import androidx.recyclerview.widget.RecyclerView
 import com.project.laundryapp.R
-import com.project.laundryapp.core.data.remote.response.LaundryDataResponse
+import com.project.laundryapp.core.data.remote.response.laundry.LaundryDataResponse
 import com.project.laundryapp.databinding.ItemLaundryVerticalBinding
+import com.project.laundryapp.utils.Const
+import com.project.laundryapp.utils.Utils
+import com.squareup.picasso.Picasso
 
 class LaundrySideAdapter : RecyclerView.Adapter<LaundrySideAdapter.LaundrySideViewHolder>() {
 
@@ -34,12 +37,21 @@ class LaundrySideAdapter : RecyclerView.Adapter<LaundrySideAdapter.LaundrySideVi
         private val binding = ItemLaundryVerticalBinding.bind(itemView)
         fun bind(data: LaundryDataResponse) {
             with(binding) {
-                val openingHours = "Buka: ${data.jamBuka} - ${data.jamTutup}"
+                val open = Utils.parseHours(data.jamBuka.toString())
+                val close = Utils.parseHours(data.jamTutup.toString())
+                val openingHours = "Buka: $open - $close"
                 tvLaundryVTitle.text = data.namaLaundry
                 tvLaundryVAddress.text = data.alamat
                 tvLaundryVOpeningHours.text = openingHours
                 tvLaundryVOrderCount.text = 100.toString()
                 tvLaundryVRating.text = 4.5.toString()
+
+                Picasso.get()
+                    .load(Const.URL_BASE_IMAGE + data.photo)
+                    .placeholder(R.drawable.square_placeholder)
+                    .error(R.drawable.square_placeholder)
+                    .resize(Const.SQUARE_TARGET_SIZE, Const.SQUARE_TARGET_SIZE)
+                    .into(ivLaundryVImage)
             }
         }
 

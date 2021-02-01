@@ -1,6 +1,7 @@
 package com.project.laundryapp.core.data.remote.retrofit
 
-import com.project.laundryapp.core.data.remote.response.*
+import com.project.laundryapp.core.data.remote.response.laundry.*
+import com.project.laundryapp.core.data.remote.response.user.UserStatusResponse
 import retrofit2.http.*
 
 interface RetrofitInterface {
@@ -37,15 +38,25 @@ interface RetrofitInterface {
     @FormUrlEncoded
     suspend fun postOrder(
         @Field("id_laundry") idLaundry: String,
-        @Field("id_user") idUser: String,
-        @Field("daftar_layanan") laundryService: LaundryServiceInput
-    ): LaundryStatusResponse
-
-    @GET("laundry_all")
-    suspend fun getLaundryList(): LaundryStatusResponse
+        @Field("daftar_layanan") laundryService: List<LaundryOrderInput>,
+        @Field("id_user") idUser: String
+    ): LaundryStatusListResponse
 
     @GET("laundry_detail")
     suspend fun getLaundryDetail(
         @Query("id") idLaundry: String
-    ): LaundryStatusDetail
+    ): LaundryStatusResponse
+
+    @GET("laundry_all")
+    suspend fun getLaundryList(): LaundryStatusListResponse
+
+    @GET("history_pesanan")
+    suspend fun getLaundryHistoryByUserId(
+        @Query("id_user") idUser: String
+    ): LaundryHistoryStatusListResponse
+
+    @GET("detail_pesanan")
+    suspend fun getLaundryHistoryDetailByHistoryId(
+        @Query("id_pesanan") idOrder: String
+    ): LaundryHistoryStatusResponse
 }

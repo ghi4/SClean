@@ -7,7 +7,6 @@ import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
 import com.project.laundryapp.R
 import com.project.laundryapp.core.data.Resource
-import com.project.laundryapp.core.data.local.User
 import com.project.laundryapp.databinding.ActivityAddressBinding
 import com.project.laundryapp.ui.MainActivity
 import com.project.laundryapp.utils.Utils
@@ -15,7 +14,6 @@ import org.koin.android.ext.android.inject
 
 class AddressActivity : AppCompatActivity() {
 
-    private var keyId: String = ""
     private val viewModel: AddressViewModel by inject()
     private lateinit var binding: ActivityAddressBinding
 
@@ -25,8 +23,6 @@ class AddressActivity : AppCompatActivity() {
 
         binding = ActivityAddressBinding.inflate(layoutInflater)
         setContentView(binding.root)
-
-        keyId = intent.getStringExtra("KEY_ID").toString()
 
         setupUI()
         observeUserRegister()
@@ -99,25 +95,15 @@ class AddressActivity : AppCompatActivity() {
 
 
             if(validity) {
-                val user = User(
-                        id = keyId,
-                        alamat = binding.etAddressFullName.text.toString(),
-                        kota = binding.etAddressCity.text.toString(),
-                        kecamatan = binding.etAddressDistricts.text.toString(),
-                        kelurahan = binding.etAddressSubDistrict.text.toString(),
-                        kodePos = binding.etAddressPostalCode.text.toString(),
-                        keteranganAlamat = binding.etAddressInformation.text.toString()
-                )
-                Log.d("User status", """
-                    ${user.id}
-                    ${user.alamat}
-                    ${user.kota}
-                    ${user.kecamatan}
-                    ${user.kelurahan}
-                    ${user.kodePos}
-                    ${user.keteranganAlamat}
-                """.trimIndent())
-                viewModel.addressUser(user)
+                val user = Utils.getSharedPref(this)
+                user.alamat = binding.etAddressFullName.text.toString()
+                user.kota = binding.etAddressCity.text.toString()
+                user.kecamatan = binding.etAddressDistricts.text.toString()
+                user.kelurahan = binding.etAddressSubDistrict.text.toString()
+                user.kodePos = binding.etAddressPostalCode.text.toString()
+                user.keteranganAlamat = binding.etAddressInformation.text.toString()
+
+                viewModel.triggerPost(user)
             } else {
                 Toast.makeText(this, "Periksa kembali userData Anda.", Toast.LENGTH_SHORT).show()
             }
@@ -130,25 +116,37 @@ class AddressActivity : AppCompatActivity() {
 
     private fun observeUserRegister() {
         viewModel.userData.observe(this, { dataPacket ->
+            Log.d("ADDRESS TAG", """
+                BASE:
+                $dataPacket
+                
+                MESSAGE:
+                ${dataPacket.message}
+                
+                DATA:
+                ${dataPacket.data}
+                
+            """.trimIndent())
+
             when(dataPacket) {
+
                 is Resource.Loading -> {
-                    Log.d("USER STATUS", "Loading")
+                    Utils.showToast(this, "Mohon tunggu.")
                 }
 
                 is Resource.Success -> {
                     val user = dataPacket.data
 
-                    Log.d("USER STATUS", "" + dataPacket.message)
+                    Utils.showToast(this, "Selamat datang!")
 
                     if(user != null) {
-                        Log.d("USER STATUS", "" + user.id)
-                        Log.d("USER STATUS", "" + user.password)
-                        startActivity(Intent(this, MainActivity::class.java))
+                        val intent = Intent(this, MainActivity::class.java)
+                        startActivity(intent)
                     }
                 }
 
                 is Resource.Error -> {
-                    Log.d("USER STATUS", "" + dataPacket.message)
+                    Utils.showToast(this, dataPacket.message.toString())
                 }
             }
         })

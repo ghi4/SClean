@@ -1,10 +1,8 @@
-package com.project.laundryapp.core.data.remote.response
+package com.project.laundryapp.core.data.remote.response.user
 
 import com.google.gson.annotations.SerializedName
 
 data class UserDataResponse(
-    @SerializedName("user")
-    var user: UserResponse,
 
     @SerializedName("nama_lengkap")
      val namaLengkap:String,

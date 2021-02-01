@@ -5,8 +5,10 @@ import android.view.View
 import android.view.ViewGroup
 import androidx.recyclerview.widget.RecyclerView
 import com.project.laundryapp.R
-import com.project.laundryapp.core.data.remote.response.LaundryDataResponse
+import com.project.laundryapp.core.data.remote.response.laundry.LaundryDataResponse
 import com.project.laundryapp.databinding.ItemLaundryHorizontalBinding
+import com.project.laundryapp.utils.Const
+import com.squareup.picasso.Picasso
 
 class LaundryTopAdapter : RecyclerView.Adapter<LaundryTopAdapter.LaundryTopViewHolder>() {
 
@@ -40,6 +42,13 @@ class LaundryTopAdapter : RecyclerView.Adapter<LaundryTopAdapter.LaundryTopViewH
                 tvLaundryOpeningHours.text = openingHours
                 tvLaundryOrderCount.text = 100.toString()
                 tvLaundryRating.text = 4.5.toString()
+
+                Picasso.get()
+                    .load(Const.URL_BASE_IMAGE + data.photo)
+                    .placeholder(R.drawable.square_placeholder)
+                    .error(R.drawable.square_placeholder)
+                    .resize(Const.SQUARE_TARGET_SIZE, Const.SQUARE_TARGET_SIZE)
+                    .into(ivLaundryImage)
             }
         }
 

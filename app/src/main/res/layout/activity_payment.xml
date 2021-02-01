@@ -27,23 +27,24 @@
                 android:id="@+id/textView25"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:text="@string/lokasi_saya" />
+                android:text="@string/lokasi_saya"
+                android:textSize="18sp" />
 
             <TextView
                 android:id="@+id/tv_user_address"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:text="@string/laundry_address" />
+                android:text="@string/laundry_address"
+                android:textStyle="italic" />
 
             <TextView
                 android:id="@+id/tv_changeAddress"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:text="@string/ganti_alamat" />
-
-            <Space
-                android:layout_width="match_parent"
-                android:layout_height="5dp" />
+                android:paddingTop="2dp"
+                android:paddingBottom="5dp"
+                android:text="@string/ganti_alamat"
+                android:textColor="@color/blue_700" />
 
             <TextView
                 android:id="@+id/textView33"
@@ -159,7 +160,7 @@
                     android:textStyle="bold" />
 
                 <TextView
-                    android:id="@+id/textView42"
+                    android:id="@+id/tv_payment_total"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_weight="1"

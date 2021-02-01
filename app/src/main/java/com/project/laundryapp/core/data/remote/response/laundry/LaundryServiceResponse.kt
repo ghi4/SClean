@@ -1,10 +1,10 @@
-package com.project.laundryapp.core.data.remote.response
+package com.project.laundryapp.core.data.remote.response.laundry
 
 import com.google.gson.annotations.SerializedName
 
 data class LaundryServiceResponse(
     @SerializedName("id")
-     val id: String? = "Unknown",
+     val idLayanan: String? = "Unknown",
 
     @SerializedName("id_laundry")
      val idLaundry: String? = "Unknown",
@@ -13,7 +13,7 @@ data class LaundryServiceResponse(
      val namaLayanan: String? = "Unknown",
 
     @SerializedName("daftar_layanan")
-    val daftarLayanan: LaundryServiceInput? = null,
+    val daftarLayanan: List<LaundryOrderInput>? = null,
 
     @SerializedName("estimasi")
      val estimasi: String? = "Unknown",

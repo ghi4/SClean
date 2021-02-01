@@ -5,40 +5,39 @@ import android.view.View
 import android.view.ViewGroup
 import androidx.recyclerview.widget.RecyclerView
 import com.project.laundryapp.R
-import com.project.laundryapp.core.data.local.LaundryOrder
+import com.project.laundryapp.core.data.remote.response.laundry.LaundryHistoryResponse
 import com.project.laundryapp.databinding.ItemHistoryLaundryBinding
-import com.project.laundryapp.databinding.ItemLaundryOrderBinding
 
-class LaundryHistoryAdapter : RecyclerView.Adapter<LaundryHistoryAdapter.LaundryOrderTopViewHolder>() {
+class LaundryHistoryAdapter : RecyclerView.Adapter<LaundryHistoryAdapter.LaundryHistoryResponseTopViewHolder>() {
 
-    private var dataList = ArrayList<LaundryOrder>()
-    var onItemClick: ((LaundryOrder) -> Unit)? = null
+    private var dataList = ArrayList<LaundryHistoryResponse>()
+    var onItemClick: ((LaundryHistoryResponse) -> Unit)? = null
 
-    fun setList(data: ArrayList<LaundryOrder>) {
+    fun setList(data: ArrayList<LaundryHistoryResponse>) {
         dataList.clear()
         dataList.addAll(data)
         notifyDataSetChanged()
     }
 
-    override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): LaundryOrderTopViewHolder {
+    override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): LaundryHistoryResponseTopViewHolder {
         val view = LayoutInflater.from(parent.context).inflate(R.layout.item_history_laundry, parent, false)
-        return LaundryOrderTopViewHolder(view)
+        return LaundryHistoryResponseTopViewHolder(view)
     }
 
-    override fun onBindViewHolder(holder: LaundryOrderTopViewHolder, position: Int) {
+    override fun onBindViewHolder(holder: LaundryHistoryResponseTopViewHolder, position: Int) {
         holder.bind(dataList[position])
     }
 
     override fun getItemCount(): Int = dataList.size
 
-    inner class LaundryOrderTopViewHolder(itemView: View): RecyclerView.ViewHolder(itemView) {
+    inner class LaundryHistoryResponseTopViewHolder(itemView: View): RecyclerView.ViewHolder(itemView) {
         private val binding = ItemHistoryLaundryBinding.bind(itemView)
-        fun bind(data: LaundryOrder) {
+        fun bind(data: LaundryHistoryResponse) {
             with(binding) {
-                tvHistoryTitle.text = "Laundry A"
-                tvHistoryPrice.text = "Rp. 20.000"
-                tvHistoryDate.text = "Tanggal: 11/01/2021"
-                tvHistoryStatus.text = "Unknown"
+                tvHistoryTitle.text = data.namaLaundry
+                tvHistoryPrice.text = data.total
+                tvHistoryDate.text = data.tglPesan
+                tvHistoryStatus.text = data.status
             }
         }
 

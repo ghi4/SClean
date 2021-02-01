@@ -1,4 +1,4 @@
-package com.project.laundryapp.ui.ui.profile
+package com.project.laundryapp.ui.zfragment.profile
 
 import androidx.lifecycle.ViewModel
 import com.project.laundryapp.core.data.LaundryRepository

@@ -1,7 +1,6 @@
-package com.project.laundryapp.ui.ui.profile
+package com.project.laundryapp.ui.zfragment.profile
 
 import android.content.Intent
-import androidx.lifecycle.ViewModelProvider
 import android.os.Bundle
 import android.util.Log
 import androidx.fragment.app.Fragment
@@ -35,12 +34,8 @@ class ProfileFragment : Fragment() {
 
         user = Utils.getSharedPref(requireActivity())
 
-        Log.d("Fragment", """
-            FRAGMENT PROFILE
-            ${user.id},
-            ${user.email},
-            ${user.namaLengkap},
-            ${user.photo}
+        Log.d("PROFILE TAG", """
+            $user
         """.trimIndent())
 
         setupUI()
@@ -48,12 +43,13 @@ class ProfileFragment : Fragment() {
 
     private fun setupUI() {
         with(binding){
+            tvProfileFullName.text = user.namaLengkap
             etProfileAddress.setText(user.alamat)
             etProfilePhone.setText(user.nomorHp)
             etProfileEmail.setText(user.email)
 
             Picasso.get()
-                    .load("https://pbs.twimg.com/profile_images/846659478120366082/K-kZVvT8_400x400.jpg")
+                    .load(user.photo)
                     .noFade()
                     .error(R.drawable.gravatar)
                     .placeholder(R.drawable.gravatar)

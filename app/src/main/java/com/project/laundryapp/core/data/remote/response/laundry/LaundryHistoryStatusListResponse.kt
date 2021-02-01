@@ -1,13 +1,13 @@
-package com.project.laundryapp.core.data.remote.response
+package com.project.laundryapp.core.data.remote.response.laundry
 
 import com.google.gson.annotations.SerializedName
 
-data class LaundryStatusResponse(
+data class LaundryHistoryStatusListResponse(
     @SerializedName("message")
     var message: String? = "Unknown",
 
     @SerializedName("data")
-    var data: List<LaundryDataResponse>? = null,
+    var data: List<LaundryHistoryResponse>? = null,
 
     @SerializedName("error")
     var error: String? = "Unknown"

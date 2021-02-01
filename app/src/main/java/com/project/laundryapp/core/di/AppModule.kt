@@ -5,12 +5,14 @@ import com.project.laundryapp.core.data.remote.RemoteDataSource
 import com.project.laundryapp.core.data.remote.retrofit.RetrofitInterface
 import com.project.laundryapp.ui.address.AddressViewModel
 import com.project.laundryapp.ui.detail.laundry.DetailLaundryViewModel
+import com.project.laundryapp.ui.detail.order.DetailOrderViewModel
 import com.project.laundryapp.ui.login.LoginViewModel
+import com.project.laundryapp.ui.payment.PaymentViewModel
 import com.project.laundryapp.ui.register.RegisterViewModel
-import com.project.laundryapp.ui.ui.history.HistoryViewModel
-import com.project.laundryapp.ui.ui.home.HomeViewModel
-import com.project.laundryapp.ui.ui.laundry.LaundryViewModel
-import com.project.laundryapp.ui.ui.profile.ProfileViewModel
+import com.project.laundryapp.ui.zfragment.history.HistoryViewModel
+import com.project.laundryapp.ui.zfragment.home.HomeViewModel
+import com.project.laundryapp.ui.zfragment.find.FindViewModel
+import com.project.laundryapp.ui.zfragment.profile.ProfileViewModel
 import org.koin.android.viewmodel.dsl.viewModel
 import org.koin.dsl.module
 import retrofit2.Retrofit
@@ -37,7 +39,9 @@ val viewModelModule = module {
     viewModel { AddressViewModel(get()) }
     viewModel { HomeViewModel(get()) }
     viewModel { HistoryViewModel(get()) }
-    viewModel { LaundryViewModel(get()) }
+    viewModel { FindViewModel(get()) }
     viewModel { ProfileViewModel(get()) }
     viewModel { DetailLaundryViewModel(get()) }
+    viewModel { DetailOrderViewModel(get()) }
+    viewModel { PaymentViewModel(get()) }
 }

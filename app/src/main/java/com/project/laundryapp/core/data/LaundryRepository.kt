@@ -1,13 +1,10 @@
 package com.project.laundryapp.core.data
 
-import com.project.laundryapp.core.data.local.Laundry
 import com.project.laundryapp.core.data.local.User
 import com.project.laundryapp.core.data.remote.ApiResponse
 import com.project.laundryapp.core.data.remote.RemoteDataSource
-import com.project.laundryapp.core.data.remote.response.LaundryServiceInput
-import com.project.laundryapp.core.data.remote.response.LaundryStatusDetail
-import com.project.laundryapp.core.data.remote.response.LaundryStatusResponse
-import com.project.laundryapp.core.data.remote.response.UserStatusResponse
+import com.project.laundryapp.core.data.remote.response.laundry.*
+import com.project.laundryapp.core.data.remote.response.user.UserStatusResponse
 import com.project.laundryapp.core.utils.DataMapper
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.flow
@@ -53,37 +50,63 @@ class LaundryRepository(private val remoteDataSource: RemoteDataSource) {
         }.asFlow()
     }
 
-    fun getLaundryList(): Flow<Resource<LaundryStatusResponse>> {
-        return object : RemoteResource<LaundryStatusResponse, LaundryStatusResponse>() {
-            override fun createCall(): Flow<ApiResponse<LaundryStatusResponse>> {
+    fun getLaundryList(): Flow<Resource<LaundryStatusListResponse>> {
+        return object : RemoteResource<LaundryStatusListResponse, LaundryStatusListResponse>() {
+            override fun createCall(): Flow<ApiResponse<LaundryStatusListResponse>> {
                 return remoteDataSource.getLaundryList()
             }
 
-            override fun convertCallResult(data: LaundryStatusResponse): Flow<LaundryStatusResponse> {
+            override fun convertCallResult(data: LaundryStatusListResponse): Flow<LaundryStatusListResponse> {
                 return flow { emit(data) }
             }
         }.asFlow()
     }
 
-    fun getLaundryDetail(laundryId: String): Flow<Resource<LaundryStatusDetail>> {
-        return object : RemoteResource<LaundryStatusDetail, LaundryStatusDetail>() {
-            override fun createCall(): Flow<ApiResponse<LaundryStatusDetail>> {
+    fun getLaundryDetail(laundryId: String): Flow<Resource<LaundryStatusResponse>> {
+        return object : RemoteResource<LaundryStatusResponse, LaundryStatusResponse>() {
+            override fun createCall(): Flow<ApiResponse<LaundryStatusResponse>> {
                 return remoteDataSource.getLaundryDetail(laundryId)
             }
 
-            override fun convertCallResult(data: LaundryStatusDetail): Flow<LaundryStatusDetail> {
+            override fun convertCallResult(data: LaundryStatusResponse): Flow<LaundryStatusResponse> {
                 return flow { emit(data) }
             }
         }.asFlow()
     }
 
-    fun postOrder(idLaundry: String, idUser: String, serviceList: LaundryServiceInput): Flow<Resource<LaundryStatusResponse>> {
-        return object : RemoteResource<LaundryStatusResponse, LaundryStatusResponse>() {
-            override fun createCall(): Flow<ApiResponse<LaundryStatusResponse>> {
+    fun postOrder(idLaundry: String, idUser: String, serviceList: ArrayList<LaundryOrderInput>): Flow<Resource<LaundryStatusListResponse>> {
+        return object : RemoteResource<LaundryStatusListResponse, LaundryStatusListResponse>() {
+            override fun createCall(): Flow<ApiResponse<LaundryStatusListResponse>> {
                 return remoteDataSource.postOrder(idLaundry, idUser, serviceList)
             }
 
-            override fun convertCallResult(data: LaundryStatusResponse): Flow<LaundryStatusResponse> {
+            override fun convertCallResult(data: LaundryStatusListResponse): Flow<LaundryStatusListResponse> {
+                return flow { emit(data) }
+            }
+
+        }.asFlow()
+    }
+
+    fun getLaundryHistoryByUserId(userId: String): Flow<Resource<LaundryHistoryStatusListResponse>> {
+        return object : RemoteResource<LaundryHistoryStatusListResponse, LaundryHistoryStatusListResponse>() {
+            override fun createCall(): Flow<ApiResponse<LaundryHistoryStatusListResponse>> {
+                return remoteDataSource.getLaundryHistoryByIdUser(userId)
+            }
+
+            override fun convertCallResult(data: LaundryHistoryStatusListResponse): Flow<LaundryHistoryStatusListResponse> {
+                return flow { emit(data) }
+            }
+
+        }.asFlow()
+    }
+
+    fun getLaundryHistoryDetailByHistoryId(historyId: String): Flow<Resource<LaundryHistoryStatusResponse>> {
+        return object : RemoteResource<LaundryHistoryStatusResponse, LaundryHistoryStatusResponse>() {
+            override fun createCall(): Flow<ApiResponse<LaundryHistoryStatusResponse>> {
+                return remoteDataSource.getLaundryHistoryDetailByHistoryId(historyId)
+            }
+
+            override fun convertCallResult(data: LaundryHistoryStatusResponse): Flow<LaundryHistoryStatusResponse> {
                 return flow { emit(data) }
             }
 
