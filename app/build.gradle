@@ -82,4 +82,7 @@ dependencies {
 
     //Logging Interceptor
     implementation 'com.squareup.okhttp3:logging-interceptor:4.9.0'
+
+    //Dots Indicator
+    implementation 'com.tbuonomo.andrui:viewpagerdotsindicator:4.1.2'
 }

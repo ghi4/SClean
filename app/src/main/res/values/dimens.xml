@@ -3,4 +3,9 @@
     <dimen name="activity_horizontal_margin">16dp</dimen>
     <dimen name="activity_vertical_margin">16dp</dimen>
     <dimen name="edittext_box">7dp</dimen>
+
+    <dimen name="dots_corner_radius_8dp">8dp</dimen>
+    <dimen name="dots_size">8dp</dimen>
+    <dimen name="dots_spacing">4dp</dimen>
+    <dimen name="dots_stroke_width">2dp</dimen>
 </resources>

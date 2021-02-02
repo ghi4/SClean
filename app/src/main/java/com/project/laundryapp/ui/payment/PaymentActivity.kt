@@ -1,14 +1,17 @@
 package com.project.laundryapp.ui.payment
 
+import android.content.Intent
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.util.Log
 import androidx.recyclerview.widget.LinearLayoutManager
+import com.project.laundryapp.R
 import com.project.laundryapp.core.adapter.LaundryOrderAdapter
 import com.project.laundryapp.core.data.Resource
 import com.project.laundryapp.core.data.remote.response.laundry.LaundryOrderInput
 import com.project.laundryapp.core.data.remote.response.laundry.LaundryServiceResponse
 import com.project.laundryapp.databinding.ActivityPaymentBinding
+import com.project.laundryapp.ui.MainActivity
 import com.project.laundryapp.utils.Const
 import com.project.laundryapp.utils.Utils
 import org.koin.android.ext.android.inject
@@ -57,6 +60,10 @@ class PaymentActivity : AppCompatActivity() {
 
                 is Resource.Success -> {
                     Utils.showToast(this, "Sukses!")
+
+                    val intent = Intent(this, MainActivity::class.java)
+                    intent.putExtra(MainActivity.FRAGMENT_ID_KEY, R.id.navigation_history)
+                    startActivity(intent)
                 }
 
                 is Resource.Error -> {

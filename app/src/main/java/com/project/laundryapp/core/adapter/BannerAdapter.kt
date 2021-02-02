@@ -5,17 +5,17 @@ import android.view.View
 import android.view.ViewGroup
 import androidx.recyclerview.widget.RecyclerView
 import com.project.laundryapp.R
-import com.project.laundryapp.core.data.local.Laundry
+import com.project.laundryapp.core.data.remote.response.promotion.PromotionResponse
 import com.project.laundryapp.databinding.ItemLaundryBannerBinding
 import com.project.laundryapp.utils.Const
 import com.squareup.picasso.Picasso
 
 class BannerAdapter : RecyclerView.Adapter<BannerAdapter.BannerViewHolder>() {
 
-    private var bannerList = ArrayList<Laundry>()
-    var onItemClick: ((Laundry) -> Unit)? = null
+    private var bannerList = ArrayList<PromotionResponse>()
+    var onItemClick: ((PromotionResponse) -> Unit)? = null
 
-    fun setList(data: ArrayList<Laundry>){
+    fun setList(data: ArrayList<PromotionResponse>){
         bannerList.clear()
         bannerList.addAll(data)
         notifyDataSetChanged()
@@ -34,12 +34,12 @@ class BannerAdapter : RecyclerView.Adapter<BannerAdapter.BannerViewHolder>() {
 
     inner class BannerViewHolder(itemView: View): RecyclerView.ViewHolder(itemView) {
         private val binding = ItemLaundryBannerBinding.bind(itemView)
-        fun bind(laundry: Laundry){
+        fun bind(promotion: PromotionResponse){
             with(binding) {
 
                 //Banner Image
                 Picasso.get()
-                    .load(laundry.foto)
+                    .load(Const.URL_BASE_IMAGE + promotion.photoURL)
                     .placeholder(R.drawable.banner_placeholder)
                     .error(R.drawable.banner_placeholder)
                     .resize(Const.BANNER_TARGET_WIDTH, Const.BANNER_TARGET_HEIGHT)

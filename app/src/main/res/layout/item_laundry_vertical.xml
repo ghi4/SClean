@@ -3,7 +3,9 @@
     xmlns:app="http://schemas.android.com/apk/res-auto"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
-    android:layout_margin="5dp">
+    android:layout_margin="5dp"
+    app:cardCornerRadius="5dp"
+    app:cardElevation="5dp">
 
     <LinearLayout
         android:layout_width="match_parent"
@@ -14,17 +16,19 @@
             android:id="@+id/iv_laundryV_image"
             android:layout_width="match_parent"
             android:layout_height="match_parent"
-            android:layout_weight="3"
+            android:layout_weight="2"
             android:adjustViewBounds="true"
             android:contentDescription="@string/laundry_image"
-            android:scaleType="fitCenter"
+            android:scaleType="centerCrop"
             app:srcCompat="@drawable/square_placeholder" />
 
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="match_parent"
-            android:layout_marginStart="5dp"
-            android:layout_marginEnd="5dp"
+            android:layout_marginStart="8dp"
+            android:layout_marginTop="8dp"
+            android:layout_marginEnd="8dp"
+            android:layout_marginBottom="8dp"
             android:layout_weight="1"
             android:orientation="vertical">
 
@@ -32,50 +36,45 @@
                 android:id="@+id/tv_laundryV_title"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:text="@string/laundry_title"
+                android:text="@string/laundry_si_dragon"
                 android:textSize="16sp"
                 android:textStyle="bold" />
+
+            <include
+                layout="@layout/layout_rating"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content" />
+
+            <View
+                android:id="@+id/divider4"
+                android:layout_width="match_parent"
+                android:layout_height="1dp"
+                android:layout_marginTop="8dp"
+                android:layout_marginBottom="8dp"
+                android:background="?android:attr/listDivider" />
 
             <TextView
                 android:id="@+id/tv_laundryV_address"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:maxLines="2"
+                android:layout_gravity="center_vertical"
+                android:ellipsize="end"
+                android:gravity="center_vertical"
+                android:maxLines="1"
                 android:text="@string/laundry_address"
-                android:textStyle="italic" />
+                android:textStyle="italic"
+                app:drawableStartCompat="@drawable/ic_baseline_location_on_24_grey" />
 
-            <LinearLayout
-                android:layout_width="match_parent"
-                android:layout_height="match_parent"
-                android:orientation="horizontal">
+            <TextView
+                android:id="@+id/tv_laundryV_openingHours"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center_vertical"
+                android:layout_marginTop="8dp"
+                android:gravity="center_vertical"
+                android:text="@string/laundry_openingHours"
+                app:drawableStartCompat="@drawable/ic_baseline_access_time_24" />
 
-                <TextView
-                    android:id="@+id/tv_laundryV_openingHours"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_weight="3"
-                    android:text="@string/laundry_openingHours" />
-
-                <TextView
-                    android:id="@+id/tv_laundryV_orderCount"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_weight="1"
-                    android:gravity="center_vertical"
-                    android:text="@string/order_count"
-                    android:visibility="invisible"
-                    app:drawableLeftCompat="@drawable/ic_baseline_emoji_emotions_24" />
-
-                <TextView
-                    android:id="@+id/tv_laundryV_rating"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_weight="1"
-                    android:gravity="center_vertical"
-                    android:text="@string/rating_value"
-                    android:visibility="invisible"
-                    app:drawableLeftCompat="@drawable/ic_baseline_stars_24" />
-            </LinearLayout>
         </LinearLayout>
     </LinearLayout>
 </androidx.cardview.widget.CardView>

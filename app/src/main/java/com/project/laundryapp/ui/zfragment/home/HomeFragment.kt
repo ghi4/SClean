@@ -13,8 +13,11 @@ import com.project.laundryapp.core.adapter.LaundryTopAdapter
 import com.project.laundryapp.core.data.Resource
 import com.project.laundryapp.core.data.local.Laundry
 import com.project.laundryapp.core.data.remote.response.laundry.LaundryDataResponse
+import com.project.laundryapp.core.data.remote.response.promotion.PromotionResponse
 import com.project.laundryapp.databinding.FragmentHomeBinding
+import com.project.laundryapp.ui.MainActivity
 import com.project.laundryapp.ui.detail.laundry.DetailLaundryActivity
+import com.project.laundryapp.utils.Anim
 import com.project.laundryapp.utils.Const
 import com.project.laundryapp.utils.Utils
 import org.koin.android.ext.android.inject
@@ -66,7 +69,7 @@ class HomeFragment : Fragment() {
                     """.trimIndent())
             when(data) {
                 is Resource.Loading -> {
-                    Utils.showToast(requireContext(), "Memuat data.")
+                    MainActivity.showLoading()
                 }
 
                 is Resource.Success -> {
@@ -74,10 +77,30 @@ class HomeFragment : Fragment() {
                     val dataLaundry = dataStatus?.data
 
                     laundryTopAdapter.setList(dataLaundry as ArrayList<LaundryDataResponse>)
+
+                    MainActivity.clearStatusInformation()
+                    Anim.crossFade(binding.root)
                 }
 
                 is Resource.Error -> {
                     Utils.showToast(requireContext(), data.message.toString())
+                }
+            }
+        })
+
+        viewModel.promotionData.observe(viewLifecycleOwner, {data->
+            when(data) {
+                is Resource.Loading -> {
+
+                }
+
+                is Resource.Success -> {
+                    val promotionList = data.data?.data
+                    bannerAdapter.setList(promotionList as ArrayList<PromotionResponse>)
+                }
+
+                is Resource.Error -> {
+
                 }
             }
         })
@@ -88,17 +111,17 @@ class HomeFragment : Fragment() {
         bannerAdapter = BannerAdapter()
         laundryTopAdapter = LaundryTopAdapter()
 
-        //Set data banner
-        bannerAdapter.setList(dummy())
-
         //Binding
         with(binding) {
+            root.visibility = View.INVISIBLE
+
             rvHomeRecommendation.layoutManager = LinearLayoutManager(context)
             rvHomeRecommendation.hasFixedSize()
             rvHomeRecommendation.adapter = laundryTopAdapter
             rvHomeRecommendation.isNestedScrollingEnabled = false
 
             vpHomeBanner.adapter = bannerAdapter
+            dotsIndicatorBanner.setViewPager2(vpHomeBanner)
         }
 
         //When list data clicked
@@ -107,23 +130,5 @@ class HomeFragment : Fragment() {
             intent.putExtra(Const.KEY_LAUNDRY_ID, selectedData.idLaundry)
             startActivity(intent)
         }
-    }
-
-    private fun dummy(): ArrayList<Laundry> {
-        val dummy = ArrayList<Laundry>()
-        for (i in 1..10) {
-            dummy.add(Laundry(
-                "AAA",
-                "TOKO A",
-                "62887",
-                "08:00",
-                "20:00,",
-                "Jl Raya di Jakarta",
-                "Lorem ipsum",
-                "abc"
-            ))
-        }
-
-        return dummy
     }
 }

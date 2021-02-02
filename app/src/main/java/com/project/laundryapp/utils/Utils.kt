@@ -44,6 +44,25 @@ object Utils {
         }
     }
 
+    fun parseStatus(input: String): String {
+        val status = listOf(
+            "Menuggu Konfirmasi",
+            "Menerima Pesanan",
+            "Proses Pengambilan",
+            "Proses Pengerjaan",
+            "Proses Selesai",
+            "Proses Pengiriman",
+            "Pesanan Selesai",
+            "Dibatalkan"
+        )
+
+        return try {
+            status[input.toInt()]
+        } catch (e: Exception) {
+            input
+        }
+    }
+
     fun parseError(input: String): String {
         return when {
             input.contains("402") -> {

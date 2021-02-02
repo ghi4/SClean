@@ -1,13 +1,18 @@
 package com.project.laundryapp.ui.detail.order
 
+import android.content.Intent
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.util.Log
+import android.view.View
 import androidx.recyclerview.widget.LinearLayoutManager
+import com.project.laundryapp.R
 import com.project.laundryapp.core.adapter.LaundryOrderAdapter
 import com.project.laundryapp.core.data.Resource
 import com.project.laundryapp.core.data.remote.response.laundry.LaundryOrderInput
 import com.project.laundryapp.databinding.ActivityDetailOrderBinding
+import com.project.laundryapp.ui.MainActivity
+import com.project.laundryapp.utils.Anim
 import com.project.laundryapp.utils.Const
 import com.project.laundryapp.utils.Utils
 import org.koin.android.ext.android.inject
@@ -62,14 +67,15 @@ class DetailOrderActivity : AppCompatActivity() {
 
                     val orderList = data.data?.data?.daftarLayanan?.map {
                         LaundryOrderInput(
-                            it.idLayanan ?: "",
-                            it.qty,
-                            it.harga
+                                it.idLayanan.toString(),
+                                it.namaLayanan.toString(),
+                                it.qty,
+                                it.harga
                         )
                     }
                     orderAdapter.setList(orderList as ArrayList<LaundryOrderInput>)
 
-                    var totalPrice = 0
+                    val totalPrice: Int
                     var subTotalPrice = 0
 
                     orderList.map {
@@ -85,9 +91,29 @@ class DetailOrderActivity : AppCompatActivity() {
                         tvPaymentShipment.text = Utils.parseIntToCurrency(Const.SHIPMENT_PRICE)
                         tvPaymentSubTotal.text = Utils.parseIntToCurrency(subTotalPrice)
                         tvPaymentTotalPrice.text = Utils.parseIntToCurrency(totalPrice)
+
+                        Anim.crossFade(root)
                     }
                 }
 
+                is Resource.Error -> {
+                    Utils.showToast(this, data.message.toString())
+                }
+            }
+        })
+
+        viewModel.deleteData.observe(this, { data ->
+            when (data) {
+                is Resource.Loading -> {
+                    Utils.showToast(this, "Mohon tunggu.")
+                }
+                is Resource.Success -> {
+                    Utils.showToast(this, "Berhasil!")
+
+                    val intent = Intent(this, MainActivity::class.java)
+                    intent.putExtra(MainActivity.FRAGMENT_ID_KEY, R.id.navigation_history)
+                    startActivity(intent)
+                }
                 is Resource.Error -> {
                     Utils.showToast(this, data.message.toString())
                 }
@@ -99,9 +125,16 @@ class DetailOrderActivity : AppCompatActivity() {
         orderAdapter = LaundryOrderAdapter()
 
         with(binding) {
+            root.visibility = View.INVISIBLE
+
             rvPaymentOrderList.layoutManager = LinearLayoutManager(this@DetailOrderActivity)
             rvPaymentOrderList.hasFixedSize()
             rvPaymentOrderList.adapter = orderAdapter
+
+            btPaymentCancel.setOnClickListener {
+                viewModel.triggerDelete(historyId)
+            }
         }
+
     }
 }

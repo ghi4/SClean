@@ -39,7 +39,7 @@ class LaundryHistoryAdapter : RecyclerView.Adapter<LaundryHistoryAdapter.Laundry
                 tvHistoryTitle.text = data.namaLaundry
                 tvHistoryPrice.text = Utils.parseIntToCurrency(price.toInt())
                 tvHistoryDate.text = data.tglPesan
-                tvHistoryStatus.text = data.status
+                tvHistoryStatus.text = Utils.parseStatus(data.status.toString())
             }
         }
 

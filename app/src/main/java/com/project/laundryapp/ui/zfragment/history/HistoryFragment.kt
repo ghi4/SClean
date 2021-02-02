@@ -12,7 +12,9 @@ import com.project.laundryapp.core.adapter.LaundryHistoryAdapter
 import com.project.laundryapp.core.data.Resource
 import com.project.laundryapp.core.data.remote.response.laundry.LaundryHistoryResponse
 import com.project.laundryapp.databinding.FragmentHistoryBinding
+import com.project.laundryapp.ui.MainActivity
 import com.project.laundryapp.ui.detail.order.DetailOrderActivity
+import com.project.laundryapp.utils.Anim
 import com.project.laundryapp.utils.Const
 import com.project.laundryapp.utils.Utils
 import org.koin.android.ext.android.inject
@@ -36,7 +38,7 @@ class HistoryFragment : Fragment() {
         super.onViewCreated(view, savedInstanceState)
 
         val user = Utils.getSharedPref(requireActivity())
-        viewModel.triggerCall(user.id ?: "")
+        viewModel.triggerCall(user.id.toString())
 
         setupUI()
         getData()
@@ -66,12 +68,15 @@ class HistoryFragment : Fragment() {
 
             when(data) {
                 is Resource.Loading -> {
-                    Utils.showToast(requireContext(), "Memuat data.")
+                    MainActivity.showLoading()
                 }
 
                 is Resource.Success -> {
                     val historyList = data.data?.data
                     historyAdapter.setList(historyList as ArrayList<LaundryHistoryResponse>)
+
+                    MainActivity.clearStatusInformation()
+                    Anim.crossFade(binding.root)
                 }
 
                 is Resource.Error -> {
@@ -85,6 +90,8 @@ class HistoryFragment : Fragment() {
         historyAdapter = LaundryHistoryAdapter()
 
         with(binding) {
+            root.visibility = View.INVISIBLE
+
             rvHistoryLaundry.layoutManager = LinearLayoutManager(context)
             rvHistoryLaundry.hasFixedSize()
             rvHistoryLaundry.adapter = historyAdapter

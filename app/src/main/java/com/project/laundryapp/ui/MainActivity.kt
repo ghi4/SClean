@@ -1,6 +1,7 @@
 package com.project.laundryapp.ui
 
 import android.os.Bundle
+import android.view.View
 import com.google.android.material.bottomnavigation.BottomNavigationView
 import androidx.appcompat.app.AppCompatActivity
 import androidx.navigation.fragment.NavHostFragment
@@ -8,13 +9,45 @@ import androidx.navigation.ui.AppBarConfiguration
 import androidx.navigation.ui.setupActionBarWithNavController
 import androidx.navigation.ui.setupWithNavController
 import com.project.laundryapp.R
+import com.project.laundryapp.databinding.ActivityMainBinding
 
 class MainActivity : AppCompatActivity() {
 
+    companion object {
+        private lateinit var binding: ActivityMainBinding
+        const val FRAGMENT_ID_KEY = "fragment id key"
+
+        fun showLoading() {
+            with(binding.statusMain) {
+                progressBar.visibility = View.INVISIBLE
+                tvMessage.visibility = View.INVISIBLE
+            }
+        }
+
+        fun showMessage(message: String) {
+            with(binding.statusMain) {
+                progressBar.visibility = View.INVISIBLE
+                tvMessage.visibility = View.VISIBLE
+
+                tvMessage.text = message
+            }
+        }
+
+        fun clearStatusInformation() {
+            with(binding.statusMain) {
+                progressBar.visibility = View.INVISIBLE
+                tvMessage.visibility = View.INVISIBLE
+            }
+        }
+    }
+
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        setContentView(R.layout.activity_main)
-        val navView: BottomNavigationView = findViewById(R.id.nav_view)
+
+        binding = ActivityMainBinding.inflate(layoutInflater)
+        setContentView(binding.root)
+
+        val navView: BottomNavigationView = binding.navView
 
         val navHostFragment =
             supportFragmentManager.findFragmentById(R.id.nav_host_fragment) as NavHostFragment
@@ -28,5 +61,9 @@ class MainActivity : AppCompatActivity() {
         )
         setupActionBarWithNavController(navController, appBarConfiguration)
         navView.setupWithNavController(navController)
+
+        val defaultFragment = R.id.navigation_home
+        val selectedFragment = intent.getIntExtra(FRAGMENT_ID_KEY, defaultFragment)
+        navView.selectedItemId = selectedFragment
     }
 }

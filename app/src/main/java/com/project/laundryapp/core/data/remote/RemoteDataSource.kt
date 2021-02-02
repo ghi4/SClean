@@ -2,8 +2,10 @@ package com.project.laundryapp.core.data.remote
 
 import android.util.Log
 import com.google.gson.Gson
+import com.project.laundryapp.core.data.Resource
 import com.project.laundryapp.core.data.local.User
 import com.project.laundryapp.core.data.remote.response.laundry.*
+import com.project.laundryapp.core.data.remote.response.promotion.PromotionStatusResponse
 import com.project.laundryapp.core.data.remote.response.user.UserStatusResponse
 import com.project.laundryapp.core.data.remote.retrofit.RetrofitInterface
 import com.project.laundryapp.core.utils.ResponseMessage
@@ -86,10 +88,35 @@ class RemoteDataSource(private val retrofitService: RetrofitInterface) {
         }.flowOn(Dispatchers.IO)
     }
 
+    fun deleteOrder(idOrder: String): Flow<ApiResponse<LaundryStatusResponse>> {
+        return flow {
+            try {
+                val response = retrofitService.deleteOrder(idOrder)
+                emit(ApiResponse.Success(response))
+            } catch (e: Exception) {
+                emit(ApiResponse.Error(noInternet))
+            }
+        }.flowOn(Dispatchers.IO)
+    }
+
     fun getLaundryList(): Flow<ApiResponse<LaundryStatusListResponse>> {
         return flow {
             try {
                 val response = retrofitService.getLaundryList()
+                Log.d("RemoteData", "" + response.toString())
+                Log.d("RemoteData", "" + response.data.toString())
+                emit(ApiResponse.Success(response))
+            } catch (e: Exception) {
+                Log.d("RemoteData", "" + e.toString())
+                emit(ApiResponse.Error(noInternet))
+            }
+        }.flowOn(Dispatchers.IO)
+    }
+
+    fun getPromotionList(): Flow<ApiResponse<PromotionStatusResponse>> {
+        return flow {
+            try {
+                val response = retrofitService.getPromotionList()
                 Log.d("RemoteData", "" + response.toString())
                 Log.d("RemoteData", "" + response.data.toString())
                 emit(ApiResponse.Success(response))
@@ -118,8 +145,13 @@ class RemoteDataSource(private val retrofitService: RetrofitInterface) {
     ): Flow<ApiResponse<LaundryStatusListResponse>> {
         Log.d("PAYMENT", """
             ===========================================
+            LAUNDRY ID:
             $idLaundry
+            
+            ID USER:
             $idUser
+            
+            ORDER LIST:
             ${serviceList.toString()}
             
             ==========================================

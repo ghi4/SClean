@@ -1,6 +1,7 @@
 package com.project.laundryapp.core.data.remote.retrofit
 
 import com.project.laundryapp.core.data.remote.response.laundry.*
+import com.project.laundryapp.core.data.remote.response.promotion.PromotionStatusResponse
 import com.project.laundryapp.core.data.remote.response.user.UserStatusResponse
 import retrofit2.http.*
 
@@ -42,6 +43,12 @@ interface RetrofitInterface {
         @Field("id_user") idUser: String
     ): LaundryStatusListResponse
 
+    @POST("batalkan_pesanan")
+    @FormUrlEncoded
+    suspend fun deleteOrder(
+        @Field("id_pesanan") idOrder: String
+    ): LaundryStatusResponse
+
     @GET("laundry_detail")
     suspend fun getLaundryDetail(
         @Query("id") idLaundry: String
@@ -49,6 +56,9 @@ interface RetrofitInterface {
 
     @GET("laundry_all")
     suspend fun getLaundryList(): LaundryStatusListResponse
+
+    @GET("promosi_all")
+    suspend fun getPromotionList(): PromotionStatusResponse
 
     @GET("history_pesanan")
     suspend fun getLaundryHistoryByUserId(

@@ -4,6 +4,7 @@ import android.content.Intent
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.util.Log
+import android.view.View
 import android.widget.Toast
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.project.laundryapp.R
@@ -13,6 +14,7 @@ import com.project.laundryapp.core.data.remote.response.laundry.LaundryOrderInpu
 import com.project.laundryapp.core.data.remote.response.laundry.LaundryServiceResponse
 import com.project.laundryapp.databinding.ActivityDetailLaundryBinding
 import com.project.laundryapp.ui.payment.PaymentActivity
+import com.project.laundryapp.utils.Anim
 import com.project.laundryapp.utils.Const
 import com.project.laundryapp.utils.Utils
 import com.squareup.picasso.Picasso
@@ -44,6 +46,8 @@ class DetailLaundryActivity : AppCompatActivity() {
         serviceAdapter = LaundryServiceAdapter()
 
         with(binding) {
+            root.visibility = View.INVISIBLE
+
             rvDetailServiceList.layoutManager = LinearLayoutManager(this@DetailLaundryActivity)
             rvDetailServiceList.hasFixedSize()
             rvDetailServiceList.adapter = serviceAdapter
@@ -52,6 +56,7 @@ class DetailLaundryActivity : AppCompatActivity() {
 
         serviceAdapter.onItemClick = {data ->
             val serviceData = LaundryOrderInput(
+                data.idLayanan.toString(),
                 data.namaLayanan.toString(),
                 data.qty,
                 data.harga
@@ -117,7 +122,7 @@ class DetailLaundryActivity : AppCompatActivity() {
             """.trimIndent())
             when(data) {
                 is Resource.Loading -> {
-                    Utils.showToast(this, "Memuat data.")
+                    showLoading()
                 }
 
                 is Resource.Success -> {
@@ -142,17 +147,35 @@ class DetailLaundryActivity : AppCompatActivity() {
                                 .error(R.drawable.wide_image_placeholder)
                                 .resize(Const.SQUARE_TARGET_SIZE, Const.SQUARE_TARGET_SIZE)
                                 .into(ivDetailImage)
-                        }
 
-                        serviceAdapter.setList(dataLaundry.laundryService as ArrayList<LaundryServiceResponse>)
+                            clearStatusInformation()
+                            Anim.crossFade(root)
+
+                            serviceAdapter.setList(dataLaundry.laundryService as ArrayList<LaundryServiceResponse>)
+                        }
                     }
 
                 }
+
 
                 is Resource.Error -> {
                     Utils.showToast(this, data.message.toString())
                 }
             }
         })
+    }
+
+    private fun showLoading() {
+        with(binding.statusDetailLaundry){
+            progressBar.visibility = View.VISIBLE
+            tvMessage.visibility = View.INVISIBLE
+        }
+    }
+
+    fun clearStatusInformation() {
+        with(binding.statusDetailLaundry){
+            progressBar.visibility = View.INVISIBLE
+            tvMessage.visibility = View.INVISIBLE
+        }
     }
 }

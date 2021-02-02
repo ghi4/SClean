@@ -3,6 +3,8 @@ package com.project.laundryapp.core.data.remote.response.user
 import com.google.gson.annotations.SerializedName
 
 data class UserDataResponse(
+        @SerializedName("id_user")
+        val idUser:String,
 
     @SerializedName("nama_lengkap")
      val namaLengkap:String,
@@ -38,8 +40,5 @@ data class UserDataResponse(
      val kodePos:String,
 
     @SerializedName("keterangan_alamat")
-     val keteranganAlamat:String,
-
-    @SerializedName("id_user")
-     val idUser:String
+     val keteranganAlamat:String
 )

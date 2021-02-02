@@ -11,6 +11,10 @@ class HomeViewModel(private val laundryRepository: LaundryRepository) : ViewMode
         laundryRepository.getLaundryList().asLiveData()
     }
 
+    var promotionData = triggerCall.switchMap {
+        laundryRepository.getPromotionList().asLiveData()
+    }
+
     fun triggerCall() {
         triggerCall.postValue(Unit)
     }

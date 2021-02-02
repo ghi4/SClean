@@ -8,7 +8,7 @@ class HistoryViewModel(private val laundryRepository: LaundryRepository) : ViewM
     private val triggerCall = MutableLiveData<String>()
 
     var dataHistory = triggerCall.switchMap {
-        laundryRepository.getLaundryHistoryByUserId(it).asLiveData()
+        laundryRepository.getLaundryHistory(it).asLiveData()
     }
 
     fun triggerCall(userId: String) {

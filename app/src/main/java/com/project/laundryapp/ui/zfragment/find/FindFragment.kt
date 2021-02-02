@@ -12,7 +12,9 @@ import com.project.laundryapp.core.adapter.LaundrySideAdapter
 import com.project.laundryapp.core.data.Resource
 import com.project.laundryapp.core.data.remote.response.laundry.LaundryDataResponse
 import com.project.laundryapp.databinding.FragmentLaundryBinding
+import com.project.laundryapp.ui.MainActivity
 import com.project.laundryapp.ui.detail.laundry.DetailLaundryActivity
+import com.project.laundryapp.utils.Anim
 import com.project.laundryapp.utils.Const
 import com.project.laundryapp.utils.Utils
 import org.koin.android.ext.android.inject
@@ -63,7 +65,7 @@ class FindFragment : Fragment() {
                 """.trimIndent())
             when(data) {
                 is Resource.Loading -> {
-                    Utils.showToast(requireContext(), "Memuat data.")
+                    MainActivity.showLoading()
                 }
 
                 is Resource.Success -> {
@@ -71,6 +73,9 @@ class FindFragment : Fragment() {
                     val dataLaundry = dataStatus?.data
 
                     laundrySideAdapter.setList(dataLaundry as ArrayList<LaundryDataResponse>)
+
+                    MainActivity.clearStatusInformation()
+                    Anim.crossFade(binding.root)
                 }
 
                 is Resource.Error -> {
@@ -85,6 +90,8 @@ class FindFragment : Fragment() {
         laundrySideAdapter = LaundrySideAdapter()
 
         with(binding) {
+            root.visibility = View.INVISIBLE
+
             rvLaundry.layoutManager = LinearLayoutManager(context)
             rvLaundry.hasFixedSize()
             rvLaundry.adapter = laundrySideAdapter

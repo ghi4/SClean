@@ -39,12 +39,10 @@ class LaundrySideAdapter : RecyclerView.Adapter<LaundrySideAdapter.LaundrySideVi
             with(binding) {
                 val open = Utils.parseHours(data.jamBuka.toString())
                 val close = Utils.parseHours(data.jamTutup.toString())
-                val openingHours = "Buka: $open - $close"
+                val openingHours = " $open - $close"
                 tvLaundryVTitle.text = data.namaLaundry
                 tvLaundryVAddress.text = data.alamat
                 tvLaundryVOpeningHours.text = openingHours
-                tvLaundryVOrderCount.text = 100.toString()
-                tvLaundryVRating.text = 4.5.toString()
 
                 Picasso.get()
                     .load(Const.URL_BASE_IMAGE + data.photo)
