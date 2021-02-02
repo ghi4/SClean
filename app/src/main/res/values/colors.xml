@@ -18,4 +18,8 @@
 
     <!-- RED -->
     <color name="red_700">#d32f2f</color>
+
+    <!-- GREEN -->
+    <color name="green_400_light">#98ee99</color>
+    <color name="green_900">#1b5e20</color>
 </resources>

@@ -133,13 +133,15 @@ class DetailLaundryActivity : AppCompatActivity() {
                         with(binding){
                             val open = Utils.parseHours(dataLaundry.jamBuka.toString())
                             val close = Utils.parseHours(dataLaundry.jamTutup.toString())
-                            val openingHours = "Buka: $open - $close"
-                            tvDetailTitle.text = dataLaundry.namaLaundry
-                            tvDetailAddress.text = dataLaundry.alamat
-                            tvDetailCount.text = 100.toString()
-                            tvDetailRating.text = 4.5.toString()
-                            tvDetailDescription.text = dataLaundry.deskripsi
-                            tvDetailOpeningHours.text = openingHours
+                            val openingHours = " $open - $close"
+
+                            with(include){
+                                tvCardDetailTitle.text = dataLaundry.namaLaundry
+                                tvCardDetailOpeningHours.text = openingHours
+                                tvCardDetailAddress.text = dataLaundry.alamat
+                                tvCardDetailDescription.text = dataLaundry.deskripsi
+                            }
+
 
                             Picasso.get()
                                 .load(Const.URL_BASE_IMAGE + Const.URL_SPECIFIED_IMAGE + dataLaundry.photo)

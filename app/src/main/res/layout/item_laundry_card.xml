@@ -6,7 +6,8 @@
     android:layout_marginStart="8dp"
     android:layout_marginTop="8dp"
     android:layout_marginEnd="8dp"
-    app:cardCornerRadius="8dp">
+    app:cardCornerRadius="8dp"
+    app:cardElevation="5dp">
 
     <LinearLayout
         android:layout_width="match_parent"
@@ -15,7 +16,7 @@
         android:padding="16dp">
 
         <TextView
-            android:id="@+id/textView26"
+            android:id="@+id/tv_cardDetail_title"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:text="@string/laundry_si_dragon"
@@ -37,13 +38,21 @@
             android:background="?android:attr/listDivider" />
 
         <TextView
-            android:id="@+id/textView29"
+            android:id="@+id/tv_cardDetail_openingHours"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_gravity="center_vertical"
             android:gravity="center_vertical"
             android:text="@string/_09_00_21_00"
             app:drawableStartCompat="@drawable/ic_baseline_access_time_24" />
+
+        <TextView
+            android:id="@+id/tv_cardDetail_address"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="8dp"
+            android:text="@string/alamat"
+            app:drawableStartCompat="@drawable/ic_baseline_location_on_24_grey" />
 
         <View
             android:id="@+id/divider2"
@@ -54,7 +63,7 @@
             android:background="?android:attr/listDivider" />
 
         <TextView
-            android:id="@+id/textView"
+            android:id="@+id/tv_cardDetail_description"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:text="@string/laundry_description" />
