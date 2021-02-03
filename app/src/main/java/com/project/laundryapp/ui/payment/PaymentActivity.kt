@@ -115,7 +115,6 @@ class PaymentActivity : AppCompatActivity() {
     }
 
 
-
     private fun showLoading() {
         binding.progressBarPayment.visibility = View.VISIBLE
     }

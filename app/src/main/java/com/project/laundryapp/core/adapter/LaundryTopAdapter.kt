@@ -1,5 +1,6 @@
 package com.project.laundryapp.core.adapter
 
+import android.content.Context
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -11,7 +12,7 @@ import com.project.laundryapp.utils.Const
 import com.project.laundryapp.utils.Utils
 import com.squareup.picasso.Picasso
 
-class LaundryTopAdapter : RecyclerView.Adapter<LaundryTopAdapter.LaundryTopViewHolder>() {
+class LaundryTopAdapter(val context: Context) : RecyclerView.Adapter<LaundryTopAdapter.LaundryTopViewHolder>() {
 
     private var dataList = ArrayList<LaundryDataResponse>()
     var onItemClick: ((LaundryDataResponse) -> Unit)? = null
@@ -44,9 +45,10 @@ class LaundryTopAdapter : RecyclerView.Adapter<LaundryTopAdapter.LaundryTopViewH
                 tvLaundryAddress.text = data.alamat
                 tvLaundryOpeningHours.text = openingHours
 
+                val circular = Utils.getCircularProgressDrawable(context)
                 Picasso.get()
                         .load(Const.URL_BASE + data.photo)
-                        .placeholder(R.drawable.square_placeholder)
+                        .placeholder(circular)
                         .error(R.drawable.square_placeholder)
                         .resize(Const.SQUARE_TARGET_SIZE, Const.SQUARE_TARGET_SIZE)
                         .into(ivLaundryImage)

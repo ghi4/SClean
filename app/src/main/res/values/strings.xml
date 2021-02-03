@@ -76,7 +76,7 @@
     <string name="_279_reviews">(279 reviews)</string>
     <string name="_09_00_21_00">09:00 – 21:00</string>
     <string name="budi_mail_com">budi@mail.com</string>
-    <string name="_0858_2234_9923">0858–2234-9923</string>
+    <string name="_0858_2234_9923">0858–2234–9923</string>
     <string name="jl_diponegoro">Jl Diponegoro</string>
     <string name="cannot_empty">Tidak boleh kosong.</string>
     <string name="must_be_numeric">Harus berupa angka.</string>
@@ -88,7 +88,6 @@
     <string name="total_harga">Total Harga</string>
     <string name="min">-</string>
     <string name="plus">+</string>
-    <string name="please_wait">Mohon tunggu.</string>
     <string name="welcome_back">Selamat datang kembali!</string>
     <string name="email_invalid">Email tidak valid.</string>
     <string name="please_recheck">Periksa kembali data Anda.</string>

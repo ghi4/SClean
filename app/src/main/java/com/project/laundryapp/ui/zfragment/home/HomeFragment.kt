@@ -48,8 +48,8 @@ class HomeFragment : Fragment() {
         hideView()
 
         //Adapter
-        bannerAdapter = BannerAdapter()
-        laundryTopAdapter = LaundryTopAdapter()
+        bannerAdapter = BannerAdapter(requireContext())
+        laundryTopAdapter = LaundryTopAdapter(requireContext())
 
         //Binding
         with(binding) {

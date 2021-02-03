@@ -3,15 +3,14 @@ package com.project.laundryapp.utils
 import android.app.Activity
 import android.content.Context
 import android.graphics.Color
-import android.util.Log
 import android.widget.Toast
+import androidx.swiperefreshlayout.widget.CircularProgressDrawable
 import com.google.gson.Gson
 import com.project.laundryapp.R
 import com.project.laundryapp.core.data.local.User
 import com.project.laundryapp.core.data.remote.response.laundry.LaundryOrderInput
 import java.text.NumberFormat
 import java.util.*
-import kotlin.collections.ArrayList
 
 object Utils {
 
@@ -44,7 +43,7 @@ object Utils {
 
         try {
             input.map {
-                if(biggest < it.estimasiPengerjaan.toInt())
+                if (biggest < it.estimasiPengerjaan.toInt())
                     biggest = it.estimasiPengerjaan.toInt()
             }
         } catch (e: Exception) {
@@ -120,21 +119,6 @@ object Utils {
         return count
     }
 
-    fun colorTextByStatus1(input: String): Int {
-        val textColor = listOf(
-                R.color.yellow_900,
-                R.color.lightblue_900,
-                R.color.green_900,
-                R.color.red_900
-        )
-
-        return try {
-            textColor[input.toInt()]
-        } catch (e: Exception) {
-            R.color.grey_900
-        }
-    }
-
     fun colorTextByStatus(input: String): Int {
         val textColor = listOf(
                 "#f57f17",
@@ -182,16 +166,13 @@ object Utils {
         return resultDot.replace("IDR", "Rp")
     }
 
-    fun parseIntToWeight(qty: Int?, weightType: String): String {
-        return "$qty $weightType"
-    }
+    fun getCircularProgressDrawable(context: Context): CircularProgressDrawable {
+        val circularProgressDrawable = CircularProgressDrawable(context)
+        circularProgressDrawable.strokeWidth = 5f
+        circularProgressDrawable.centerRadius = 20f
+        circularProgressDrawable.start()
 
-    fun findBiggest(input1: Int, input2: Int): Int {
-        return if (input1 > input2) {
-            input1
-        } else {
-            input2
-        }
+        return circularProgressDrawable
     }
 
     fun isEmailValid(input: String): Boolean {

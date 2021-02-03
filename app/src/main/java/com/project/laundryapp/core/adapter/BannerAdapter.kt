@@ -1,5 +1,6 @@
 package com.project.laundryapp.core.adapter
 
+import android.content.Context
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -8,9 +9,10 @@ import com.project.laundryapp.R
 import com.project.laundryapp.core.data.remote.response.promotion.PromotionResponse
 import com.project.laundryapp.databinding.ItemLaundryBannerBinding
 import com.project.laundryapp.utils.Const
+import com.project.laundryapp.utils.Utils
 import com.squareup.picasso.Picasso
 
-class BannerAdapter : RecyclerView.Adapter<BannerAdapter.BannerViewHolder>() {
+class BannerAdapter(val context: Context) : RecyclerView.Adapter<BannerAdapter.BannerViewHolder>() {
 
     private var bannerList = ArrayList<PromotionResponse>()
     var onItemClick: ((PromotionResponse) -> Unit)? = null
@@ -37,10 +39,11 @@ class BannerAdapter : RecyclerView.Adapter<BannerAdapter.BannerViewHolder>() {
         fun bind(promotion: PromotionResponse) {
             with(binding) {
 
+                val circular = Utils.getCircularProgressDrawable(context)
                 //Banner Image
                 Picasso.get()
                         .load(Const.URL_BASE + promotion.photoURL)
-                        .placeholder(R.drawable.banner_placeholder)
+                        .placeholder(circular)
                         .error(R.drawable.banner_placeholder)
                         .resize(Const.BANNER_TARGET_WIDTH, Const.BANNER_TARGET_HEIGHT)
                         .into(ivBanner)

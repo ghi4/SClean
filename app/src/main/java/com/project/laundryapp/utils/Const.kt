@@ -17,6 +17,5 @@ class Const {
         const val KEY_SERVICE_ORDERED = "service ordered"
 
         const val SHIPMENT_PRICE = 10000
-        const val DEFAULT_WEIGHT_TYPE = "Kg"
     }
 }

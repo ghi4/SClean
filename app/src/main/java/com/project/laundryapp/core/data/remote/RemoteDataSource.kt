@@ -1,6 +1,5 @@
 package com.project.laundryapp.core.data.remote
 
-import android.util.Log
 import com.google.gson.Gson
 import com.project.laundryapp.core.data.local.User
 import com.project.laundryapp.core.data.remote.response.laundry.*

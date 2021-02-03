@@ -52,7 +52,7 @@ val viewModelModule = module {
     viewModel { HomeViewModel(get()) }
     viewModel { HistoryViewModel(get()) }
     viewModel { FindViewModel(get()) }
-    viewModel { ProfileViewModel(get()) }
+    viewModel { ProfileViewModel() }
     viewModel { DetailLaundryViewModel(get()) }
     viewModel { DetailOrderViewModel(get()) }
     viewModel { PaymentViewModel(get()) }

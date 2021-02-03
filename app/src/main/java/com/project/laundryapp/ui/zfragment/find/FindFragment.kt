@@ -45,7 +45,7 @@ class FindFragment : Fragment() {
         hideView()
 
         //Adapter
-        laundrySideAdapter = LaundrySideAdapter()
+        laundrySideAdapter = LaundrySideAdapter(requireContext())
 
         //Binding
         with(binding) {

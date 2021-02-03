@@ -15,11 +15,9 @@ import com.project.laundryapp.ui.login.LoginActivity
 import com.project.laundryapp.utils.Anim
 import com.project.laundryapp.utils.Utils
 import com.squareup.picasso.Picasso
-import org.koin.android.ext.android.inject
 
 class ProfileFragment : Fragment() {
 
-    private val viewModel: ProfileViewModel by inject()
     private lateinit var binding: FragmentProfileBinding
     private lateinit var user: User
 
