@@ -3,6 +3,7 @@ package com.project.laundryapp.ui.login
 import android.content.Intent
 import android.os.Bundle
 import android.util.Log
+import android.view.View
 import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
 import com.project.laundryapp.R
@@ -31,6 +32,7 @@ class LoginActivity : AppCompatActivity() {
     }
 
     private fun setupUI() {
+        clearStatusInformation()
 
         //Button Login
         binding.btLogin.setOnClickListener {
@@ -58,21 +60,9 @@ class LoginActivity : AppCompatActivity() {
     private fun getData() {
         viewModel.userData.observe(this, { dataPacket ->
 
-            Log.d("LOGIN TAG", """
-                BASE:
-                $dataPacket
-                
-                MESSAGE:
-                ${dataPacket.message}
-                
-                DATA:
-                ${dataPacket.data}
-                
-            """.trimIndent())
-
             when(dataPacket) {
                 is Resource.Loading -> {
-                    Utils.showToast(this, "Mohon tunggu.")
+                    showLoading()
                 }
 
                 is Resource.Success -> {
@@ -82,16 +72,19 @@ class LoginActivity : AppCompatActivity() {
                         //Save data to shared preference
                         Utils.putSharedPref(this, user)
 
-                        Utils.showToast(this, "Selamat datang kembali!")
+                        Utils.showToast(this, getString(R.string.welcome_back))
 
                         //Intent to MainActivity
                         val intent = Intent(this, MainActivity::class.java)
                         startActivity(intent)
                         finish()
                     }
+
+                    clearStatusInformation()
                 }
 
                 is Resource.Error -> {
+                    clearStatusInformation()
                     Utils.showToast(this, dataPacket.message.toString())
                 }
             }
@@ -112,19 +105,27 @@ class LoginActivity : AppCompatActivity() {
         // === Email ===
         if(email.isEmpty()){
             validity = false
-            binding.etEmail.error = "Tidak boleh kosong."
+            binding.etEmail.error = getString(R.string.cannot_empty)
         }
         if(!Utils.isEmailValid(email)) {
             validity = false
-            binding.etEmail.error = "Email tidak valid."
+            binding.etEmail.error = getString(R.string.email_invalid)
         }
 
         // === Password ===
         if(password.isEmpty()) {
             validity = false
-            binding.etPassword.error = "Tidak boleh kosong."
+            binding.etPassword.error = getString(R.string.cannot_empty)
         }
 
         return validity
+    }
+
+    private fun showLoading() {
+        binding.progressBarLogin.visibility = View.VISIBLE
+    }
+
+    private fun clearStatusInformation() {
+        binding.progressBarLogin.visibility = View.INVISIBLE
     }
 }

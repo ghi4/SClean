@@ -7,6 +7,7 @@ import android.view.View
 import android.view.ViewGroup
 import androidx.fragment.app.Fragment
 import androidx.recyclerview.widget.LinearLayoutManager
+import com.project.laundryapp.R
 import com.project.laundryapp.core.adapter.LaundryHistoryAdapter
 import com.project.laundryapp.core.data.Resource
 import com.project.laundryapp.core.data.remote.response.laundry.LaundryHistoryResponse
@@ -44,29 +45,33 @@ class HistoryFragment : Fragment() {
     }
 
     private fun setupUI() {
+        hideView()
+
+        //Adapter
         historyAdapter = LaundryHistoryAdapter()
 
+        //Binding
         with(binding) {
-            hideView()
-
             rvHistoryLaundry.layoutManager = LinearLayoutManager(context)
             rvHistoryLaundry.hasFixedSize()
             rvHistoryLaundry.adapter = historyAdapter
             rvHistoryLaundry.isNestedScrollingEnabled = false
         }
 
-        //OnClick Listener
+        //Item list click
         historyAdapter.onItemClick = {selectedData ->
             val intent = Intent(requireContext(), DetailOrderActivity::class.java)
             intent.putExtra(Const.KEY_LAUNDRY_HISTORY_ID, selectedData.idPesanan)
             startActivity(intent)
         }
 
-        MainActivity.getListener().tvRetry.setOnClickListener {
+        //Retry button
+        MainActivity.getStatusView().tvRetry.setOnClickListener {
             val user = Utils.getSharedPref(requireActivity())
             viewModel.triggerCall(user.id.toString())
         }
 
+        //Refresh button
         binding.btHistoryRefresh.setOnClickListener {
             val user = Utils.getSharedPref(requireActivity())
             viewModel.triggerCall(user.id.toString())
@@ -88,7 +93,9 @@ class HistoryFragment : Fragment() {
                         showView()
                         historyAdapter.setList(historyList)
                     } else {
-                        MainActivity.showMessage("Anda belum melakukan transaksi apapun.")
+                        hideView()
+                        MainActivity.showMessage(getString(R.string.no_order_history))
+                        MainActivity.getStatusView().tvRetry.visibility = View.INVISIBLE
                     }
                 }
 

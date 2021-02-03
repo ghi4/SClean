@@ -7,6 +7,7 @@ import android.view.View
 import android.view.ViewGroup
 import androidx.fragment.app.Fragment
 import androidx.recyclerview.widget.LinearLayoutManager
+import com.project.laundryapp.R
 import com.project.laundryapp.core.adapter.BannerAdapter
 import com.project.laundryapp.core.adapter.LaundryTopAdapter
 import com.project.laundryapp.core.data.Resource
@@ -45,7 +46,6 @@ class HomeFragment : Fragment() {
 
     private fun setupUI() {
         hideView()
-        MainActivity.showLoading()
 
         //Adapter
         bannerAdapter = BannerAdapter()
@@ -62,14 +62,15 @@ class HomeFragment : Fragment() {
             dotsIndicatorBanner.setViewPager2(vpHomeBanner)
         }
 
-        //OnClick Listener
+        //Item list click
         laundryTopAdapter.onItemClick = {selectedData ->
             val intent = Intent(requireContext(), DetailLaundryActivity::class.java)
             intent.putExtra(Const.KEY_LAUNDRY_ID, selectedData.idLaundry)
             startActivity(intent)
         }
 
-        MainActivity.getListener().tvRetry.setOnClickListener {
+        //Retry button
+        MainActivity.getStatusView().tvRetry.setOnClickListener {
             viewModel.triggerCall()
         }
     }
@@ -83,12 +84,16 @@ class HomeFragment : Fragment() {
                 }
 
                 is Resource.Success -> {
-                    val dataStatus = data.data
-                    val dataLaundry = dataStatus?.data
+                    val dataList = data.data?.data as ArrayList<LaundryDataResponse>
 
-                    laundryTopAdapter.setList(dataLaundry as ArrayList<LaundryDataResponse>)
-
-                    showView()
+                    if(dataList.isNotEmpty()) {
+                        showView()
+                        laundryTopAdapter.setList(dataList)
+                    } else {
+                        hideView()
+                        MainActivity.showMessage(getString(R.string.no_laundry_nearby))
+                        MainActivity.getStatusView().tvRetry.visibility = View.INVISIBLE
+                    }
                 }
 
                 is Resource.Error -> {

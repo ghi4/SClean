@@ -2,6 +2,7 @@ package com.project.laundryapp.ui.address
 
 import android.content.Intent
 import android.os.Bundle
+import android.view.View
 import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
 import com.project.laundryapp.R
@@ -32,6 +33,8 @@ class AddressActivity : AppCompatActivity() {
     }
 
     private fun setupUI() {
+        clearStatusInformation()
+
         binding.btAddressSave.setOnClickListener {
             var validity = true
 
@@ -93,10 +96,9 @@ class AddressActivity : AppCompatActivity() {
                     validity = false
                     etAddressInformation.error = getString(R.string.cannot_empty)
                 }
-
             }
 
-
+            //Check if input is valid
             if(validity) {
                 val user = Utils.getSharedPref(this)
                 user.alamat = binding.etAddressFullName.text.toString()
@@ -109,21 +111,27 @@ class AddressActivity : AppCompatActivity() {
                 viewModel.triggerPost(user)
                 Utils.putSharedPref(this, user)
             } else {
-                Toast.makeText(this, "Periksa kembali userData Anda.", Toast.LENGTH_SHORT).show()
+                Toast.makeText(this, getString(R.string.please_recheck), Toast.LENGTH_SHORT).show()
             }
         }
 
+        //Skip button
         binding.btAddressSkip.setOnClickListener {
-            startActivity(Intent(this, MainActivity::class.java))
+            val previousActivity = intent.getIntExtra(ADDRESS_CHANGE_KEY, 0)
+
+            if(previousActivity == 0) {
+                startActivity(Intent(this, MainActivity::class.java))
+            } else {
+                finish()
+            }
         }
     }
 
     private fun observeUserRegister() {
         viewModel.userData.observe(this, { dataPacket ->
             when(dataPacket) {
-
                 is Resource.Loading -> {
-                    Utils.showToast(this, "Mohon tunggu.")
+                    showLoading()
                 }
 
                 is Resource.Success -> {
@@ -131,8 +139,6 @@ class AddressActivity : AppCompatActivity() {
                     val user = dataPacket.data
 
                     if(user != null) {
-                        Utils.showToast(this, "Selamat datang!")
-
                         when (previousActivity) {
                             0 -> {
                                 val intent = Intent(this, MainActivity::class.java)
@@ -148,12 +154,22 @@ class AddressActivity : AppCompatActivity() {
                             }
                         }
                     }
+                    clearStatusInformation()
                 }
 
                 is Resource.Error -> {
+                    clearStatusInformation()
                     Utils.showToast(this, dataPacket.message.toString())
                 }
             }
         })
+    }
+
+    private fun showLoading() {
+        binding.progressBarAddress.visibility = View.VISIBLE
+    }
+
+    private fun clearStatusInformation() {
+        binding.progressBarAddress.visibility = View.INVISIBLE
     }
 }

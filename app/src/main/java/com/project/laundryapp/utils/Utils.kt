@@ -8,6 +8,7 @@ import android.widget.Toast
 import com.google.gson.Gson
 import com.project.laundryapp.R
 import com.project.laundryapp.core.data.local.User
+import com.project.laundryapp.core.data.remote.response.laundry.LaundryOrderInput
 import java.text.NumberFormat
 import java.util.*
 
@@ -84,6 +85,16 @@ object Utils {
         }
     }
 
+    fun countPrice(input: ArrayList<LaundryOrderInput>): Int {
+        var count = 0
+        input.map {
+            val price = it.harga ?: 0
+            val qty = it.jumlah ?: 0
+            count += price * qty
+        }
+        return count
+    }
+
     fun colorTextByStatus1(input: String): Int {
         val textColor = listOf(
                 R.color.yellow_900,
@@ -117,7 +128,7 @@ object Utils {
     fun parseError(input: String): String {
         return when {
             input.contains("402") -> {
-                "Periksa kembali email dan password."
+                "Pastikan email dan password benar."
             }
             input.contains("Unable to resolve host") -> {
                 "Masalah koneksi"

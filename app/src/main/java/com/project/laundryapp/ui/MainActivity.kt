@@ -44,7 +44,7 @@ class MainActivity : AppCompatActivity() {
             }
         }
 
-        fun getListener(): StatusInformationBinding {
+        fun getStatusView(): StatusInformationBinding {
             return binding.statusMain
         }
     }

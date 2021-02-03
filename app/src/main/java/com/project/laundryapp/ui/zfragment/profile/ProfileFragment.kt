@@ -40,9 +40,10 @@ class ProfileFragment : Fragment() {
     }
 
     private fun setupUI() {
-        with(binding){
-            hideView()
+        hideView()
 
+        //Binding
+        with(binding){
             tvProfileFullName.setText(user.namaLengkap)
             etProfileAddress.setText(Utils.parseFullAddress(user))
             etProfilePhone.setText(user.nomorHp)
@@ -55,12 +56,14 @@ class ProfileFragment : Fragment() {
                     .placeholder(R.drawable.gravatar)
                     .into(binding.ivProfileImage)
 
+            //Edit address button
             btProfileEditAddress.setOnClickListener {
                 val intent = Intent(requireActivity(), AddressActivity::class.java)
                 intent.putExtra(AddressActivity.ADDRESS_CHANGE_KEY, 1)
                 startActivity(intent)
             }
 
+            //Logout button
             btLogout.setOnClickListener {
                 Utils.putSharedPref(requireActivity(), User())
                 startActivity(Intent(requireActivity(), LoginActivity::class.java))

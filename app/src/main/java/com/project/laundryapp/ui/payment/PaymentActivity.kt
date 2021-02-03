@@ -2,6 +2,7 @@ package com.project.laundryapp.ui.payment
 
 import android.content.Intent
 import android.os.Bundle
+import android.view.View
 import androidx.appcompat.app.AppCompatActivity
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.project.laundryapp.R
@@ -36,23 +37,28 @@ class PaymentActivity : AppCompatActivity() {
         viewModel.orderResponse.observe(this, {data ->
             when(data){
                 is Resource.Loading -> {
-                    Utils.showToast(this, "Mohon tunggu.")
+                    showLoading()
                 }
 
                 is Resource.Success -> {
                     val intent = Intent(this, MainActivity::class.java)
                     intent.putExtra(MainActivity.FRAGMENT_ID_KEY, R.id.navigation_history)
                     startActivity(intent)
+
+                    clearStatusInformation()
                 }
 
                 is Resource.Error -> {
-                    Utils.showToast(this, data.message.toString())
+                    clearStatusInformation()
+                    Utils.showToast(this, Utils.parseError(data.message.toString()))
                 }
             }
         })
     }
 
     private fun setupUI() {
+        clearStatusInformation()
+
         val laundryId = intent.getStringExtra(Const.KEY_LAUNDRY_ID)
         val orderedService = intent.getParcelableArrayListExtra<LaundryOrderInput>(Const.KEY_SERVICE_ORDERED)
 
@@ -68,7 +74,7 @@ class PaymentActivity : AppCompatActivity() {
 
         with(binding){
             //Counting totalPrice
-            val subTotalPrice = countPrice(orderedService)
+            val subTotalPrice = Utils.countPrice(orderedService)
             val totalPrice = subTotalPrice + Const.SHIPMENT_PRICE
 
             //Initializing value
@@ -96,14 +102,19 @@ class PaymentActivity : AppCompatActivity() {
         }
     }
 
-    private fun countPrice(input: ArrayList<LaundryOrderInput>): Int {
-        var count = 0
-        input.map {
-            val price = it.harga ?: 0
-            val qty = it.jumlah ?: 0
-            count += price * qty
-        }
-        return count
+    private fun showLoading() {
+        binding.progressBarPayment.visibility = View.VISIBLE
+    }
+
+    private fun clearStatusInformation() {
+        binding.progressBarPayment.visibility = View.INVISIBLE
+    }
+
+    override fun onResume() {
+        super.onResume()
+
+        val user = Utils.getSharedPref(this)
+        binding.tvUserAddress.text = Utils.parseFullAddress(user)
     }
 
 

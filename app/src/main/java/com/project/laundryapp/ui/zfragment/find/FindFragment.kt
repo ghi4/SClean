@@ -7,6 +7,7 @@ import android.view.View
 import android.view.ViewGroup
 import androidx.fragment.app.Fragment
 import androidx.recyclerview.widget.LinearLayoutManager
+import com.project.laundryapp.R
 import com.project.laundryapp.core.adapter.LaundrySideAdapter
 import com.project.laundryapp.core.data.Resource
 import com.project.laundryapp.core.data.remote.response.laundry.LaundryDataResponse
@@ -41,11 +42,13 @@ class FindFragment : Fragment() {
     }
 
     private fun setupUI() {
+        hideView()
+
+        //Adapter
         laundrySideAdapter = LaundrySideAdapter()
 
+        //Binding
         with(binding) {
-            hideView()
-
             rvLaundry.layoutManager = LinearLayoutManager(context)
             rvLaundry.hasFixedSize()
             rvLaundry.adapter = laundrySideAdapter
@@ -59,7 +62,7 @@ class FindFragment : Fragment() {
             startActivity(intent)
         }
 
-        MainActivity.getListener().tvRetry.setOnClickListener {
+        MainActivity.getStatusView().tvRetry.setOnClickListener {
             viewModel.triggerCall()
         }
     }
@@ -73,14 +76,15 @@ class FindFragment : Fragment() {
                 }
 
                 is Resource.Success -> {
-                    val laundryList = data.data?.data as ArrayList<LaundryDataResponse>
+                    val dataList = data.data?.data as ArrayList<LaundryDataResponse>
 
-                    if(laundryList.isNotEmpty()) {
+                    if(dataList.isNotEmpty()) {
                         showView()
-                        laundrySideAdapter.setList(laundryList)
+                        laundrySideAdapter.setList(dataList)
                     } else {
                         hideView()
-                        MainActivity.showMessage("Tidak ada laundry di dekat sini.")
+                        MainActivity.showMessage(getString(R.string.no_laundry_nearby))
+                        MainActivity.getStatusView().tvRetry.visibility = View.INVISIBLE
                     }
                 }
 

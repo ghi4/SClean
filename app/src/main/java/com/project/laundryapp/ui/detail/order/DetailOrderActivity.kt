@@ -29,6 +29,7 @@ class DetailOrderActivity : AppCompatActivity() {
         setContentView(binding.root)
 
         val historyId = intent.getStringExtra(Const.KEY_LAUNDRY_HISTORY_ID)
+
         if (historyId != null) {
             viewModel.triggerCall(historyId)
             setupUI(historyId)
@@ -37,11 +38,13 @@ class DetailOrderActivity : AppCompatActivity() {
     }
 
     private fun setupUI(historyId: String) {
+        hideView()
+
+        //Adapter
         orderAdapter = LaundryOrderAdapter()
 
+        //Binding
         with(binding) {
-            hideView()
-
             rvPaymentOrderList.layoutManager = LinearLayoutManager(this@DetailOrderActivity)
             rvPaymentOrderList.hasFixedSize()
             rvPaymentOrderList.adapter = orderAdapter
@@ -50,7 +53,6 @@ class DetailOrderActivity : AppCompatActivity() {
                 viewModel.triggerDelete(historyId)
             }
         }
-
     }
 
     private fun getData() {
@@ -75,16 +77,8 @@ class DetailOrderActivity : AppCompatActivity() {
                     }
                     orderAdapter.setList(orderList as ArrayList<LaundryOrderInput>)
 
-                    val totalPrice: Int
-                    var subTotalPrice = 0
-
-                    orderList.map {
-                        val price = it.harga ?: 0
-                        val qty = it.jumlah ?: 0
-                        subTotalPrice += price * qty
-                    }
-
-                    totalPrice = subTotalPrice + Const.SHIPMENT_PRICE
+                    val subTotalPrice = Utils.countPrice(orderList)
+                    val totalPrice = subTotalPrice + Const.SHIPMENT_PRICE
 
                     with(binding) {
                         tvPaymentEstimationDays.text = 5.toString()
@@ -93,7 +87,6 @@ class DetailOrderActivity : AppCompatActivity() {
                         tvPaymentTotalPrice.text = Utils.parseIntToCurrency(totalPrice)
                     }
 
-                    clearStatusInformation()
                     showView()
                 }
 
@@ -126,13 +119,13 @@ class DetailOrderActivity : AppCompatActivity() {
     private fun hideView() {
         with(binding){
             scrollViewDetailOrder.visibility = View.INVISIBLE
-            btPaymentCancel.visibility = View.INVISIBLE
+            cardViewDetailOrder.visibility = View.INVISIBLE
         }
     }
 
     private fun showView() {
         binding.scrollViewDetailOrder.visibility = View.VISIBLE
-        binding.btPaymentCancel.visibility = View.VISIBLE
+        binding.cardViewDetailOrder.visibility = View.VISIBLE
         binding.constraintViewDetailOrder.visibility = View.INVISIBLE
         clearStatusInformation()
         Anim.crossFade(binding.constraintViewDetailOrder)

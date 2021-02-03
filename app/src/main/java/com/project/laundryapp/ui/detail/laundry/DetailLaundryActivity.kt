@@ -33,6 +33,7 @@ class DetailLaundryActivity : AppCompatActivity() {
         setContentView(binding.root)
 
         val laundryId = intent.getStringExtra(Const.KEY_LAUNDRY_ID)
+
         if (laundryId != null) {
             viewModel.triggerCall(laundryId)
             setupUI(laundryId)
@@ -41,17 +42,20 @@ class DetailLaundryActivity : AppCompatActivity() {
     }
 
     private fun setupUI(laundryId: String) {
+        hideView()
+
+        //Adapter
         serviceAdapter = LaundryServiceAdapter()
 
+        //Binding
         with(binding) {
-            hideView()
-
             rvDetailServiceList.layoutManager = LinearLayoutManager(this@DetailLaundryActivity)
             rvDetailServiceList.hasFixedSize()
             rvDetailServiceList.adapter = serviceAdapter
             rvDetailServiceList.isNestedScrollingEnabled = false
         }
 
+        //When "layanan list" is clicked
         serviceAdapter.onItemClick = {data ->
             val serviceData = LaundryOrderInput(
                 data.idLayanan.toString(),
@@ -61,29 +65,13 @@ class DetailLaundryActivity : AppCompatActivity() {
             )
 
             //Prevent duplicate data
-            if(serviceOrdered.isEmpty())
-                serviceOrdered.add(serviceData)
-            else {
-                var isNotDuplicate = true
-                for(i in 0 until serviceOrdered.size){
-                    if(serviceOrdered[i].idLayanan == serviceData.idLayanan) {
-                        isNotDuplicate = false
-                        serviceOrdered[i] = serviceData
-                    }
-                }
-                if (isNotDuplicate)
-                    serviceOrdered.add(serviceData)
-            }
+            duplicatePreventor(serviceData)
 
             //Prevent "jumlah = 0" in the list
-            for(i in 0 until serviceOrdered.size){
-                if(serviceOrdered[i].jumlah == 0){
-                    serviceOrdered.removeAt(i)
-                }
-            }
-
+            zeroQtyPreventor()
         }
 
+        //Order button
         binding.btDetailOrder.setOnClickListener {
             if(serviceOrdered.isNotEmpty()){
                 val intent = Intent(this, PaymentActivity::class.java)
@@ -131,7 +119,6 @@ class DetailLaundryActivity : AppCompatActivity() {
                             serviceAdapter.setList(dataLaundry.laundryService as ArrayList<LaundryServiceResponse>)
                         }
 
-                        clearStatusInformation()
                         showView()
                     }
                 }
@@ -142,6 +129,30 @@ class DetailLaundryActivity : AppCompatActivity() {
                 }
             }
         })
+    }
+
+    private fun duplicatePreventor(input: LaundryOrderInput){
+        if(serviceOrdered.isEmpty())
+            serviceOrdered.add(input)
+        else {
+            var isNotDuplicate = true
+            for(i in 0 until serviceOrdered.size){
+                if(serviceOrdered[i].idLayanan == input.idLayanan) {
+                    isNotDuplicate = false
+                    serviceOrdered[i] = input
+                }
+            }
+            if (isNotDuplicate)
+                serviceOrdered.add(input)
+        }
+    }
+
+    private fun zeroQtyPreventor(){
+        for(i in 0 until serviceOrdered.size){
+            if(serviceOrdered[i].jumlah == 0){
+                serviceOrdered.removeAt(i)
+            }
+        }
     }
 
     private fun hideView() {
