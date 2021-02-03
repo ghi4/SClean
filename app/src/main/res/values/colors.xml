@@ -17,9 +17,23 @@
     <color name="blue_500">#6cecff</color>
 
     <!-- RED -->
+    <color name="red_400_light">#ff867c</color>
+    <color name="red_900">#b71c1c</color>
     <color name="red_700">#d32f2f</color>
+
+    <!-- YELLOW -->
+    <color name="yellow_400_light">#ffff8b</color>
+    <color name="yellow_900">#f57f17</color>
+
+    <!-- LIGHT BLUE -->
+    <color name="lighblue_400_light">#73e8ff</color>
+    <color name="lightblue_900">#01579b</color>
 
     <!-- GREEN -->
     <color name="green_400_light">#98ee99</color>
     <color name="green_900">#1b5e20</color>
+
+    <!-- GREY -->
+    <color name="grey_400_light">#efefef</color>
+    <color name="grey_900">#212121</color>
 </resources>

@@ -44,28 +44,27 @@ class HistoryFragment : Fragment() {
         getData()
     }
 
+    private fun setupUI() {
+        historyAdapter = LaundryHistoryAdapter()
+
+        with(binding) {
+            root.visibility = View.INVISIBLE
+
+            rvHistoryLaundry.layoutManager = LinearLayoutManager(context)
+            rvHistoryLaundry.hasFixedSize()
+            rvHistoryLaundry.adapter = historyAdapter
+            rvHistoryLaundry.isNestedScrollingEnabled = false
+        }
+
+        historyAdapter.onItemClick = {selectedData ->
+            val intent = Intent(requireContext(), DetailOrderActivity::class.java)
+            intent.putExtra(Const.KEY_LAUNDRY_HISTORY_ID, selectedData.idPesanan)
+            startActivity(intent)
+        }
+    }
+
     private fun getData() {
         viewModel.dataHistory.observe(viewLifecycleOwner, {data ->
-            Log.d("HISTORY TAG", """
-                    BASE:
-                    $data
-                    
-                    MESSAGE:
-                    ${data.message}
-                    
-                    MESSAGE RESPONSE:
-                    ${data.data?.message}
-                                        
-                    MESSAGE ERROR
-                    ${data.data?.error}
-                    
-                    RESOURCE:
-                    ${data.data}
-                    
-                    DATA LIST:
-                    ${data.data?.data}
-                """.trimIndent())
-
             when(data) {
                 is Resource.Loading -> {
                     MainActivity.showLoading()
@@ -84,24 +83,5 @@ class HistoryFragment : Fragment() {
                 }
             }
         })
-    }
-
-    private fun setupUI() {
-        historyAdapter = LaundryHistoryAdapter()
-
-        with(binding) {
-            root.visibility = View.INVISIBLE
-
-            rvHistoryLaundry.layoutManager = LinearLayoutManager(context)
-            rvHistoryLaundry.hasFixedSize()
-            rvHistoryLaundry.adapter = historyAdapter
-            rvHistoryLaundry.isNestedScrollingEnabled = false
-        }
-
-        historyAdapter.onItemClick = {selectedData ->
-            val intent = Intent(requireContext(), DetailOrderActivity::class.java)
-            intent.putExtra(Const.KEY_LAUNDRY_HISTORY_ID, selectedData.idPesanan)
-            startActivity(intent)
-        }
     }
 }

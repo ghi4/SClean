@@ -46,29 +46,38 @@ class HomeFragment : Fragment() {
         getData()
     }
 
+    private fun setupUI() {
+        hideView()
+        MainActivity.showLoading()
+
+        //Adapter
+        bannerAdapter = BannerAdapter()
+        laundryTopAdapter = LaundryTopAdapter()
+
+        //Binding
+        with(binding) {
+            rvHomeRecommendation.layoutManager = LinearLayoutManager(context)
+            rvHomeRecommendation.hasFixedSize()
+            rvHomeRecommendation.adapter = laundryTopAdapter
+            rvHomeRecommendation.isNestedScrollingEnabled = false
+
+            vpHomeBanner.adapter = bannerAdapter
+            dotsIndicatorBanner.setViewPager2(vpHomeBanner)
+        }
+
+        //When list data clicked
+        laundryTopAdapter.onItemClick = {selectedData ->
+            val intent = Intent(requireContext(), DetailLaundryActivity::class.java)
+            intent.putExtra(Const.KEY_LAUNDRY_ID, selectedData.idLaundry)
+            startActivity(intent)
+        }
+    }
+
     private fun getData() {
         viewModel.laundryData.observe(viewLifecycleOwner, {data ->
-            Log.d("HOME TAG", """
-                        BASE:
-                        $data
-                        
-                        MESSAGE:
-                        ${data.message}
-                        
-                        MESSAGE RESPONSE:
-                        ${data.data?.message}
-                        
-                        MESSAGE ERROR:
-                        ${data.data?.error}
-                        
-                        DATA:
-                        ${data.data?.data}
-                        
-                        DATA SIZE:
-                        ${data.data?.data?.size}
-                    """.trimIndent())
             when(data) {
                 is Resource.Loading -> {
+                    hideView()
                     MainActivity.showLoading()
                 }
 
@@ -78,12 +87,12 @@ class HomeFragment : Fragment() {
 
                     laundryTopAdapter.setList(dataLaundry as ArrayList<LaundryDataResponse>)
 
-                    MainActivity.clearStatusInformation()
-                    Anim.crossFade(binding.root)
+                    showView()
                 }
 
                 is Resource.Error -> {
-                    Utils.showToast(requireContext(), data.message.toString())
+                    hideView()
+                    MainActivity.showMessage(data.data?.message ?: data.message)
                 }
             }
         })
@@ -106,29 +115,14 @@ class HomeFragment : Fragment() {
         })
     }
 
-    private fun setupUI() {
-        //Adapter
-        bannerAdapter = BannerAdapter()
-        laundryTopAdapter = LaundryTopAdapter()
-
-        //Binding
-        with(binding) {
-            root.visibility = View.INVISIBLE
-
-            rvHomeRecommendation.layoutManager = LinearLayoutManager(context)
-            rvHomeRecommendation.hasFixedSize()
-            rvHomeRecommendation.adapter = laundryTopAdapter
-            rvHomeRecommendation.isNestedScrollingEnabled = false
-
-            vpHomeBanner.adapter = bannerAdapter
-            dotsIndicatorBanner.setViewPager2(vpHomeBanner)
+    private fun hideView() {
+        with(binding){
+            scrollViewHome.visibility = View.INVISIBLE
         }
+    }
 
-        //When list data clicked
-        laundryTopAdapter.onItemClick = {selectedData ->
-            val intent = Intent(requireContext(), DetailLaundryActivity::class.java)
-            intent.putExtra(Const.KEY_LAUNDRY_ID, selectedData.idLaundry)
-            startActivity(intent)
-        }
+    private fun showView() {
+        MainActivity.clearStatusInformation()
+        Anim.crossFade(binding.scrollViewHome)
     }
 }

@@ -10,6 +10,7 @@ import androidx.navigation.ui.setupActionBarWithNavController
 import androidx.navigation.ui.setupWithNavController
 import com.project.laundryapp.R
 import com.project.laundryapp.databinding.ActivityMainBinding
+import com.project.laundryapp.databinding.StatusInformationBinding
 
 class MainActivity : AppCompatActivity() {
 
@@ -19,15 +20,17 @@ class MainActivity : AppCompatActivity() {
 
         fun showLoading() {
             with(binding.statusMain) {
-                progressBar.visibility = View.INVISIBLE
+                progressBar.visibility = View.VISIBLE
                 tvMessage.visibility = View.INVISIBLE
+                tvRetry.visibility = View.INVISIBLE
             }
         }
 
-        fun showMessage(message: String) {
+        fun showMessage(message: String? = "Terjadi masalah.") {
             with(binding.statusMain) {
                 progressBar.visibility = View.INVISIBLE
                 tvMessage.visibility = View.VISIBLE
+                tvRetry.visibility = View.VISIBLE
 
                 tvMessage.text = message
             }
@@ -37,7 +40,12 @@ class MainActivity : AppCompatActivity() {
             with(binding.statusMain) {
                 progressBar.visibility = View.INVISIBLE
                 tvMessage.visibility = View.INVISIBLE
+                tvRetry.visibility = View.INVISIBLE
             }
+        }
+
+        fun getListener(): StatusInformationBinding {
+            return binding.statusMain
         }
     }
 

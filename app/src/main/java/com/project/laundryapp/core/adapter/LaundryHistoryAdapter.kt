@@ -39,7 +39,11 @@ class LaundryHistoryAdapter : RecyclerView.Adapter<LaundryHistoryAdapter.Laundry
                 tvHistoryTitle.text = data.namaLaundry
                 tvHistoryPrice.text = Utils.parseIntToCurrency(price.toInt())
                 tvHistoryDate.text = data.tglPesan
-                tvHistoryStatus.text = Utils.parseStatus(data.status.toString())
+
+                val status = data.status.toString()
+                tvHistoryStatus.text = Utils.parseStatus(status)
+                tvHistoryStatus.setBackgroundResource(Utils.colorBackgroundByStatus(status))
+                tvHistoryStatus.setTextColor(Utils.colorTextByStatus(status))
             }
         }
 

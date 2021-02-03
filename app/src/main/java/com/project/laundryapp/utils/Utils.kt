@@ -2,9 +2,11 @@ package com.project.laundryapp.utils
 
 import android.app.Activity
 import android.content.Context
+import android.graphics.Color
 import android.util.Log
 import android.widget.Toast
 import com.google.gson.Gson
+import com.project.laundryapp.R
 import com.project.laundryapp.core.data.local.User
 import java.text.NumberFormat
 import java.util.*
@@ -44,22 +46,71 @@ object Utils {
         }
     }
 
+    fun parseFullAddress(user: User): String {
+        return "${user.alamat}, " +
+                "Kel. ${user.kelurahan}, " +
+                "Kec. ${user.kecamatan}, " +
+                "Kota ${user.kota}, " +
+                "Kode Pos ${user.kodePos}"
+    }
+
     fun parseStatus(input: String): String {
         val status = listOf(
             "Menunggu Konfirmasi",
-            "Menerima Pesanan",
-            "Proses Pengambilan",
-            "Proses Pengerjaan",
-            "Proses Selesai",
-            "Proses Pengiriman",
-            "Pesanan Selesai",
-            "Dibatalkan"
+                "Menerima Pesanan",
+                "Pesanan Selesai",
+                "Pesanan Dibatalkan"
         )
 
         return try {
             status[input.toInt()]
         } catch (e: Exception) {
             input
+        }
+    }
+
+    fun colorBackgroundByStatus(input: String): Int {
+        val backgroundColor = listOf(
+                R.drawable.textview_roundedcorner_yellow,
+                R.drawable.textview_roundedcorner_lightblue,
+                R.drawable.textview_roundedcorner_green,
+                R.drawable.textview_roundedcorner_red
+        )
+
+        return try {
+            backgroundColor[input.toInt()]
+        } catch (e: Exception) {
+            R.drawable.textview_roundedcorner_grey
+        }
+    }
+
+    fun colorTextByStatus1(input: String): Int {
+        val textColor = listOf(
+                R.color.yellow_900,
+                R.color.lightblue_900,
+                R.color.green_900,
+                R.color.red_900
+        )
+
+        return try {
+            textColor[input.toInt()]
+        } catch (e: Exception) {
+            R.color.grey_900
+        }
+    }
+
+    fun colorTextByStatus(input: String): Int {
+        val textColor = listOf(
+                "#f57f17",
+                "#01579b",
+                "#1b5e20",
+                "#b71c1c"
+        )
+
+        return try {
+            Color.parseColor(textColor[input.toInt()])
+        } catch (e: Exception) {
+            Color.parseColor("#212121")
         }
     }
 

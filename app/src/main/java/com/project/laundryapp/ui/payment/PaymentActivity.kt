@@ -12,6 +12,7 @@ import com.project.laundryapp.core.data.remote.response.laundry.LaundryOrderInpu
 import com.project.laundryapp.core.data.remote.response.laundry.LaundryServiceResponse
 import com.project.laundryapp.databinding.ActivityPaymentBinding
 import com.project.laundryapp.ui.MainActivity
+import com.project.laundryapp.ui.address.AddressActivity
 import com.project.laundryapp.utils.Const
 import com.project.laundryapp.utils.Utils
 import org.koin.android.ext.android.inject
@@ -34,25 +35,6 @@ class PaymentActivity : AppCompatActivity() {
 
     private fun getData() {
         viewModel.orderResponse.observe(this, {data ->
-            Log.d("DETAIL LAUNDRY TAG", """
-                BASE:
-                $data
-                
-                RESOURCE:
-                ${data.data}
-                
-                MESSAGE:
-                ${data.message}
-                
-                MESSAGE RESPONSE:
-                ${data.data?.message}
-                                
-                MESSAGE ERROR:
-                ${data.data?.error}
-                
-                DATA:
-                ${data.data?.data}
-            """.trimIndent())
             when(data){
                 is Resource.Loading -> {
                     Utils.showToast(this, "Mohon tunggu.")
@@ -76,25 +58,24 @@ class PaymentActivity : AppCompatActivity() {
     private fun setupUI() {
         val laundryId = intent.getStringExtra(Const.KEY_LAUNDRY_ID)
         val orderedService = intent.getParcelableArrayListExtra<LaundryOrderInput>(Const.KEY_SERVICE_ORDERED)
+
         val user = Utils.getSharedPref(this)
+        val data = LaundryServiceResponse(
+                idLayanan = user.id,
+                idLaundry = laundryId,
+                daftarLayanan = orderedService
+        )
 
         orderAdapter = LaundryOrderAdapter()
         orderAdapter.setList(orderedService as ArrayList<LaundryOrderInput>)
 
         with(binding){
-            val totalPrice: Int
-            var subTotalPrice = 0
-
             //Counting totalPrice
-            orderedService.map {
-                val price = it.harga ?: 0
-                val qty = it.jumlah ?: 0
-                subTotalPrice += price * qty
-            }
-            totalPrice = subTotalPrice + Const.SHIPMENT_PRICE
+            val subTotalPrice = countPrice(orderedService)
+            val totalPrice = subTotalPrice + Const.SHIPMENT_PRICE
 
             //Initializing value
-            tvUserAddress.text = user.alamat
+            tvUserAddress.text = Utils.parseFullAddress(user)
             tvPaymentSubTotal.text = Utils.parseIntToCurrency(subTotalPrice)
             tvPaymentShipment.text = Utils.parseIntToCurrency(Const.SHIPMENT_PRICE)
             tvPaymentTotal.text = Utils.parseIntToCurrency(totalPrice)
@@ -106,20 +87,27 @@ class PaymentActivity : AppCompatActivity() {
 
             //Change Address
             tvChangeAddress.setOnClickListener {
-
+                val intent = Intent(this@PaymentActivity, AddressActivity::class.java)
+                intent.putExtra(AddressActivity.ADDRESS_CHANGE_KEY, 2)
+                startActivity(intent)
             }
 
             //Payment Confirmation
             btPaymentConfirmation.setOnClickListener {
-                val data = LaundryServiceResponse(
-                    idLayanan = user.id,
-                    idLaundry = laundryId,
-                    daftarLayanan = orderedService
-                )
-
                 viewModel.triggerPayment(data)
             }
         }
-
     }
+
+    private fun countPrice(input: ArrayList<LaundryOrderInput>): Int {
+        var count = 0
+        input.map {
+            val price = it.harga ?: 0
+            val qty = it.jumlah ?: 0
+            count += price * qty
+        }
+        return count
+    }
+
+
 }

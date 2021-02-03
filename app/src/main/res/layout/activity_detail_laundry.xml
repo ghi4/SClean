@@ -8,7 +8,7 @@
     <ScrollView
         android:layout_width="match_parent"
         android:layout_height="0dp"
-        android:fillViewport="false"
+        android:fillViewport="true"
         app:layout_constraintBottom_toTopOf="@+id/bt_detail_order"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.5"
@@ -23,7 +23,7 @@
             <ImageView
                 android:id="@+id/iv_detail_image"
                 android:layout_width="0dp"
-                android:layout_height="300dp"
+                android:layout_height="250dp"
                 android:adjustViewBounds="true"
                 android:contentDescription="@string/laundry_image"
                 android:scaleType="centerCrop"
@@ -33,30 +33,43 @@
                 app:layout_constraintTop_toTopOf="parent"
                 app:srcCompat="@drawable/image_placeholder" />
 
-            <include
-                android:id="@+id/include"
-                layout="@layout/item_laundry_card"
-                android:layout_width="0dp"
+            <androidx.constraintlayout.widget.ConstraintLayout
+                android:id="@+id/constraintLayout2"
+                android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_marginStart="16dp"
-                android:layout_marginEnd="16dp"
-                app:layout_constraintBottom_toBottomOf="@+id/iv_detail_image"
+                android:translationY="-50dp"
                 app:layout_constraintEnd_toEndOf="parent"
-                app:layout_constraintHorizontal_bias="0.5"
                 app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toBottomOf="@+id/iv_detail_image" />
+                app:layout_constraintTop_toBottomOf="@+id/iv_detail_image">
+
+                <include
+                    android:id="@+id/include"
+                    layout="@layout/item_laundry_card"
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_marginStart="16dp"
+                    android:layout_marginEnd="16dp"
+                    android:layout_marginBottom="16dp"
+                    android:translationY="-100dp"
+                    app:layout_constraintBottom_toBottomOf="parent"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toTopOf="parent" />
+            </androidx.constraintlayout.widget.ConstraintLayout>
 
             <androidx.recyclerview.widget.RecyclerView
                 android:id="@+id/rv_detail_serviceList"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_marginStart="8dp"
-                android:layout_marginTop="16dp"
                 android:layout_marginEnd="8dp"
+                android:clipToPadding="false"
+                android:paddingBottom="16dp"
+                android:translationY="-50dp"
                 app:layout_constraintEnd_toEndOf="parent"
-                app:layout_constraintHorizontal_bias="0.5"
+                app:layout_constraintHorizontal_bias="1.0"
                 app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toBottomOf="@+id/include"
+                app:layout_constraintTop_toBottomOf="@+id/constraintLayout2"
                 tools:itemCount="5"
                 tools:listitem="@layout/item_laundry_service" />
 

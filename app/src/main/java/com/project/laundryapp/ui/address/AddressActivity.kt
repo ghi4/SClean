@@ -17,6 +17,10 @@ class AddressActivity : AppCompatActivity() {
     private val viewModel: AddressViewModel by inject()
     private lateinit var binding: ActivityAddressBinding
 
+    companion object {
+        const val ADDRESS_CHANGE_KEY = "address change key"
+    }
+
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_address)
@@ -50,45 +54,45 @@ class AddressActivity : AppCompatActivity() {
                 // === Full Address ===
                 if(fullAddress.isEmpty()) {
                     validity = false
-                    etAddressFullName.error = "Tidak boleh kosong."
+                    etAddressFullName.error = getString(R.string.cannot_empty)
                 }
 
                 // === City ===
                 if(city.isEmpty()) {
                     validity = false
-                    etAddressCity.error = "Tidak boleh kosong."
+                    etAddressCity.error = getString(R.string.cannot_empty)
                 }
 
                 // === Distric ===
                 if(districs.isEmpty()) {
                     validity = false
-                    etAddressDistricts.error = "Tidak boleh kosong."
+                    etAddressDistricts.error = getString(R.string.cannot_empty)
                 }
 
                 // === Sub Distric ===
                 if(subDistric.isEmpty()) {
                     validity = false
-                    etAddressSubDistrict.error = "Tidak boleh kosong."
+                    etAddressSubDistrict.error = getString(R.string.cannot_empty)
                 }
 
                 // === Postal Code ===
                 if(postalCode.length != 5) {
                     validity = false
-                    etAddressPostalCode.error = "Harus 5 karakter."
+                    etAddressPostalCode.error = getString(R.string.must_be_5_characters)
                 }
                 if(!Utils.isNumeric(postalCode)) {
                     validity = false
-                    etAddressPostalCode.error = "Harus berupa angka."
+                    etAddressPostalCode.error = getString(R.string.must_be_numeric)
                 }
                 if(postalCode.isEmpty()) {
                     validity = false
-                    etAddressPostalCode.error = "Tidak boleh kosong."
+                    etAddressPostalCode.error = getString(R.string.cannot_empty)
                 }
 
                 // === Address Info ===
                 if(addressInfo.isEmpty()) {
                     validity = false
-                    etAddressInformation.error = "Tidak boleh kosong."
+                    etAddressInformation.error = getString(R.string.cannot_empty)
                 }
 
             }
@@ -104,6 +108,7 @@ class AddressActivity : AppCompatActivity() {
                 user.keteranganAlamat = binding.etAddressInformation.text.toString()
 
                 viewModel.triggerPost(user)
+                Utils.putSharedPref(this, user)
             } else {
                 Toast.makeText(this, "Periksa kembali userData Anda.", Toast.LENGTH_SHORT).show()
             }
@@ -116,18 +121,6 @@ class AddressActivity : AppCompatActivity() {
 
     private fun observeUserRegister() {
         viewModel.userData.observe(this, { dataPacket ->
-            Log.d("ADDRESS TAG", """
-                BASE:
-                $dataPacket
-                
-                MESSAGE:
-                ${dataPacket.message}
-                
-                DATA:
-                ${dataPacket.data}
-                
-            """.trimIndent())
-
             when(dataPacket) {
 
                 is Resource.Loading -> {
@@ -135,13 +128,26 @@ class AddressActivity : AppCompatActivity() {
                 }
 
                 is Resource.Success -> {
+                    val previousActivity = intent.getIntExtra(ADDRESS_CHANGE_KEY, 0)
                     val user = dataPacket.data
 
-                    Utils.showToast(this, "Selamat datang!")
-
                     if(user != null) {
-                        val intent = Intent(this, MainActivity::class.java)
-                        startActivity(intent)
+                        Utils.showToast(this, "Selamat datang!")
+
+                        when (previousActivity) {
+                            0 -> {
+                                val intent = Intent(this, MainActivity::class.java)
+                                startActivity(intent)
+                            }
+                            1 -> {
+                                val intent = Intent(this, MainActivity::class.java)
+                                intent.putExtra(MainActivity.FRAGMENT_ID_KEY, R.id.navigation_profile)
+                                startActivity(intent)
+                            }
+                            else -> {
+                                finish()
+                            }
+                        }
                     }
                 }
 

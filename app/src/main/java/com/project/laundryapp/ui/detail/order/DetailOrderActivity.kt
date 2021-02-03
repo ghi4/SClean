@@ -38,6 +38,9 @@ class DetailOrderActivity : AppCompatActivity() {
     }
 
     private fun getData() {
+        val user = Utils.getSharedPref(this)
+        binding.tvUserAddress.text = Utils.parseFullAddress(user)
+
         viewModel.historyDetail.observe(this, {data ->
             Log.d("DETAIL ORDER", """
                         =============================================================

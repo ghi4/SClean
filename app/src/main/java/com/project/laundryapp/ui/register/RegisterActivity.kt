@@ -138,6 +138,7 @@ class RegisterActivity : AppCompatActivity() {
                         //Intent to AddressActivity
                         val intent = Intent(this, AddressActivity::class.java)
                         startActivity(intent)
+                        finish()
                     }
                 }
 

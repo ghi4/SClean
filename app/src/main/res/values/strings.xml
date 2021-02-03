@@ -91,4 +91,11 @@
     <string name="_4_5">4.5</string>
     <string name="_279_reviews">(279 reviews)</string>
     <string name="_09_00_21_00">09:00 - 21:00</string>
+    <string name="budi_mail_com">budi@mail.com</string>
+    <string name="_0858_2234_9923">0858-2234-9923</string>
+    <string name="jl_diponegoro">Jl Diponegoro</string>
+    <string name="cannot_empty">Tidak boleh kosong.</string>
+    <string name="must_be_numeric">Harus berupa angka.</string>
+    <string name="must_be_5_characters">Harus 5 karakter.</string>
+    <string name="retry">RETRY</string>
 </resources>

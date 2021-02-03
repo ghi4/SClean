@@ -11,100 +11,137 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content">
 
-        <de.hdodenhof.circleimageview.CircleImageView
-            android:id="@+id/iv_profile_image"
-            android:layout_width="150dp"
-            android:layout_height="150dp"
-            android:layout_marginStart="120dp"
-            android:layout_marginTop="30dp"
-            android:layout_marginEnd="120dp"
-            android:layout_marginBottom="8dp"
-            android:contentDescription="@string/profile_photo"
-            app:civ_border_color="@color/black_light"
-            app:civ_border_width="2dp"
-            app:layout_constraintBottom_toTopOf="@+id/tv_profile_fullName"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toTopOf="parent"
-            tools:src="@tools:sample/avatars" />
-
-        <TextView
-            android:id="@+id/tv_profile_fullName"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_marginTop="8dp"
-            android:text="@string/profile_name"
-            android:textSize="18sp"
-            app:layout_constraintEnd_toEndOf="@+id/iv_profile_image"
-            app:layout_constraintStart_toStartOf="@+id/iv_profile_image"
-            app:layout_constraintTop_toBottomOf="@+id/iv_profile_image" />
-
-        <LinearLayout
-            android:id="@+id/linearLayout6"
+        <FrameLayout
+            android:id="@+id/frameLayout"
             android:layout_width="0dp"
             android:layout_height="wrap_content"
-            android:layout_marginStart="32dp"
-            android:layout_marginTop="16dp"
-            android:layout_marginEnd="32dp"
-            android:orientation="vertical"
+            android:layout_marginTop="91dp"
+            android:clipToPadding="false"
+            android:padding="16dp"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintHorizontal_bias="0.5"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent">
+
+            <androidx.cardview.widget.CardView
+                android:id="@+id/cardView4"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                app:cardCornerRadius="5dp"
+                app:cardElevation="5dp">
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:layout_marginTop="50dp"
+                    android:orientation="vertical"
+                    android:padding="16dp">
+
+                    <TextView
+                        android:id="@+id/textView"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:text="@string/nama_lengkap" />
+
+                    <EditText
+                        android:id="@+id/tv_profile_fullName"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:autofillHints="name"
+                        android:background="@drawable/edittext_box"
+                        android:ems="10"
+                        android:hint="@string/masukkan_nama_lengkap"
+                        android:inputType="textPersonName"
+                        android:text="@string/profile_name" />
+
+                    <TextView
+                        android:id="@+id/textView21"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_marginTop="8dp"
+                        android:text="@string/email" />
+
+                    <EditText
+                        android:id="@+id/et_profile_email"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:autofillHints="@string/email"
+                        android:background="@drawable/edittext_box"
+                        android:clickable="false"
+                        android:ems="10"
+                        android:hint="@string/masukkan_email"
+                        android:inputType="textEmailAddress"
+                        android:text="@string/budi_mail_com" />
+
+                    <TextView
+                        android:id="@+id/textView22"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_marginTop="8dp"
+                        android:text="@string/nomor_hp" />
+
+                    <EditText
+                        android:id="@+id/et_profile_phone"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:autofillHints="phone"
+                        android:background="@drawable/edittext_box"
+                        android:ems="10"
+                        android:hint="@string/masukkan_nomor_hp"
+                        android:inputType="phone"
+                        android:text="@string/_0858_2234_9923" />
+
+                    <TextView
+                        android:id="@+id/bt_profile_editAddress"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_marginTop="8dp"
+                        android:gravity="bottom"
+                        android:text="@string/alamat"
+                        app:drawableEndCompat="@drawable/ic_baseline_edit_24" />
+
+                    <EditText
+                        android:id="@+id/et_profile_address"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:autofillHints="address"
+                        android:background="@drawable/edittext_box"
+                        android:ems="10"
+                        android:gravity="start|top"
+                        android:hint="@string/masukkan_alamat"
+                        android:inputType="textMultiLine"
+                        android:minLines="5"
+                        android:text="@string/jl_diponegoro" />
+
+                    <Button
+                        android:id="@+id/bt_logout"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_marginTop="16dp"
+                        android:text="@string/keluar"
+                        android:theme="@style/Button.White" />
+
+                </LinearLayout>
+            </androidx.cardview.widget.CardView>
+        </FrameLayout>
+
+        <FrameLayout
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            app:layout_constraintBottom_toTopOf="@+id/frameLayout"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/tv_profile_fullName">
+            app:layout_constraintTop_toTopOf="@+id/frameLayout">
 
-            <TextView
-                android:id="@+id/textView21"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:text="@string/email" />
+            <de.hdodenhof.circleimageview.CircleImageView
+                android:id="@+id/iv_profile_image"
+                android:layout_width="150dp"
+                android:layout_height="150dp"
+                android:contentDescription="@string/profile_photo"
+                app:civ_border_color="@color/black_light"
+                app:civ_border_width="2dp"
+                tools:src="@tools:sample/avatars" />
+        </FrameLayout>
 
-            <EditText
-                android:id="@+id/et_profile_email"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:autofillHints="@string/email"
-                android:clickable="false"
-                android:ems="10"
-                android:hint="@string/masukkan_email"
-                android:inputType="textEmailAddress" />
-
-            <TextView
-                android:id="@+id/textView22"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:text="@string/nomor_hp" />
-
-            <EditText
-                android:id="@+id/et_profile_phone"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:autofillHints="phone"
-                android:ems="10"
-                android:hint="@string/masukkan_nomor_hp"
-                android:inputType="phone" />
-
-            <TextView
-                android:id="@+id/textView23"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:text="@string/alamat" />
-
-            <EditText
-                android:id="@+id/et_profile_address"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:autofillHints="address"
-                android:ems="10"
-                android:gravity="start|top"
-                android:hint="@string/masukkan_alamat"
-                android:inputType="textMultiLine" />
-
-            <Button
-                android:id="@+id/bt_logout"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:text="@string/keluar"
-                android:theme="@style/Button.White" />
-
-        </LinearLayout>
     </androidx.constraintlayout.widget.ConstraintLayout>
 </ScrollView>
