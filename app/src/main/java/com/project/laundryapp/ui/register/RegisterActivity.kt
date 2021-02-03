@@ -2,6 +2,7 @@ package com.project.laundryapp.ui.register
 
 import android.content.Intent
 import android.os.Bundle
+import android.view.View
 import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
 import com.project.laundryapp.R
@@ -27,10 +28,12 @@ class RegisterActivity : AppCompatActivity() {
 
         setupUI()
         getData()
-
     }
 
     private fun setupUI() {
+        clearStatusInformation()
+
+        //Button Registration
         binding.btRegistration.setOnClickListener {
             var validity = true
 
@@ -50,41 +53,41 @@ class RegisterActivity : AppCompatActivity() {
                 // === Full Name ===
                 if (fullName.isEmpty()) {
                     validity = false
-                    etFullName.error = "Tidak boleh kosong."
+                    etFullName.error = getString(R.string.cannot_empty)
                 }
 
                 // === Email ===
                 if (email.isEmpty()) {
                     validity = false
-                    etRegisterEmail.error = "Tidak boleh kosong."
+                    etRegisterEmail.error = getString(R.string.cannot_empty)
                 }
                 if (!Utils.isEmailValid(email)) {
                     validity = false
-                    etRegisterEmail.error = "Email tidak valid."
+                    etRegisterEmail.error = getString(R.string.email_invalid)
                 }
 
                 // === Phone ===
                 if (phone.isEmpty()) {
                     validity = false
-                    etRegisterPhone.error = "Tidak boleh kosong."
+                    etRegisterPhone.error = getString(R.string.cannot_empty)
                 }
 
                 // === Password ===
                 if (password.length < 5) {
                     validity = false
-                    etRegisterRePassword.error = "Minimal 5 karakter."
+                    etRegisterRePassword.error = getString(R.string.minimum_5_characters)
                 }
                 if (rePassword != password) {
                     validity = false
-                    etRegisterRePassword.error = "Password tidak cocok."
+                    etRegisterRePassword.error = getString(R.string.password_not_match)
                 }
                 if (password.isEmpty()) {
                     validity = false
-                    etRegisterPassword.error = "Tidak boleh kosong."
+                    etRegisterPassword.error = getString(R.string.cannot_empty)
                 }
                 if (rePassword.isEmpty()) {
                     validity = false
-                    etRegisterRePassword.error = "Tidak boleh kosong."
+                    etRegisterRePassword.error = getString(R.string.cannot_empty)
                 }
             }
 
@@ -97,10 +100,11 @@ class RegisterActivity : AppCompatActivity() {
                 )
                 viewModel.registerUser(userRegister)
             } else {
-                Toast.makeText(this, "Periksa kembali data Anda.", Toast.LENGTH_SHORT).show()
+                Toast.makeText(this, getString(R.string.please_recheck), Toast.LENGTH_SHORT).show()
             }
         }
 
+        //Button open Login
         binding.tvGotoLogin.setOnClickListener {
             startActivity(Intent(this, LoginActivity::class.java))
         }
@@ -110,7 +114,7 @@ class RegisterActivity : AppCompatActivity() {
         viewModel.userData.observe(this, { dataPacket ->
             when (dataPacket) {
                 is Resource.Loading -> {
-                    Utils.showToast(this, "Mohon tunggu.")
+                    showLoading()
                 }
 
                 is Resource.Success -> {
@@ -120,19 +124,29 @@ class RegisterActivity : AppCompatActivity() {
                         //Save data to shared preference
                         Utils.putSharedPref(this, user)
 
-                        Utils.showToast(this, "Registrasi sukses!")
-
                         //Intent to AddressActivity
                         val intent = Intent(this, AddressActivity::class.java)
                         startActivity(intent)
                         finish()
                     }
+
+                    clearStatusInformation()
                 }
 
                 is Resource.Error -> {
+                    clearStatusInformation()
                     Utils.showToast(this, dataPacket.message.toString())
                 }
             }
         })
     }
+
+    private fun showLoading() {
+        binding.progressBarRegister.visibility = View.VISIBLE
+    }
+
+    private fun clearStatusInformation() {
+        binding.progressBarRegister.visibility = View.INVISIBLE
+    }
+
 }

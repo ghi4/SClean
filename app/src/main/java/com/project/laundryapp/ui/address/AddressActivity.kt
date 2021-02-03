@@ -35,6 +35,7 @@ class AddressActivity : AppCompatActivity() {
     private fun setupUI() {
         clearStatusInformation()
 
+        //Button Save Address
         binding.btAddressSave.setOnClickListener {
             var validity = true
 
@@ -115,7 +116,7 @@ class AddressActivity : AppCompatActivity() {
             }
         }
 
-        //Skip button
+        //Button Skip
         binding.btAddressSkip.setOnClickListener {
             val previousActivity = intent.getIntExtra(ADDRESS_CHANGE_KEY, 0)
 

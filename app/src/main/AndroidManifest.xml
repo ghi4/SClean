@@ -14,15 +14,8 @@
         android:supportsRtl="true"
         android:theme="@style/Theme.LaundryApp"
         android:windowSoftInputMode="adjustPan|adjustResize">
-        <activity android:name=".ui.payment.PaymentActivity" />
-        <activity android:name=".ui.detail.order.DetailOrderActivity" />
-        <activity android:name=".ui.detail.laundry.DetailLaundryActivity" />
-        <activity
-            android:name=".ui.MainActivity"
-            android:label="@string/title_activity_main"></activity>
-        <activity android:name=".ui.address.AddressActivity" />
-        <activity android:name=".ui.register.RegisterActivity" />
-        <activity android:name=".ui.login.LoginActivity" />
+
+        <!-- Splash -->
         <activity
             android:name=".ui.splash.SplashActivity"
             android:theme="@style/SplashPage">
@@ -32,6 +25,29 @@
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
+
+        <!-- Login -->
+        <activity android:name=".ui.login.LoginActivity" />
+
+        <!-- Register -->
+        <activity android:name=".ui.register.RegisterActivity" />
+
+        <!-- Address -->
+        <activity android:name=".ui.address.AddressActivity" />
+
+        <!-- Main -->
+        <activity
+            android:name=".ui.MainActivity"
+            android:label="@string/title_activity_main" />
+
+        <!-- Detail Laundry -->
+        <activity android:name=".ui.detail.laundry.DetailLaundryActivity" />
+
+        <!-- Payment -->
+        <activity android:name=".ui.payment.PaymentActivity" />
+
+        <!-- Detail Order - History -->
+        <activity android:name=".ui.detail.order.DetailOrderActivity" />
     </application>
 
 </manifest>

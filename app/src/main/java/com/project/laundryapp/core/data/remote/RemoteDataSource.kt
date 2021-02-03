@@ -24,16 +24,9 @@ class RemoteDataSource(private val retrofitService: RetrofitInterface) {
                         user.password.toString(),
                 )
 
-                Log.d("RemoteData", "" + response)
-                Log.d("RemoteData", "" + response.userData)
-                Log.d("RemoteData", "" + response.userData.idUser)
-                Log.d("RemoteData", "" + response.error)
-                Log.d("RemoteData", "" + response.message)
-
                 emit(ApiResponse.Success(response))
 
             } catch (e: Exception) {
-                Log.d("RemoteData", "GGWP$e")
                 emit(ApiResponse.Error(Utils.parseError(e.toString())))
             }
         }.flowOn(Dispatchers.IO)
@@ -49,13 +42,9 @@ class RemoteDataSource(private val retrofitService: RetrofitInterface) {
                         user.nomorHp.toString()
                 )
 
-                Log.d("RemoteData", "" + response.error)
-                Log.d("RemoteData", "" + response.message)
-
                 emit(ApiResponse.Success(response))
 
             } catch (e: Exception) {
-                Log.d("RemoteData", "" + e.toString())
                 emit(ApiResponse.Error(noInternet))
             }
         }.flowOn(Dispatchers.IO)
@@ -73,14 +62,8 @@ class RemoteDataSource(private val retrofitService: RetrofitInterface) {
                         user.kodePos.toString(),
                         user.keteranganAlamat.toString()
                 )
-
-                Log.d("RemoteData", "" + response.error)
-                Log.d("RemoteData", "" + response.message)
-
                 emit(ApiResponse.Success(response))
-
             } catch (e: Exception) {
-                Log.d("RemoteData", "" + e.toString())
                 emit(ApiResponse.Error(noInternet))
             }
         }.flowOn(Dispatchers.IO)
@@ -101,11 +84,8 @@ class RemoteDataSource(private val retrofitService: RetrofitInterface) {
         return flow {
             try {
                 val response = retrofitService.getLaundryList()
-                Log.d("RemoteData", "" + response.toString())
-                Log.d("RemoteData", "" + response.data.toString())
                 emit(ApiResponse.Success(response))
             } catch (e: Exception) {
-                Log.d("RemoteData", "" + e.toString())
                 emit(ApiResponse.Error(noInternet))
             }
         }.flowOn(Dispatchers.IO)
@@ -115,11 +95,8 @@ class RemoteDataSource(private val retrofitService: RetrofitInterface) {
         return flow {
             try {
                 val response = retrofitService.getPromotionList()
-                Log.d("RemoteData", "" + response.toString())
-                Log.d("RemoteData", "" + response.data.toString())
                 emit(ApiResponse.Success(response))
             } catch (e: Exception) {
-                Log.d("RemoteData", "" + e.toString())
                 emit(ApiResponse.Error(noInternet))
             }
         }.flowOn(Dispatchers.IO)
@@ -141,30 +118,12 @@ class RemoteDataSource(private val retrofitService: RetrofitInterface) {
             idUser: String,
             serviceList: ArrayList<LaundryOrderInput>
     ): Flow<ApiResponse<LaundryStatusListResponse>> {
-        Log.d("PAYMENT", """
-            ===========================================
-            LAUNDRY ID:
-            $idLaundry
-            
-            ID USER:
-            $idUser
-            
-            ORDER LIST:
-            $serviceList
-            
-            ==========================================
-            ${Gson().toJson(serviceList)}
-            
-            ${Gson().toJson(serviceList.toList())}
-            ===========================================
-        """.trimIndent())
         return flow {
             try {
                 val serviceListJson = Gson().toJson(serviceList.toList())
                 val response = retrofitService.postOrder(idLaundry, serviceListJson, idUser)
                 emit(ApiResponse.Success(response))
             } catch (e: Exception) {
-                Log.d("INPUT DATA", e.toString())
                 emit(ApiResponse.Error(e.toString()))
             }
         }.flowOn(Dispatchers.IO)
@@ -174,14 +133,8 @@ class RemoteDataSource(private val retrofitService: RetrofitInterface) {
         return flow {
             try {
                 val response = retrofitService.getLaundryHistoryByUserId(idUser)
-                Log.d("HISTORY LAUNDRY", """
-                    $response
-                """.trimIndent())
                 emit(ApiResponse.Success(response))
             } catch (e: Exception) {
-                Log.d("HISTORY LAUNDRY", """
-                    $e
-                """.trimIndent())
                 emit(ApiResponse.Error(noInternet))
             }
         }.flowOn(Dispatchers.IO)
@@ -191,14 +144,8 @@ class RemoteDataSource(private val retrofitService: RetrofitInterface) {
         return flow {
             try {
                 val response = retrofitService.getLaundryHistoryDetailByHistoryId(idHistory)
-                Log.d("HISTORY LAUNDRY", """
-                    $response
-                """.trimIndent())
                 emit(ApiResponse.Success(response))
             } catch (e: Exception) {
-                Log.d("HISTORY LAUNDRY", """
-                    $e
-                """.trimIndent())
                 emit(ApiResponse.Error(noInternet))
             }
         }.flowOn(Dispatchers.IO)

@@ -46,11 +46,11 @@ class LoginActivity : AppCompatActivity() {
                 )
                 viewModel.loginUser(user)
             } else {
-                Toast.makeText(this, "Periksa kembali data Anda.", Toast.LENGTH_SHORT).show()
+                Toast.makeText(this, getString(R.string.please_recheck), Toast.LENGTH_SHORT).show()
             }
         }
 
-        //Button Registration
+        //Button open Registration
         binding.tvGotoRegistration.setOnClickListener {
             startActivity(Intent(this, RegisterActivity::class.java))
         }
@@ -58,7 +58,6 @@ class LoginActivity : AppCompatActivity() {
 
     private fun getData() {
         viewModel.userData.observe(this, { dataPacket ->
-
             when (dataPacket) {
                 is Resource.Loading -> {
                     showLoading()

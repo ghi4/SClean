@@ -33,6 +33,64 @@ class PaymentActivity : AppCompatActivity() {
         getData()
     }
 
+    private fun setupUI() {
+        clearStatusInformation()
+
+        //Intent
+        val laundryId = intent.getStringExtra(Const.KEY_LAUNDRY_ID)
+        val orderedService = intent.getParcelableArrayListExtra<LaundryOrderInput>(Const.KEY_SERVICE_ORDERED)
+
+        //Base Data
+        val user = Utils.getSharedPref(this)
+        val data = LaundryServiceResponse(
+                idLayanan = user.id,
+                idLaundry = laundryId,
+                daftarLayanan = orderedService
+        )
+
+        //Adapter
+        orderAdapter = LaundryOrderAdapter()
+        orderAdapter.setList(orderedService as ArrayList<LaundryOrderInput>)
+
+        //Binding
+        with(binding) {
+            //Counting totalPrice
+            val subTotalPrice = Utils.countPrice(orderedService)
+            val totalPrice = subTotalPrice + Const.SHIPMENT_PRICE
+
+            //Initializing value
+            tvUserAddress.text = Utils.parseFullAddress(user)
+            tvPaymentEstimationDays.text = Utils.getEstimationDays(orderedService)
+            tvPaymentSubTotal.text = Utils.parseIntToCurrency(subTotalPrice)
+            tvPaymentShipment.text = Utils.parseIntToCurrency(Const.SHIPMENT_PRICE)
+            tvPaymentTotal.text = Utils.parseIntToCurrency(totalPrice)
+
+            //RecyclerView
+            rvPaymentOrderList.layoutManager = LinearLayoutManager(this@PaymentActivity)
+            rvPaymentOrderList.hasFixedSize()
+            rvPaymentOrderList.adapter = orderAdapter
+        }
+
+        //Button Edit Address
+        binding.tvChangeAddress.setOnClickListener {
+            val intent = Intent(this@PaymentActivity, AddressActivity::class.java)
+            intent.putExtra(AddressActivity.ADDRESS_CHANGE_KEY, 2)
+            startActivity(intent)
+        }
+
+        //Button Confirmation
+        binding.btPaymentConfirmation.setOnClickListener {
+            val userData = Utils.getSharedPref(this)
+            val isAddressValid = Utils.isAddressValid(userData)
+
+            if (isAddressValid) {
+                viewModel.triggerPayment(data)
+            } else {
+                Utils.showToast(this@PaymentActivity, getString(R.string.address_not_valid))
+            }
+        }
+    }
+
     private fun getData() {
         viewModel.orderResponse.observe(this, { data ->
             when (data) {
@@ -56,57 +114,7 @@ class PaymentActivity : AppCompatActivity() {
         })
     }
 
-    private fun setupUI() {
-        clearStatusInformation()
 
-        val laundryId = intent.getStringExtra(Const.KEY_LAUNDRY_ID)
-        val orderedService = intent.getParcelableArrayListExtra<LaundryOrderInput>(Const.KEY_SERVICE_ORDERED)
-
-        val user = Utils.getSharedPref(this)
-        val data = LaundryServiceResponse(
-                idLayanan = user.id,
-                idLaundry = laundryId,
-                daftarLayanan = orderedService
-        )
-
-        orderAdapter = LaundryOrderAdapter()
-        orderAdapter.setList(orderedService as ArrayList<LaundryOrderInput>)
-
-        with(binding) {
-            //Counting totalPrice
-            val subTotalPrice = Utils.countPrice(orderedService)
-            val totalPrice = subTotalPrice + Const.SHIPMENT_PRICE
-
-            //Initializing value
-            tvUserAddress.text = Utils.parseFullAddress(user)
-            tvPaymentSubTotal.text = Utils.parseIntToCurrency(subTotalPrice)
-            tvPaymentShipment.text = Utils.parseIntToCurrency(Const.SHIPMENT_PRICE)
-            tvPaymentTotal.text = Utils.parseIntToCurrency(totalPrice)
-
-            //RecyclerView
-            rvPaymentOrderList.layoutManager = LinearLayoutManager(this@PaymentActivity)
-            rvPaymentOrderList.hasFixedSize()
-            rvPaymentOrderList.adapter = orderAdapter
-
-            //Change Address
-            tvChangeAddress.setOnClickListener {
-                val intent = Intent(this@PaymentActivity, AddressActivity::class.java)
-                intent.putExtra(AddressActivity.ADDRESS_CHANGE_KEY, 2)
-                startActivity(intent)
-            }
-
-            //Payment Confirmation
-            btPaymentConfirmation.setOnClickListener {
-                val isAddressValid = Utils.isAddressValid(user)
-
-                if (isAddressValid) {
-                    viewModel.triggerPayment(data)
-                } else {
-                    Utils.showToast(this@PaymentActivity, getString(R.string.address_not_valid))
-                }
-            }
-        }
-    }
 
     private fun showLoading() {
         binding.progressBarPayment.visibility = View.VISIBLE

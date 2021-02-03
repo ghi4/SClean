@@ -119,7 +119,7 @@
                 android:background="@drawable/edittext_box"
                 android:ems="10"
                 android:hint="@string/masukkan_kode_pos"
-                android:inputType="textPersonName" />
+                android:inputType="number|textPostalAddress" />
 
             <TextView
                 android:id="@+id/textView15"

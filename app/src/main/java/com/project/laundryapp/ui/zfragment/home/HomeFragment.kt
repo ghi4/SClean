@@ -69,7 +69,7 @@ class HomeFragment : Fragment() {
             startActivity(intent)
         }
 
-        //Retry button
+        //Button Retry
         MainActivity.getStatusView().tvRetry.setOnClickListener {
             viewModel.triggerCall()
         }

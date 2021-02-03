@@ -28,13 +28,11 @@ class DetailOrderActivity : AppCompatActivity() {
         binding = ActivityDetailOrderBinding.inflate(layoutInflater)
         setContentView(binding.root)
 
-        val historyId = intent.getStringExtra(Const.KEY_LAUNDRY_HISTORY_ID)
+        val historyId = intent.getStringExtra(Const.KEY_LAUNDRY_HISTORY_ID).toString()
 
-        if (historyId != null) {
             viewModel.triggerCall(historyId)
             setupUI(historyId)
             getData()
-        }
     }
 
     private fun setupUI(historyId: String) {
@@ -48,10 +46,16 @@ class DetailOrderActivity : AppCompatActivity() {
             rvPaymentOrderList.layoutManager = LinearLayoutManager(this@DetailOrderActivity)
             rvPaymentOrderList.hasFixedSize()
             rvPaymentOrderList.adapter = orderAdapter
+        }
 
-            btPaymentCancel.setOnClickListener {
-                viewModel.triggerDelete(historyId)
-            }
+        //Button Cancel
+        binding.btPaymentCancel.setOnClickListener {
+            viewModel.triggerDelete(historyId)
+        }
+
+        //Button Retry
+        binding.statusDetailOrder.tvRetry.setOnClickListener {
+            viewModel.triggerCall(historyId)
         }
     }
 
@@ -71,6 +75,7 @@ class DetailOrderActivity : AppCompatActivity() {
                         LaundryOrderInput(
                                 it.idLayanan.toString(),
                                 it.namaLayanan.toString(),
+                                it.estimasi.toString(),
                                 it.qty,
                                 it.harga
                         )
@@ -81,7 +86,7 @@ class DetailOrderActivity : AppCompatActivity() {
                     val totalPrice = subTotalPrice + Const.SHIPMENT_PRICE
 
                     with(binding) {
-                        tvPaymentEstimationDays.text = 5.toString()
+                        tvPaymentEstimationDays.text = Utils.getEstimationDays(orderList)
                         tvPaymentShipment.text = Utils.parseIntToCurrency(Const.SHIPMENT_PRICE)
                         tvPaymentSubTotal.text = Utils.parseIntToCurrency(subTotalPrice)
                         tvPaymentTotalPrice.text = Utils.parseIntToCurrency(totalPrice)

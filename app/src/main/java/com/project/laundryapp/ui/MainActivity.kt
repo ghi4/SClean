@@ -70,6 +70,10 @@ class MainActivity : AppCompatActivity() {
         setupActionBarWithNavController(navController, appBarConfiguration)
         navView.setupWithNavController(navController)
 
+        navView.setOnNavigationItemReselectedListener {
+            //Do nothing
+        }
+
         val defaultFragment = R.id.navigation_home
         val selectedFragment = intent.getIntExtra(FRAGMENT_ID_KEY, defaultFragment)
         navView.selectedItemId = selectedFragment

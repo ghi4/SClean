@@ -21,12 +21,13 @@ class SplashActivity : AppCompatActivity() {
 
         Handler(Looper.getMainLooper()).postDelayed({
             val user = Utils.getSharedPref(this)
-            Log.d("StartHH", user.toString())
+
             if (user.id == "Unknown") {
                 startActivity(Intent(this, LoginActivity::class.java))
             } else {
                 startActivity(Intent(this, MainActivity::class.java))
             }
+
             finish()
         }, splashDelay)
 

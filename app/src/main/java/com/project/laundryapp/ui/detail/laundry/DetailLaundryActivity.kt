@@ -60,6 +60,7 @@ class DetailLaundryActivity : AppCompatActivity() {
             val serviceData = LaundryOrderInput(
                     data.idLayanan.toString(),
                     data.namaLayanan.toString(),
+                    data.estimasi.toString(),
                     data.qty,
                     data.harga
             )
@@ -71,7 +72,7 @@ class DetailLaundryActivity : AppCompatActivity() {
             zeroQtyPreventor()
         }
 
-        //Order button
+        //Button Order
         binding.btDetailOrder.setOnClickListener {
             if (serviceOrdered.isNotEmpty()) {
                 val intent = Intent(this, PaymentActivity::class.java)
@@ -81,6 +82,11 @@ class DetailLaundryActivity : AppCompatActivity() {
             } else {
                 Utils.showToast(this, getString(R.string.no_service_selected))
             }
+        }
+
+        //Button Retry
+        binding.statusDetailLaundry.tvRetry.setOnClickListener {
+            viewModel.triggerCall(laundryId)
         }
     }
 

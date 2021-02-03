@@ -49,8 +49,8 @@ class ProfileFragment : Fragment() {
             etProfilePhone.setText(user.nomorHp)
             etProfileEmail.setText(user.email)
 
-            if (Utils.isAddressValid(user))
-                etProfileAddress.error = "Perbaiki alamat anda."
+            if (!Utils.isAddressValid(user))
+                etProfileAddress.error = getString(R.string.correct_your_address)
 
             Picasso.get()
                     .load(user.photo)
@@ -59,14 +59,14 @@ class ProfileFragment : Fragment() {
                     .placeholder(R.drawable.gravatar)
                     .into(binding.ivProfileImage)
 
-            //Edit address button
+            //Button Edit Address
             btProfileEditAddress.setOnClickListener {
                 val intent = Intent(requireActivity(), AddressActivity::class.java)
                 intent.putExtra(AddressActivity.ADDRESS_CHANGE_KEY, 1)
                 startActivity(intent)
             }
 
-            //Logout button
+            //Button Logout
             btLogout.setOnClickListener {
                 Utils.putSharedPref(requireActivity(), User())
                 startActivity(Intent(requireActivity(), LoginActivity::class.java))

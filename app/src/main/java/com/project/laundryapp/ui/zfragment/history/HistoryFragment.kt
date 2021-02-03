@@ -65,13 +65,13 @@ class HistoryFragment : Fragment() {
             startActivity(intent)
         }
 
-        //Retry button
+        //Button Retry
         MainActivity.getStatusView().tvRetry.setOnClickListener {
             val user = Utils.getSharedPref(requireActivity())
             viewModel.triggerCall(user.id.toString())
         }
 
-        //Refresh button
+        //Button Refresh
         binding.btHistoryRefresh.setOnClickListener {
             val user = Utils.getSharedPref(requireActivity())
             viewModel.triggerCall(user.id.toString())

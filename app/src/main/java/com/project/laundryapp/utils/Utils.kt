@@ -11,6 +11,7 @@ import com.project.laundryapp.core.data.local.User
 import com.project.laundryapp.core.data.remote.response.laundry.LaundryOrderInput
 import java.text.NumberFormat
 import java.util.*
+import kotlin.collections.ArrayList
 
 object Utils {
 
@@ -19,14 +20,6 @@ object Utils {
     }
 
     fun putSharedPref(activity: Activity, user: User) {
-        Log.d("Fragment", """
-            PUT ENGINE
-            ${user.id},
-            ${user.email},
-            ${user.namaLengkap},
-            ${user.photo}
-        """.trimIndent())
-
         val shared = activity.getSharedPreferences("ProfileData", Context.MODE_PRIVATE) ?: return
         with(shared.edit()) {
             val json = userToJson(user)
@@ -39,7 +32,6 @@ object Utils {
         val shared = activity.getSharedPreferences("ProfileData", Context.MODE_PRIVATE)
         val jsonUser = shared.getString(Const.SHARED_PREFS_USER, "No Data") ?: "No Data"
 
-        Log.d("Fragment", "GET ENGINE: $jsonUser")
         return if (jsonUser != "No Data") {
             jsonToUser(jsonUser)
         } else {
@@ -47,19 +39,34 @@ object Utils {
         }
     }
 
+    fun getEstimationDays(input: ArrayList<LaundryOrderInput>): String {
+        var biggest = 0
+
+        try {
+            input.map {
+                if(biggest < it.estimasiPengerjaan.toInt())
+                    biggest = it.estimasiPengerjaan.toInt()
+            }
+        } catch (e: Exception) {
+            biggest = 9
+        }
+
+        return "$biggest Hari"
+    }
+
     fun parseFullAddress(user: User): String {
         val address = "${user.alamat}, " +
                 "Kel. ${user.kelurahan}, " +
                 "Kec. ${user.kecamatan}, " +
                 "Kota ${user.kota}, " +
-                "Kode Pos ${user.kodePos}, " +
-                "${user.keteranganAlamat}"
-        val isValid = !address.contains("Unknown")
+                "${user.kodePos}. " +
+                "${user.keteranganAlamat}."
+        val isNotValid = address.contains("Unknown")
 
-        return if (isValid) {
-            address
-        } else {
+        return if (isNotValid) {
             "Alamat tidak valid."
+        } else {
+            address
         }
     }
 
