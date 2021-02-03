@@ -34,8 +34,8 @@ class PaymentActivity : AppCompatActivity() {
     }
 
     private fun getData() {
-        viewModel.orderResponse.observe(this, {data ->
-            when(data){
+        viewModel.orderResponse.observe(this, { data ->
+            when (data) {
                 is Resource.Loading -> {
                     showLoading()
                 }
@@ -72,7 +72,7 @@ class PaymentActivity : AppCompatActivity() {
         orderAdapter = LaundryOrderAdapter()
         orderAdapter.setList(orderedService as ArrayList<LaundryOrderInput>)
 
-        with(binding){
+        with(binding) {
             //Counting totalPrice
             val subTotalPrice = Utils.countPrice(orderedService)
             val totalPrice = subTotalPrice + Const.SHIPMENT_PRICE
@@ -97,7 +97,13 @@ class PaymentActivity : AppCompatActivity() {
 
             //Payment Confirmation
             btPaymentConfirmation.setOnClickListener {
-                viewModel.triggerPayment(data)
+                val isAddressValid = Utils.isAddressValid(user)
+
+                if (isAddressValid) {
+                    viewModel.triggerPayment(data)
+                } else {
+                    Utils.showToast(this@PaymentActivity, getString(R.string.address_not_valid))
+                }
             }
         }
     }

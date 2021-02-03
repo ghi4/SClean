@@ -2,7 +2,6 @@ package com.project.laundryapp.ui.register
 
 import android.content.Intent
 import android.os.Bundle
-import android.util.Log
 import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
 import com.project.laundryapp.R
@@ -35,7 +34,7 @@ class RegisterActivity : AppCompatActivity() {
         binding.btRegistration.setOnClickListener {
             var validity = true
 
-            with(binding){
+            with(binding) {
                 etFullName.error = null
                 etRegisterEmail.error = null
                 etRegisterPhone.error = null
@@ -49,17 +48,17 @@ class RegisterActivity : AppCompatActivity() {
                 val rePassword = etRegisterRePassword.text.toString()
 
                 // === Full Name ===
-                if(fullName.isEmpty()){
+                if (fullName.isEmpty()) {
                     validity = false
                     etFullName.error = "Tidak boleh kosong."
                 }
 
                 // === Email ===
-                if(email.isEmpty()){
+                if (email.isEmpty()) {
                     validity = false
-                   etRegisterEmail.error = "Tidak boleh kosong."
+                    etRegisterEmail.error = "Tidak boleh kosong."
                 }
-                if(!Utils.isEmailValid(email)) {
+                if (!Utils.isEmailValid(email)) {
                     validity = false
                     etRegisterEmail.error = "Email tidak valid."
                 }
@@ -79,26 +78,26 @@ class RegisterActivity : AppCompatActivity() {
                     validity = false
                     etRegisterRePassword.error = "Password tidak cocok."
                 }
-                if(password.isEmpty()) {
+                if (password.isEmpty()) {
                     validity = false
                     etRegisterPassword.error = "Tidak boleh kosong."
                 }
-                if(rePassword.isEmpty()) {
+                if (rePassword.isEmpty()) {
                     validity = false
                     etRegisterRePassword.error = "Tidak boleh kosong."
                 }
             }
 
-            if(validity) {
+            if (validity) {
                 val userRegister = User(
-                        namaLengkap = binding.etFullName.text.toString(),
-                        email = binding.etRegisterEmail.text.toString(),
-                        password = binding.etRegisterPassword.text.toString(),
-                        nomorHp = binding.etRegisterPhone.text.toString()
+                        namaLengkap = binding.etFullName.text.toString().trim(),
+                        email = binding.etRegisterEmail.text.toString().trim(),
+                        password = binding.etRegisterPassword.text.toString().trim(),
+                        nomorHp = binding.etRegisterPhone.text.toString().trim()
                 )
                 viewModel.registerUser(userRegister)
             } else {
-                Toast.makeText(this, "Periksa kembali userData Anda.", Toast.LENGTH_SHORT).show()
+                Toast.makeText(this, "Periksa kembali data Anda.", Toast.LENGTH_SHORT).show()
             }
         }
 
@@ -109,19 +108,7 @@ class RegisterActivity : AppCompatActivity() {
 
     private fun getData() {
         viewModel.userData.observe(this, { dataPacket ->
-            Log.d("REGISTER TAG", """
-                BASE:
-                $dataPacket
-                
-                MESSAGE:
-                ${dataPacket.message}
-                
-                DATA:
-                ${dataPacket.data}
-                
-            """.trimIndent())
-
-            when(dataPacket) {
+            when (dataPacket) {
                 is Resource.Loading -> {
                     Utils.showToast(this, "Mohon tunggu.")
                 }
@@ -129,7 +116,7 @@ class RegisterActivity : AppCompatActivity() {
                 is Resource.Success -> {
                     val user = dataPacket.data
 
-                    if(user != null && !user.id.isNullOrEmpty()) {
+                    if (user != null && !user.id.isNullOrEmpty()) {
                         //Save data to shared preference
                         Utils.putSharedPref(this, user)
 

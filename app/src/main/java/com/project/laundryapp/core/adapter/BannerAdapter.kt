@@ -15,7 +15,7 @@ class BannerAdapter : RecyclerView.Adapter<BannerAdapter.BannerViewHolder>() {
     private var bannerList = ArrayList<PromotionResponse>()
     var onItemClick: ((PromotionResponse) -> Unit)? = null
 
-    fun setList(data: ArrayList<PromotionResponse>){
+    fun setList(data: ArrayList<PromotionResponse>) {
         bannerList.clear()
         bannerList.addAll(data)
         notifyDataSetChanged()
@@ -32,18 +32,18 @@ class BannerAdapter : RecyclerView.Adapter<BannerAdapter.BannerViewHolder>() {
 
     override fun getItemCount(): Int = bannerList.size
 
-    inner class BannerViewHolder(itemView: View): RecyclerView.ViewHolder(itemView) {
+    inner class BannerViewHolder(itemView: View) : RecyclerView.ViewHolder(itemView) {
         private val binding = ItemLaundryBannerBinding.bind(itemView)
-        fun bind(promotion: PromotionResponse){
+        fun bind(promotion: PromotionResponse) {
             with(binding) {
 
                 //Banner Image
                 Picasso.get()
-                    .load(Const.URL_BASE + promotion.photoURL)
-                    .placeholder(R.drawable.banner_placeholder)
-                    .error(R.drawable.banner_placeholder)
-                    .resize(Const.BANNER_TARGET_WIDTH, Const.BANNER_TARGET_HEIGHT)
-                    .into(ivBanner)
+                        .load(Const.URL_BASE + promotion.photoURL)
+                        .placeholder(R.drawable.banner_placeholder)
+                        .error(R.drawable.banner_placeholder)
+                        .resize(Const.BANNER_TARGET_WIDTH, Const.BANNER_TARGET_HEIGHT)
+                        .into(ivBanner)
             }
 
         }

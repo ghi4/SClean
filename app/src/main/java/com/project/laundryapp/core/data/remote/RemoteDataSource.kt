@@ -20,8 +20,8 @@ class RemoteDataSource(private val retrofitService: RetrofitInterface) {
         return flow {
             try {
                 val response = retrofitService.postLogin(
-                    user.email.toString(),
-                    user.password.toString(),
+                        user.email.toString(),
+                        user.password.toString(),
                 )
 
                 Log.d("RemoteData", "" + response)
@@ -43,10 +43,10 @@ class RemoteDataSource(private val retrofitService: RetrofitInterface) {
         return flow {
             try {
                 val response = retrofitService.postRegister(
-                    user.namaLengkap.toString(),
-                    user.email.toString(),
-                    user.password.toString(),
-                    user.nomorHp.toString()
+                        user.namaLengkap.toString(),
+                        user.email.toString(),
+                        user.password.toString(),
+                        user.nomorHp.toString()
                 )
 
                 Log.d("RemoteData", "" + response.error)
@@ -65,13 +65,13 @@ class RemoteDataSource(private val retrofitService: RetrofitInterface) {
         return flow {
             try {
                 val response = retrofitService.postAddress(
-                    user.id.toString(),
-                    user.alamat.toString(),
-                    user.kota.toString(),
-                    user.kecamatan.toString(),
-                    user.kelurahan.toString(),
-                    user.kodePos.toString(),
-                    user.keteranganAlamat.toString()
+                        user.id.toString(),
+                        user.alamat.toString(),
+                        user.kota.toString(),
+                        user.kecamatan.toString(),
+                        user.kelurahan.toString(),
+                        user.kodePos.toString(),
+                        user.keteranganAlamat.toString()
                 )
 
                 Log.d("RemoteData", "" + response.error)
@@ -137,9 +137,9 @@ class RemoteDataSource(private val retrofitService: RetrofitInterface) {
     }
 
     fun postOrder(
-        idLaundry: String,
-        idUser: String,
-        serviceList: ArrayList<LaundryOrderInput>
+            idLaundry: String,
+            idUser: String,
+            serviceList: ArrayList<LaundryOrderInput>
     ): Flow<ApiResponse<LaundryStatusListResponse>> {
         Log.d("PAYMENT", """
             ===========================================

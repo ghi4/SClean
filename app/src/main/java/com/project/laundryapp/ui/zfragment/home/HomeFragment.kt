@@ -28,9 +28,9 @@ class HomeFragment : Fragment() {
     private lateinit var laundryTopAdapter: LaundryTopAdapter
 
     override fun onCreateView(
-        inflater: LayoutInflater,
-        container: ViewGroup?,
-        savedInstanceState: Bundle?
+            inflater: LayoutInflater,
+            container: ViewGroup?,
+            savedInstanceState: Bundle?
     ): View {
         binding = FragmentHomeBinding.inflate(inflater, container, false)
         return binding.root
@@ -63,7 +63,7 @@ class HomeFragment : Fragment() {
         }
 
         //Item list click
-        laundryTopAdapter.onItemClick = {selectedData ->
+        laundryTopAdapter.onItemClick = { selectedData ->
             val intent = Intent(requireContext(), DetailLaundryActivity::class.java)
             intent.putExtra(Const.KEY_LAUNDRY_ID, selectedData.idLaundry)
             startActivity(intent)
@@ -76,8 +76,8 @@ class HomeFragment : Fragment() {
     }
 
     private fun getData() {
-        viewModel.laundryData.observe(viewLifecycleOwner, {data ->
-            when(data) {
+        viewModel.laundryData.observe(viewLifecycleOwner, { data ->
+            when (data) {
                 is Resource.Loading -> {
                     hideView()
                     MainActivity.showLoading()
@@ -86,7 +86,7 @@ class HomeFragment : Fragment() {
                 is Resource.Success -> {
                     val dataList = data.data?.data as ArrayList<LaundryDataResponse>
 
-                    if(dataList.isNotEmpty()) {
+                    if (dataList.isNotEmpty()) {
                         showView()
                         laundryTopAdapter.setList(dataList)
                     } else {
@@ -103,8 +103,8 @@ class HomeFragment : Fragment() {
             }
         })
 
-        viewModel.promotionData.observe(viewLifecycleOwner, {data->
-            when(data) {
+        viewModel.promotionData.observe(viewLifecycleOwner, { data ->
+            when (data) {
                 is Resource.Loading -> {
                     //Done by "viewModel.laundryData"
                 }
@@ -122,7 +122,7 @@ class HomeFragment : Fragment() {
     }
 
     private fun hideView() {
-        with(binding){
+        with(binding) {
             scrollViewHome.visibility = View.INVISIBLE
         }
     }

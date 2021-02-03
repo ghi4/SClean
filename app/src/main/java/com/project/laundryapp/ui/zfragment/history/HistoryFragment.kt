@@ -26,9 +26,9 @@ class HistoryFragment : Fragment() {
     private lateinit var historyAdapter: LaundryHistoryAdapter
 
     override fun onCreateView(
-        inflater: LayoutInflater,
-        container: ViewGroup?,
-        savedInstanceState: Bundle?
+            inflater: LayoutInflater,
+            container: ViewGroup?,
+            savedInstanceState: Bundle?
     ): View {
         binding = FragmentHistoryBinding.inflate(inflater, container, false)
         return binding.root
@@ -59,7 +59,7 @@ class HistoryFragment : Fragment() {
         }
 
         //Item list click
-        historyAdapter.onItemClick = {selectedData ->
+        historyAdapter.onItemClick = { selectedData ->
             val intent = Intent(requireContext(), DetailOrderActivity::class.java)
             intent.putExtra(Const.KEY_LAUNDRY_HISTORY_ID, selectedData.idPesanan)
             startActivity(intent)
@@ -79,8 +79,8 @@ class HistoryFragment : Fragment() {
     }
 
     private fun getData() {
-        viewModel.dataHistory.observe(viewLifecycleOwner, {data ->
-            when(data) {
+        viewModel.dataHistory.observe(viewLifecycleOwner, { data ->
+            when (data) {
                 is Resource.Loading -> {
                     hideView()
                     MainActivity.showLoading()
@@ -89,7 +89,7 @@ class HistoryFragment : Fragment() {
                 is Resource.Success -> {
                     val historyList = data.data?.data as ArrayList<LaundryHistoryResponse>
 
-                    if(historyList.isNotEmpty()){
+                    if (historyList.isNotEmpty()) {
                         showView()
                         historyAdapter.setList(historyList)
                     } else {
@@ -108,7 +108,7 @@ class HistoryFragment : Fragment() {
     }
 
     private fun hideView() {
-        with(binding){
+        with(binding) {
             constrainViewHistory.visibility = View.INVISIBLE
         }
     }

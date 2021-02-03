@@ -31,7 +31,7 @@ class LaundryServiceAdapter : RecyclerView.Adapter<LaundryServiceAdapter.Laundry
 
     override fun getItemCount(): Int = dataList.size
 
-    inner class LaundryServiceViewHolder(itemView: View): RecyclerView.ViewHolder(itemView) {
+    inner class LaundryServiceViewHolder(itemView: View) : RecyclerView.ViewHolder(itemView) {
         private val binding = ItemLaundryServiceBinding.bind(itemView)
         fun bind(data: LaundryServiceResponse) {
             with(binding) {
@@ -51,7 +51,7 @@ class LaundryServiceAdapter : RecyclerView.Adapter<LaundryServiceAdapter.Laundry
                 }
 
                 btServiceReduce.setOnClickListener {
-                    if(count > 0) {
+                    if (count > 0) {
                         count--
                         tvServiceCount.text = count.toString()
 

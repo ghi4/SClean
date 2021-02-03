@@ -19,11 +19,11 @@ class MyApplication : Application() {
             androidLogger(Level.NONE)
             androidContext(this@MyApplication)
             modules(
-                listOf(
-                    networkModule,
-                    repositoryModule,
-                    viewModelModule
-                )
+                    listOf(
+                            networkModule,
+                            repositoryModule,
+                            viewModelModule
+                    )
             )
         }
     }

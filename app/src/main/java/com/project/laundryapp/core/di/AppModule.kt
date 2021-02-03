@@ -10,9 +10,9 @@ import com.project.laundryapp.ui.detail.order.DetailOrderViewModel
 import com.project.laundryapp.ui.login.LoginViewModel
 import com.project.laundryapp.ui.payment.PaymentViewModel
 import com.project.laundryapp.ui.register.RegisterViewModel
+import com.project.laundryapp.ui.zfragment.find.FindViewModel
 import com.project.laundryapp.ui.zfragment.history.HistoryViewModel
 import com.project.laundryapp.ui.zfragment.home.HomeViewModel
-import com.project.laundryapp.ui.zfragment.find.FindViewModel
 import com.project.laundryapp.ui.zfragment.profile.ProfileViewModel
 import okhttp3.OkHttpClient
 import okhttp3.logging.HttpLoggingInterceptor
@@ -29,13 +29,13 @@ val networkModule = module {
         httpClient.interceptors().add(interceptor)
 
         val gson = GsonBuilder()
-            .setLenient()
-            .create()
+                .setLenient()
+                .create()
         val retrofit = Retrofit.Builder()
-            .baseUrl("https://testingsclean.000webhostapp.com/api/v1/")
-            .addConverterFactory(GsonConverterFactory.create(gson))
-            .client(httpClient.build())
-            .build()
+                .baseUrl("https://testingsclean.000webhostapp.com/api/v1/")
+                .addConverterFactory(GsonConverterFactory.create(gson))
+                .client(httpClient.build())
+                .build()
         retrofit.create(RetrofitInterface::class.java)
     }
 }

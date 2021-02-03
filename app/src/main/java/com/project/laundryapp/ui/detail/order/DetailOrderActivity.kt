@@ -59,8 +59,8 @@ class DetailOrderActivity : AppCompatActivity() {
         val user = Utils.getSharedPref(this)
         binding.tvUserAddress.text = Utils.parseFullAddress(user)
 
-        viewModel.historyDetail.observe(this, {data ->
-            when(data) {
+        viewModel.historyDetail.observe(this, { data ->
+            when (data) {
                 is Resource.Loading -> {
                     hideView()
                     showLoading()
@@ -107,9 +107,12 @@ class DetailOrderActivity : AppCompatActivity() {
                     val intent = Intent(this, MainActivity::class.java)
                     intent.putExtra(MainActivity.FRAGMENT_ID_KEY, R.id.navigation_history)
                     startActivity(intent)
+
+                    clearStatusInformation()
                 }
 
                 is Resource.Error -> {
+                    clearStatusInformation()
                     Utils.showToast(this, data.message.toString())
                 }
             }
@@ -117,7 +120,7 @@ class DetailOrderActivity : AppCompatActivity() {
     }
 
     private fun hideView() {
-        with(binding){
+        with(binding) {
             scrollViewDetailOrder.visibility = View.INVISIBLE
             cardViewDetailOrder.visibility = View.INVISIBLE
         }
@@ -132,7 +135,7 @@ class DetailOrderActivity : AppCompatActivity() {
     }
 
     private fun showLoading() {
-        with(binding.statusDetailOrder){
+        with(binding.statusDetailOrder) {
             progressBar.visibility = View.VISIBLE
             tvMessage.visibility = View.INVISIBLE
             tvRetry.visibility = View.INVISIBLE
@@ -140,7 +143,7 @@ class DetailOrderActivity : AppCompatActivity() {
     }
 
     private fun showMessage(message: String? = getString(R.string.an_error_occured)) {
-        with(binding.statusDetailOrder){
+        with(binding.statusDetailOrder) {
             progressBar.visibility = View.INVISIBLE
             tvMessage.visibility = View.VISIBLE
             tvRetry.visibility = View.VISIBLE
@@ -150,7 +153,7 @@ class DetailOrderActivity : AppCompatActivity() {
     }
 
     private fun clearStatusInformation() {
-        with(binding.statusDetailOrder){
+        with(binding.statusDetailOrder) {
             progressBar.visibility = View.INVISIBLE
             tvMessage.visibility = View.INVISIBLE
             tvRetry.visibility = View.INVISIBLE

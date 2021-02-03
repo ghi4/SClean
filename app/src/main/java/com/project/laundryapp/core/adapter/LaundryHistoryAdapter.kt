@@ -31,7 +31,7 @@ class LaundryHistoryAdapter : RecyclerView.Adapter<LaundryHistoryAdapter.Laundry
 
     override fun getItemCount(): Int = dataList.size
 
-    inner class LaundryHistoryResponseTopViewHolder(itemView: View): RecyclerView.ViewHolder(itemView) {
+    inner class LaundryHistoryResponseTopViewHolder(itemView: View) : RecyclerView.ViewHolder(itemView) {
         private val binding = ItemHistoryLaundryBinding.bind(itemView)
         fun bind(data: LaundryHistoryResponse) {
             with(binding) {

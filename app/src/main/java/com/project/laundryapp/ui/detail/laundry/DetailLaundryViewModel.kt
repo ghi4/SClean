@@ -14,7 +14,7 @@ class DetailLaundryViewModel(private val laundryRepository: LaundryRepository) :
         laundryRepository.getLaundryDetail(it).asLiveData()
     }
 
-    fun triggerCall(laundryId: String){
+    fun triggerCall(laundryId: String) {
         triggerCall.postValue(laundryId)
     }
 }

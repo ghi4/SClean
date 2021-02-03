@@ -7,16 +7,16 @@ import androidx.lifecycle.switchMap
 import com.project.laundryapp.core.data.LaundryRepository
 import com.project.laundryapp.core.data.local.User
 
-class LoginViewModel(private val laundryRepository: LaundryRepository): ViewModel() {
+class LoginViewModel(private val laundryRepository: LaundryRepository) : ViewModel() {
 
     private val loginUser = MutableLiveData<User>()
 
     var userData = loginUser.switchMap {
         laundryRepository.postLogin(
-            User(
-                email = it.email,
-                password = it.password,
-            )
+                User(
+                        email = it.email,
+                        password = it.password,
+                )
         ).asLiveData()
     }
 

@@ -56,12 +56,12 @@ class DetailLaundryActivity : AppCompatActivity() {
         }
 
         //When "layanan list" is clicked
-        serviceAdapter.onItemClick = {data ->
+        serviceAdapter.onItemClick = { data ->
             val serviceData = LaundryOrderInput(
-                data.idLayanan.toString(),
-                data.namaLayanan.toString(),
-                data.qty,
-                data.harga
+                    data.idLayanan.toString(),
+                    data.namaLayanan.toString(),
+                    data.qty,
+                    data.harga
             )
 
             //Prevent duplicate data
@@ -73,7 +73,7 @@ class DetailLaundryActivity : AppCompatActivity() {
 
         //Order button
         binding.btDetailOrder.setOnClickListener {
-            if(serviceOrdered.isNotEmpty()){
+            if (serviceOrdered.isNotEmpty()) {
                 val intent = Intent(this, PaymentActivity::class.java)
                 intent.putExtra(Const.KEY_LAUNDRY_ID, laundryId)
                 intent.putExtra(Const.KEY_SERVICE_ORDERED, serviceOrdered)
@@ -85,8 +85,8 @@ class DetailLaundryActivity : AppCompatActivity() {
     }
 
     private fun getData() {
-        viewModel.laundryDetail.observe(this, {data ->
-            when(data) {
+        viewModel.laundryDetail.observe(this, { data ->
+            when (data) {
                 is Resource.Loading -> {
                     hideView()
                     showLoading()
@@ -96,13 +96,13 @@ class DetailLaundryActivity : AppCompatActivity() {
                     val dataStatus = data.data
                     val dataLaundry = dataStatus?.data
 
-                    if(dataLaundry != null){
-                        with(binding){
+                    if (dataLaundry != null) {
+                        with(binding) {
                             val open = Utils.parseHours(dataLaundry.jamBuka.toString())
                             val close = Utils.parseHours(dataLaundry.jamTutup.toString())
                             val openingHours = " $open - $close"
 
-                            with(include){
+                            with(include) {
                                 tvCardDetailTitle.text = dataLaundry.namaLaundry
                                 tvCardDetailOpeningHours.text = openingHours
                                 tvCardDetailAddress.text = dataLaundry.alamat
@@ -110,11 +110,11 @@ class DetailLaundryActivity : AppCompatActivity() {
                             }
 
                             Picasso.get()
-                                .load(Const.URL_BASE + Const.URL_SPECIFIED_IMAGE + dataLaundry.photo)
-                                .placeholder(R.drawable.wide_image_placeholder)
-                                .error(R.drawable.wide_image_placeholder)
-                                .resize(Const.SQUARE_TARGET_SIZE, Const.SQUARE_TARGET_SIZE)
-                                .into(ivDetailImage)
+                                    .load(Const.URL_BASE + Const.URL_SPECIFIED_IMAGE + dataLaundry.photo)
+                                    .placeholder(R.drawable.wide_image_placeholder)
+                                    .error(R.drawable.wide_image_placeholder)
+                                    .resize(Const.SQUARE_TARGET_SIZE, Const.SQUARE_TARGET_SIZE)
+                                    .into(ivDetailImage)
 
                             serviceAdapter.setList(dataLaundry.laundryService as ArrayList<LaundryServiceResponse>)
                         }
@@ -131,13 +131,13 @@ class DetailLaundryActivity : AppCompatActivity() {
         })
     }
 
-    private fun duplicatePreventor(input: LaundryOrderInput){
-        if(serviceOrdered.isEmpty())
+    private fun duplicatePreventor(input: LaundryOrderInput) {
+        if (serviceOrdered.isEmpty())
             serviceOrdered.add(input)
         else {
             var isNotDuplicate = true
-            for(i in 0 until serviceOrdered.size){
-                if(serviceOrdered[i].idLayanan == input.idLayanan) {
+            for (i in 0 until serviceOrdered.size) {
+                if (serviceOrdered[i].idLayanan == input.idLayanan) {
                     isNotDuplicate = false
                     serviceOrdered[i] = input
                 }
@@ -147,16 +147,16 @@ class DetailLaundryActivity : AppCompatActivity() {
         }
     }
 
-    private fun zeroQtyPreventor(){
-        for(i in 0 until serviceOrdered.size){
-            if(serviceOrdered[i].jumlah == 0){
+    private fun zeroQtyPreventor() {
+        for (i in 0 until serviceOrdered.size) {
+            if (serviceOrdered[i].jumlah == 0) {
                 serviceOrdered.removeAt(i)
             }
         }
     }
 
     private fun hideView() {
-        with(binding){
+        with(binding) {
             scrollViewDetailLaundry.visibility = View.INVISIBLE
             btDetailOrder.visibility = View.INVISIBLE
         }
@@ -171,7 +171,7 @@ class DetailLaundryActivity : AppCompatActivity() {
     }
 
     private fun showLoading() {
-        with(binding.statusDetailLaundry){
+        with(binding.statusDetailLaundry) {
             progressBar.visibility = View.VISIBLE
             tvMessage.visibility = View.INVISIBLE
             tvRetry.visibility = View.INVISIBLE
@@ -179,7 +179,7 @@ class DetailLaundryActivity : AppCompatActivity() {
     }
 
     private fun showMessage(message: String? = getString(R.string.an_error_occured)) {
-        with(binding.statusDetailLaundry){
+        with(binding.statusDetailLaundry) {
             progressBar.visibility = View.INVISIBLE
             tvMessage.visibility = View.VISIBLE
             tvRetry.visibility = View.VISIBLE
@@ -189,7 +189,7 @@ class DetailLaundryActivity : AppCompatActivity() {
     }
 
     private fun clearStatusInformation() {
-        with(binding.statusDetailLaundry){
+        with(binding.statusDetailLaundry) {
             progressBar.visibility = View.INVISIBLE
             tvMessage.visibility = View.INVISIBLE
             tvRetry.visibility = View.INVISIBLE

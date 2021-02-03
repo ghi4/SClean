@@ -9,7 +9,7 @@ import com.project.laundryapp.core.data.remote.response.laundry.LaundryOrderInpu
 import com.project.laundryapp.databinding.ItemLaundryOrderBinding
 import com.project.laundryapp.utils.Utils
 
-class LaundryOrderAdapter : RecyclerView.Adapter<LaundryOrderAdapter.LaundryOrderViewHolder>(){
+class LaundryOrderAdapter : RecyclerView.Adapter<LaundryOrderAdapter.LaundryOrderViewHolder>() {
 
     private var dataList = ArrayList<LaundryOrderInput>()
     var onItemClick: ((LaundryOrderInput) -> Unit)? = null
@@ -20,7 +20,7 @@ class LaundryOrderAdapter : RecyclerView.Adapter<LaundryOrderAdapter.LaundryOrde
         notifyDataSetChanged()
     }
 
-    inner class LaundryOrderViewHolder(itemView: View): RecyclerView.ViewHolder(itemView) {
+    inner class LaundryOrderViewHolder(itemView: View) : RecyclerView.ViewHolder(itemView) {
         private val binding = ItemLaundryOrderBinding.bind(itemView)
 
         fun bind(data: LaundryOrderInput) {

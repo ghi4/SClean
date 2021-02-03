@@ -33,7 +33,7 @@ class LaundryTopAdapter : RecyclerView.Adapter<LaundryTopAdapter.LaundryTopViewH
 
     override fun getItemCount(): Int = dataList.size
 
-    inner class LaundryTopViewHolder(itemView: View): RecyclerView.ViewHolder(itemView) {
+    inner class LaundryTopViewHolder(itemView: View) : RecyclerView.ViewHolder(itemView) {
         private val binding = ItemLaundryHorizontalBinding.bind(itemView)
         fun bind(data: LaundryDataResponse) {
             with(binding) {
@@ -45,11 +45,11 @@ class LaundryTopAdapter : RecyclerView.Adapter<LaundryTopAdapter.LaundryTopViewH
                 tvLaundryOpeningHours.text = openingHours
 
                 Picasso.get()
-                    .load(Const.URL_BASE + data.photo)
-                    .placeholder(R.drawable.square_placeholder)
-                    .error(R.drawable.square_placeholder)
-                    .resize(Const.SQUARE_TARGET_SIZE, Const.SQUARE_TARGET_SIZE)
-                    .into(ivLaundryImage)
+                        .load(Const.URL_BASE + data.photo)
+                        .placeholder(R.drawable.square_placeholder)
+                        .error(R.drawable.square_placeholder)
+                        .resize(Const.SQUARE_TARGET_SIZE, Const.SQUARE_TARGET_SIZE)
+                        .into(ivLaundryImage)
             }
         }
 

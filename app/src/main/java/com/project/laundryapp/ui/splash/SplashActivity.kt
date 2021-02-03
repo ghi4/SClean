@@ -1,11 +1,11 @@
 package com.project.laundryapp.ui.splash
 
 import android.content.Intent
-import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.os.Handler
 import android.os.Looper
 import android.util.Log
+import androidx.appcompat.app.AppCompatActivity
 import com.project.laundryapp.R
 import com.project.laundryapp.ui.MainActivity
 import com.project.laundryapp.ui.login.LoginActivity
@@ -22,7 +22,7 @@ class SplashActivity : AppCompatActivity() {
         Handler(Looper.getMainLooper()).postDelayed({
             val user = Utils.getSharedPref(this)
             Log.d("StartHH", user.toString())
-            if(user.id == "Unknown") {
+            if (user.id == "Unknown") {
                 startActivity(Intent(this, LoginActivity::class.java))
             } else {
                 startActivity(Intent(this, MainActivity::class.java))

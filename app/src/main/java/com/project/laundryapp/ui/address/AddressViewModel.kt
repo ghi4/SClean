@@ -7,21 +7,21 @@ import androidx.lifecycle.switchMap
 import com.project.laundryapp.core.data.LaundryRepository
 import com.project.laundryapp.core.data.local.User
 
-class AddressViewModel(private val laundryRepository: LaundryRepository): ViewModel() {
+class AddressViewModel(private val laundryRepository: LaundryRepository) : ViewModel() {
 
     private val user = MutableLiveData<User>()
-    
+
     var userData = user.switchMap {
         laundryRepository.postAddress(
-            User(
-                alamat = it.alamat,
-                kota = it.kota,
-                kecamatan = it.kecamatan,
-                kelurahan = it.kelurahan,
-                kodePos = it.kodePos,
-                keteranganAlamat = it.keteranganAlamat,
-                id = it.id
-            )
+                User(
+                        alamat = it.alamat,
+                        kota = it.kota,
+                        kecamatan = it.kecamatan,
+                        kelurahan = it.kelurahan,
+                        kodePos = it.kodePos,
+                        keteranganAlamat = it.keteranganAlamat,
+                        id = it.id
+                )
         ).asLiveData()
     }
 

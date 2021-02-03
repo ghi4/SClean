@@ -18,7 +18,7 @@ object Utils {
         Toast.makeText(context, message, Toast.LENGTH_SHORT).show()
     }
 
-    fun putSharedPref(activity: Activity, user: User){
+    fun putSharedPref(activity: Activity, user: User) {
         Log.d("Fragment", """
             PUT ENGINE
             ${user.id},
@@ -28,19 +28,19 @@ object Utils {
         """.trimIndent())
 
         val shared = activity.getSharedPreferences("ProfileData", Context.MODE_PRIVATE) ?: return
-        with(shared.edit()){
+        with(shared.edit()) {
             val json = userToJson(user)
             putString(Const.SHARED_PREFS_USER, json)
             commit()
         }
     }
 
-    fun getSharedPref(activity: Activity): User{
+    fun getSharedPref(activity: Activity): User {
         val shared = activity.getSharedPreferences("ProfileData", Context.MODE_PRIVATE)
         val jsonUser = shared.getString(Const.SHARED_PREFS_USER, "No Data") ?: "No Data"
 
         Log.d("Fragment", "GET ENGINE: $jsonUser")
-        return if(jsonUser != "No Data"){
+        return if (jsonUser != "No Data") {
             jsonToUser(jsonUser)
         } else {
             User()
@@ -48,16 +48,34 @@ object Utils {
     }
 
     fun parseFullAddress(user: User): String {
-        return "${user.alamat}, " +
+        val address = "${user.alamat}, " +
                 "Kel. ${user.kelurahan}, " +
                 "Kec. ${user.kecamatan}, " +
                 "Kota ${user.kota}, " +
-                "Kode Pos ${user.kodePos}"
+                "Kode Pos ${user.kodePos}, " +
+                "${user.keteranganAlamat}"
+        val isValid = !address.contains("Unknown")
+
+        return if (isValid) {
+            address
+        } else {
+            "Alamat tidak valid."
+        }
+    }
+
+    fun isAddressValid(user: User): Boolean {
+        val address = "${user.alamat}, " +
+                "Kel. ${user.kelurahan}, " +
+                "Kec. ${user.kecamatan}, " +
+                "Kota ${user.kota}, " +
+                "Kode Pos ${user.kodePos}, " +
+                "${user.keteranganAlamat}"
+        return !address.contains("Unknown")
     }
 
     fun parseStatus(input: String): String {
         val status = listOf(
-            "Menunggu Konfirmasi",
+                "Menunggu Konfirmasi",
                 "Menerima Pesanan",
                 "Pesanan Selesai",
                 "Pesanan Dibatalkan"
@@ -157,19 +175,19 @@ object Utils {
         return resultDot.replace("IDR", "Rp")
     }
 
-    fun parseIntToWeight(qty: Int?, weightType: String): String{
+    fun parseIntToWeight(qty: Int?, weightType: String): String {
         return "$qty $weightType"
     }
 
     fun findBiggest(input1: Int, input2: Int): Int {
-        return if(input1>input2){
+        return if (input1 > input2) {
             input1
         } else {
             input2
         }
     }
 
-    fun isEmailValid(input: String): Boolean{
+    fun isEmailValid(input: String): Boolean {
         return android.util.Patterns.EMAIL_ADDRESS.matcher(input).matches()
     }
 

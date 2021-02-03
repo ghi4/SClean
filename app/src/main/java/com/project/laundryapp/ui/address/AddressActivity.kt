@@ -54,59 +54,59 @@ class AddressActivity : AppCompatActivity() {
                 val addressInfo = etAddressInformation.text.toString()
 
                 // === Full Address ===
-                if(fullAddress.isEmpty()) {
+                if (fullAddress.isEmpty()) {
                     validity = false
                     etAddressFullName.error = getString(R.string.cannot_empty)
                 }
 
                 // === City ===
-                if(city.isEmpty()) {
+                if (city.isEmpty()) {
                     validity = false
                     etAddressCity.error = getString(R.string.cannot_empty)
                 }
 
                 // === Distric ===
-                if(districs.isEmpty()) {
+                if (districs.isEmpty()) {
                     validity = false
                     etAddressDistricts.error = getString(R.string.cannot_empty)
                 }
 
                 // === Sub Distric ===
-                if(subDistric.isEmpty()) {
+                if (subDistric.isEmpty()) {
                     validity = false
                     etAddressSubDistrict.error = getString(R.string.cannot_empty)
                 }
 
                 // === Postal Code ===
-                if(postalCode.length != 5) {
+                if (postalCode.length != 5) {
                     validity = false
                     etAddressPostalCode.error = getString(R.string.must_be_5_characters)
                 }
-                if(!Utils.isNumeric(postalCode)) {
+                if (!Utils.isNumeric(postalCode)) {
                     validity = false
                     etAddressPostalCode.error = getString(R.string.must_be_numeric)
                 }
-                if(postalCode.isEmpty()) {
+                if (postalCode.isEmpty()) {
                     validity = false
                     etAddressPostalCode.error = getString(R.string.cannot_empty)
                 }
 
                 // === Address Info ===
-                if(addressInfo.isEmpty()) {
+                if (addressInfo.isEmpty()) {
                     validity = false
                     etAddressInformation.error = getString(R.string.cannot_empty)
                 }
             }
 
             //Check if input is valid
-            if(validity) {
+            if (validity) {
                 val user = Utils.getSharedPref(this)
-                user.alamat = binding.etAddressFullName.text.toString()
-                user.kota = binding.etAddressCity.text.toString()
-                user.kecamatan = binding.etAddressDistricts.text.toString()
-                user.kelurahan = binding.etAddressSubDistrict.text.toString()
-                user.kodePos = binding.etAddressPostalCode.text.toString()
-                user.keteranganAlamat = binding.etAddressInformation.text.toString()
+                user.alamat = binding.etAddressFullName.text.toString().trim()
+                user.kota = binding.etAddressCity.text.toString().trim()
+                user.kecamatan = binding.etAddressDistricts.text.toString().trim()
+                user.kelurahan = binding.etAddressSubDistrict.text.toString().trim()
+                user.kodePos = binding.etAddressPostalCode.text.toString().trim()
+                user.keteranganAlamat = binding.etAddressInformation.text.toString().trim()
 
                 viewModel.triggerPost(user)
                 Utils.putSharedPref(this, user)
@@ -119,7 +119,7 @@ class AddressActivity : AppCompatActivity() {
         binding.btAddressSkip.setOnClickListener {
             val previousActivity = intent.getIntExtra(ADDRESS_CHANGE_KEY, 0)
 
-            if(previousActivity == 0) {
+            if (previousActivity == 0) {
                 startActivity(Intent(this, MainActivity::class.java))
             } else {
                 finish()
@@ -129,7 +129,7 @@ class AddressActivity : AppCompatActivity() {
 
     private fun observeUserRegister() {
         viewModel.userData.observe(this, { dataPacket ->
-            when(dataPacket) {
+            when (dataPacket) {
                 is Resource.Loading -> {
                     showLoading()
                 }
@@ -138,7 +138,7 @@ class AddressActivity : AppCompatActivity() {
                     val previousActivity = intent.getIntExtra(ADDRESS_CHANGE_KEY, 0)
                     val user = dataPacket.data
 
-                    if(user != null) {
+                    if (user != null) {
                         when (previousActivity) {
                             0 -> {
                                 val intent = Intent(this, MainActivity::class.java)

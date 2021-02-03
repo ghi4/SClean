@@ -50,6 +50,7 @@
                         android:autofillHints="name"
                         android:background="@drawable/edittext_box"
                         android:ems="10"
+                        android:focusable="false"
                         android:hint="@string/masukkan_nama_lengkap"
                         android:inputType="textPersonName"
                         android:text="@string/profile_name" />
@@ -69,6 +70,7 @@
                         android:background="@drawable/edittext_box"
                         android:clickable="false"
                         android:ems="10"
+                        android:focusable="false"
                         android:hint="@string/masukkan_email"
                         android:inputType="textEmailAddress"
                         android:text="@string/budi_mail_com" />
@@ -87,6 +89,7 @@
                         android:autofillHints="phone"
                         android:background="@drawable/edittext_box"
                         android:ems="10"
+                        android:focusable="false"
                         android:hint="@string/masukkan_nomor_hp"
                         android:inputType="phone"
                         android:text="@string/_0858_2234_9923" />
@@ -107,6 +110,7 @@
                         android:autofillHints="address"
                         android:background="@drawable/edittext_box"
                         android:ems="10"
+                        android:focusable="false"
                         android:gravity="start|top"
                         android:hint="@string/masukkan_alamat"
                         android:inputType="textMultiLine"

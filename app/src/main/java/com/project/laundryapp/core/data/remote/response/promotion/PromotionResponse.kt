@@ -2,7 +2,7 @@ package com.project.laundryapp.core.data.remote.response.promotion
 
 import com.google.gson.annotations.SerializedName
 
-data class PromotionResponse (
+data class PromotionResponse(
         @SerializedName("id")
         val idPromotion: String,
 

@@ -24,8 +24,8 @@ class ProfileFragment : Fragment() {
     private lateinit var user: User
 
     override fun onCreateView(
-        inflater: LayoutInflater, container: ViewGroup?,
-        savedInstanceState: Bundle?
+            inflater: LayoutInflater, container: ViewGroup?,
+            savedInstanceState: Bundle?
     ): View {
         binding = FragmentProfileBinding.inflate(inflater, container, false)
         return binding.root
@@ -43,11 +43,14 @@ class ProfileFragment : Fragment() {
         hideView()
 
         //Binding
-        with(binding){
+        with(binding) {
             tvProfileFullName.setText(user.namaLengkap)
             etProfileAddress.setText(Utils.parseFullAddress(user))
             etProfilePhone.setText(user.nomorHp)
             etProfileEmail.setText(user.email)
+
+            if (Utils.isAddressValid(user))
+                etProfileAddress.error = "Perbaiki alamat anda."
 
             Picasso.get()
                     .load(user.photo)
@@ -74,7 +77,7 @@ class ProfileFragment : Fragment() {
     }
 
     private fun hideView() {
-        with(binding){
+        with(binding) {
             root.visibility = View.INVISIBLE
         }
     }

@@ -25,9 +25,9 @@ class FindFragment : Fragment() {
     private lateinit var laundrySideAdapter: LaundrySideAdapter
 
     override fun onCreateView(
-        inflater: LayoutInflater,
-        container: ViewGroup?,
-        savedInstanceState: Bundle?
+            inflater: LayoutInflater,
+            container: ViewGroup?,
+            savedInstanceState: Bundle?
     ): View {
         binding = FragmentLaundryBinding.inflate(inflater, container, false)
         return binding.root
@@ -56,7 +56,7 @@ class FindFragment : Fragment() {
         }
 
         //OnClick Listener
-        laundrySideAdapter.onItemClick = {selectedData ->
+        laundrySideAdapter.onItemClick = { selectedData ->
             val intent = Intent(requireContext(), DetailLaundryActivity::class.java)
             intent.putExtra(Const.KEY_LAUNDRY_ID, selectedData.idLaundry)
             startActivity(intent)
@@ -68,8 +68,8 @@ class FindFragment : Fragment() {
     }
 
     private fun getData() {
-        viewModel.laundryData.observe(viewLifecycleOwner, {data ->
-            when(data) {
+        viewModel.laundryData.observe(viewLifecycleOwner, { data ->
+            when (data) {
                 is Resource.Loading -> {
                     hideView()
                     MainActivity.showLoading()
@@ -78,7 +78,7 @@ class FindFragment : Fragment() {
                 is Resource.Success -> {
                     val dataList = data.data?.data as ArrayList<LaundryDataResponse>
 
-                    if(dataList.isNotEmpty()) {
+                    if (dataList.isNotEmpty()) {
                         showView()
                         laundrySideAdapter.setList(dataList)
                     } else {
@@ -98,7 +98,7 @@ class FindFragment : Fragment() {
     }
 
     private fun hideView() {
-        with(binding){
+        with(binding) {
             constrainViewFind.visibility = View.INVISIBLE
         }
     }

@@ -2,7 +2,6 @@ package com.project.laundryapp.ui.login
 
 import android.content.Intent
 import android.os.Bundle
-import android.util.Log
 import android.view.View
 import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
@@ -40,7 +39,7 @@ class LoginActivity : AppCompatActivity() {
             resetWarning()
 
             //Check input validity
-            if(isInputValid()) {
+            if (isInputValid()) {
                 val user = User(
                         email = binding.etEmail.text.toString(),
                         password = binding.etPassword.text.toString()
@@ -60,7 +59,7 @@ class LoginActivity : AppCompatActivity() {
     private fun getData() {
         viewModel.userData.observe(this, { dataPacket ->
 
-            when(dataPacket) {
+            when (dataPacket) {
                 is Resource.Loading -> {
                     showLoading()
                 }
@@ -68,7 +67,7 @@ class LoginActivity : AppCompatActivity() {
                 is Resource.Success -> {
                     val user = dataPacket.data
 
-                    if(user != null) {
+                    if (user != null) {
                         //Save data to shared preference
                         Utils.putSharedPref(this, user)
 
@@ -103,17 +102,17 @@ class LoginActivity : AppCompatActivity() {
         val password = binding.etPassword.text.toString()
 
         // === Email ===
-        if(email.isEmpty()){
+        if (email.isEmpty()) {
             validity = false
             binding.etEmail.error = getString(R.string.cannot_empty)
         }
-        if(!Utils.isEmailValid(email)) {
+        if (!Utils.isEmailValid(email)) {
             validity = false
             binding.etEmail.error = getString(R.string.email_invalid)
         }
 
         // === Password ===
-        if(password.isEmpty()) {
+        if (password.isEmpty()) {
             validity = false
             binding.etPassword.error = getString(R.string.cannot_empty)
         }

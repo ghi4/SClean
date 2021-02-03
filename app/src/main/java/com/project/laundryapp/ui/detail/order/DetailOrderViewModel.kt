@@ -6,7 +6,7 @@ import androidx.lifecycle.asLiveData
 import androidx.lifecycle.switchMap
 import com.project.laundryapp.core.data.LaundryRepository
 
-class DetailOrderViewModel(private val laundryRepository: LaundryRepository) : ViewModel(){
+class DetailOrderViewModel(private val laundryRepository: LaundryRepository) : ViewModel() {
 
     private val triggerCall = MutableLiveData<String>()
     private val triggerDelete = MutableLiveData<String>()
