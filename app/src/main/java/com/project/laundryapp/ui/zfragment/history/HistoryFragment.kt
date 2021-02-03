@@ -2,7 +2,6 @@ package com.project.laundryapp.ui.zfragment.history
 
 import android.content.Intent
 import android.os.Bundle
-import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -48,7 +47,7 @@ class HistoryFragment : Fragment() {
         historyAdapter = LaundryHistoryAdapter()
 
         with(binding) {
-            root.visibility = View.INVISIBLE
+            hideView()
 
             rvHistoryLaundry.layoutManager = LinearLayoutManager(context)
             rvHistoryLaundry.hasFixedSize()
@@ -56,10 +55,21 @@ class HistoryFragment : Fragment() {
             rvHistoryLaundry.isNestedScrollingEnabled = false
         }
 
+        //OnClick Listener
         historyAdapter.onItemClick = {selectedData ->
             val intent = Intent(requireContext(), DetailOrderActivity::class.java)
             intent.putExtra(Const.KEY_LAUNDRY_HISTORY_ID, selectedData.idPesanan)
             startActivity(intent)
+        }
+
+        MainActivity.getListener().tvRetry.setOnClickListener {
+            val user = Utils.getSharedPref(requireActivity())
+            viewModel.triggerCall(user.id.toString())
+        }
+
+        binding.btHistoryRefresh.setOnClickListener {
+            val user = Utils.getSharedPref(requireActivity())
+            viewModel.triggerCall(user.id.toString())
         }
     }
 
@@ -67,21 +77,37 @@ class HistoryFragment : Fragment() {
         viewModel.dataHistory.observe(viewLifecycleOwner, {data ->
             when(data) {
                 is Resource.Loading -> {
+                    hideView()
                     MainActivity.showLoading()
                 }
 
                 is Resource.Success -> {
-                    val historyList = data.data?.data
-                    historyAdapter.setList(historyList as ArrayList<LaundryHistoryResponse>)
+                    val historyList = data.data?.data as ArrayList<LaundryHistoryResponse>
 
-                    MainActivity.clearStatusInformation()
-                    Anim.crossFade(binding.root)
+                    if(historyList.isNotEmpty()){
+                        showView()
+                        historyAdapter.setList(historyList)
+                    } else {
+                        MainActivity.showMessage("Anda belum melakukan transaksi apapun.")
+                    }
                 }
 
                 is Resource.Error -> {
-                    Utils.showToast(requireContext(), data.message.toString())
+                    hideView()
+                    MainActivity.showMessage(data.message)
                 }
             }
         })
+    }
+
+    private fun hideView() {
+        with(binding){
+            constrainViewHistory.visibility = View.INVISIBLE
+        }
+    }
+
+    private fun showView() {
+        MainActivity.clearStatusInformation()
+        Anim.crossFade(binding.constrainViewHistory)
     }
 }

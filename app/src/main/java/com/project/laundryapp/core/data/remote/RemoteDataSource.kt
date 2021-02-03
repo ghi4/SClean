@@ -2,13 +2,11 @@ package com.project.laundryapp.core.data.remote
 
 import android.util.Log
 import com.google.gson.Gson
-import com.project.laundryapp.core.data.Resource
 import com.project.laundryapp.core.data.local.User
 import com.project.laundryapp.core.data.remote.response.laundry.*
 import com.project.laundryapp.core.data.remote.response.promotion.PromotionStatusResponse
 import com.project.laundryapp.core.data.remote.response.user.UserStatusResponse
 import com.project.laundryapp.core.data.remote.retrofit.RetrofitInterface
-import com.project.laundryapp.core.utils.ResponseMessage
 import com.project.laundryapp.utils.Utils
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.flow.Flow
@@ -35,7 +33,7 @@ class RemoteDataSource(private val retrofitService: RetrofitInterface) {
                 emit(ApiResponse.Success(response))
 
             } catch (e: Exception) {
-                Log.d("RemoteData", "GGWP" + e.toString())
+                Log.d("RemoteData", "GGWP$e")
                 emit(ApiResponse.Error(Utils.parseError(e.toString())))
             }
         }.flowOn(Dispatchers.IO)
@@ -152,12 +150,12 @@ class RemoteDataSource(private val retrofitService: RetrofitInterface) {
             $idUser
             
             ORDER LIST:
-            ${serviceList.toString()}
+            $serviceList
             
             ==========================================
-            ${Gson().toJson(serviceList).toString()}
+            ${Gson().toJson(serviceList)}
             
-            ${Gson().toJson(serviceList.toList()).toString()}
+            ${Gson().toJson(serviceList.toList())}
             ===========================================
         """.trimIndent())
         return flow {
@@ -177,12 +175,12 @@ class RemoteDataSource(private val retrofitService: RetrofitInterface) {
             try {
                 val response = retrofitService.getLaundryHistoryByUserId(idUser)
                 Log.d("HISTORY LAUNDRY", """
-                    ${response.toString()}
+                    $response
                 """.trimIndent())
                 emit(ApiResponse.Success(response))
             } catch (e: Exception) {
                 Log.d("HISTORY LAUNDRY", """
-                    ${e.toString()}
+                    $e
                 """.trimIndent())
                 emit(ApiResponse.Error(noInternet))
             }
@@ -194,12 +192,12 @@ class RemoteDataSource(private val retrofitService: RetrofitInterface) {
             try {
                 val response = retrofitService.getLaundryHistoryDetailByHistoryId(idHistory)
                 Log.d("HISTORY LAUNDRY", """
-                    ${response.toString()}
+                    $response
                 """.trimIndent())
                 emit(ApiResponse.Success(response))
             } catch (e: Exception) {
                 Log.d("HISTORY LAUNDRY", """
-                    ${e.toString()}
+                    $e
                 """.trimIndent())
                 emit(ApiResponse.Error(noInternet))
             }

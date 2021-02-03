@@ -1,10 +1,6 @@
 package com.project.laundryapp.utils
 
-import android.animation.Animator
-import android.animation.AnimatorListenerAdapter
 import android.view.View
-import androidx.core.view.ViewCompat.animate
-import com.project.laundryapp.R
 
 object Anim {
     fun crossFade(contentView: View) {
@@ -19,7 +15,7 @@ object Anim {
             // listener set on the view.
             animate()
                 .alpha(1f)
-                .setDuration(shortAnimationDuration.toLong())
+                .setDuration(shortAnimationDuration)
                 .setListener(null)
         }
     }

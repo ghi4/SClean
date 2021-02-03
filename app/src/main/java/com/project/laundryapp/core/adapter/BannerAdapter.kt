@@ -39,7 +39,7 @@ class BannerAdapter : RecyclerView.Adapter<BannerAdapter.BannerViewHolder>() {
 
                 //Banner Image
                 Picasso.get()
-                    .load(Const.URL_BASE_IMAGE + promotion.photoURL)
+                    .load(Const.URL_BASE + promotion.photoURL)
                     .placeholder(R.drawable.banner_placeholder)
                     .error(R.drawable.banner_placeholder)
                     .resize(Const.BANNER_TARGET_WIDTH, Const.BANNER_TARGET_HEIGHT)

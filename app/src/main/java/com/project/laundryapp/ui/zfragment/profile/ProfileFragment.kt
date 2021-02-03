@@ -2,11 +2,10 @@ package com.project.laundryapp.ui.zfragment.profile
 
 import android.content.Intent
 import android.os.Bundle
-import android.util.Log
-import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import androidx.fragment.app.Fragment
 import com.project.laundryapp.R
 import com.project.laundryapp.core.data.local.User
 import com.project.laundryapp.databinding.FragmentProfileBinding
@@ -42,8 +41,7 @@ class ProfileFragment : Fragment() {
 
     private fun setupUI() {
         with(binding){
-            root.visibility = View.INVISIBLE
-            MainActivity.clearStatusInformation()
+            hideView()
 
             tvProfileFullName.setText(user.namaLengkap)
             etProfileAddress.setText(Utils.parseFullAddress(user))
@@ -68,10 +66,19 @@ class ProfileFragment : Fragment() {
                 startActivity(Intent(requireActivity(), LoginActivity::class.java))
             }
 
-            Anim.crossFade(root)
+            showView()
         }
+    }
 
+    private fun hideView() {
+        with(binding){
+            root.visibility = View.INVISIBLE
+        }
+    }
 
+    private fun showView() {
+        MainActivity.clearStatusInformation()
+        Anim.crossFade(binding.root)
     }
 
 }

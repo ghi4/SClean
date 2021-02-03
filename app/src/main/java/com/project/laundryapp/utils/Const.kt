@@ -2,7 +2,7 @@ package com.project.laundryapp.utils
 
 class Const {
     companion object {
-        const val URL_BASE_IMAGE = "https://testingsclean.000webhostapp.com/"
+        const val URL_BASE = "https://testingsclean.000webhostapp.com/"
         const val URL_SPECIFIED_IMAGE = "assets/images/produk/"
 
         const val SHARED_PREFS_USER = "SharedPrefUsr"

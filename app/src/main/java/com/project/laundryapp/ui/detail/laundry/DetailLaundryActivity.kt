@@ -1,11 +1,9 @@
 package com.project.laundryapp.ui.detail.laundry
 
 import android.content.Intent
-import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
-import android.util.Log
 import android.view.View
-import android.widget.Toast
+import androidx.appcompat.app.AppCompatActivity
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.project.laundryapp.R
 import com.project.laundryapp.core.adapter.LaundryServiceAdapter
@@ -46,7 +44,7 @@ class DetailLaundryActivity : AppCompatActivity() {
         serviceAdapter = LaundryServiceAdapter()
 
         with(binding) {
-            root.visibility = View.INVISIBLE
+            hideView()
 
             rvDetailServiceList.layoutManager = LinearLayoutManager(this@DetailLaundryActivity)
             rvDetailServiceList.hasFixedSize()
@@ -87,41 +85,22 @@ class DetailLaundryActivity : AppCompatActivity() {
         }
 
         binding.btDetailOrder.setOnClickListener {
-
             if(serviceOrdered.isNotEmpty()){
                 val intent = Intent(this, PaymentActivity::class.java)
                 intent.putExtra(Const.KEY_LAUNDRY_ID, laundryId)
                 intent.putExtra(Const.KEY_SERVICE_ORDERED, serviceOrdered)
                 startActivity(intent)
             } else {
-                Utils.showToast(this, "Tidak ada layanan terpilih.")
+                Utils.showToast(this, getString(R.string.no_service_selected))
             }
         }
     }
 
     private fun getData() {
         viewModel.laundryDetail.observe(this, {data ->
-            Log.d("DETAIL LAUNDRY TAG", """
-                BASE:
-                $data
-                
-                RESOURCE:
-                ${data.data}
-                
-                MESSAGE:
-                ${data.message}
-                
-                MESSAGE RESPONSE:
-                ${data.data?.message}
-                                
-                MESSAGE ERROR:
-                ${data.data?.error}
-                
-                DATA:
-                ${data.data?.data}
-            """.trimIndent())
             when(data) {
                 is Resource.Loading -> {
+                    hideView()
                     showLoading()
                 }
 
@@ -142,42 +121,67 @@ class DetailLaundryActivity : AppCompatActivity() {
                                 tvCardDetailDescription.text = dataLaundry.deskripsi
                             }
 
-
                             Picasso.get()
-                                .load(Const.URL_BASE_IMAGE + Const.URL_SPECIFIED_IMAGE + dataLaundry.photo)
+                                .load(Const.URL_BASE + Const.URL_SPECIFIED_IMAGE + dataLaundry.photo)
                                 .placeholder(R.drawable.wide_image_placeholder)
                                 .error(R.drawable.wide_image_placeholder)
                                 .resize(Const.SQUARE_TARGET_SIZE, Const.SQUARE_TARGET_SIZE)
                                 .into(ivDetailImage)
 
-                            clearStatusInformation()
-                            Anim.crossFade(root)
-
                             serviceAdapter.setList(dataLaundry.laundryService as ArrayList<LaundryServiceResponse>)
                         }
-                    }
 
+                        clearStatusInformation()
+                        showView()
+                    }
                 }
 
-
                 is Resource.Error -> {
-                    Utils.showToast(this, data.message.toString())
+                    hideView()
+                    showMessage(data.message)
                 }
             }
         })
+    }
+
+    private fun hideView() {
+        with(binding){
+            scrollViewDetailLaundry.visibility = View.INVISIBLE
+            btDetailOrder.visibility = View.INVISIBLE
+        }
+    }
+
+    private fun showView() {
+        binding.scrollViewDetailLaundry.visibility = View.VISIBLE
+        binding.btDetailOrder.visibility = View.VISIBLE
+        binding.constraintViewDetailLaundry.visibility = View.INVISIBLE
+        clearStatusInformation()
+        Anim.crossFade(binding.constraintViewDetailLaundry)
     }
 
     private fun showLoading() {
         with(binding.statusDetailLaundry){
             progressBar.visibility = View.VISIBLE
             tvMessage.visibility = View.INVISIBLE
+            tvRetry.visibility = View.INVISIBLE
         }
     }
 
-    fun clearStatusInformation() {
+    private fun showMessage(message: String? = getString(R.string.an_error_occured)) {
+        with(binding.statusDetailLaundry){
+            progressBar.visibility = View.INVISIBLE
+            tvMessage.visibility = View.VISIBLE
+            tvRetry.visibility = View.VISIBLE
+
+            tvMessage.text = message
+        }
+    }
+
+    private fun clearStatusInformation() {
         with(binding.statusDetailLaundry){
             progressBar.visibility = View.INVISIBLE
             tvMessage.visibility = View.INVISIBLE
+            tvRetry.visibility = View.INVISIBLE
         }
     }
 }

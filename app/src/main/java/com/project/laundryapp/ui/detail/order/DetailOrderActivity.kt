@@ -1,10 +1,9 @@
 package com.project.laundryapp.ui.detail.order
 
 import android.content.Intent
-import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
-import android.util.Log
 import android.view.View
+import androidx.appcompat.app.AppCompatActivity
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.project.laundryapp.R
 import com.project.laundryapp.core.adapter.LaundryOrderAdapter
@@ -37,37 +36,35 @@ class DetailOrderActivity : AppCompatActivity() {
         }
     }
 
+    private fun setupUI(historyId: String) {
+        orderAdapter = LaundryOrderAdapter()
+
+        with(binding) {
+            hideView()
+
+            rvPaymentOrderList.layoutManager = LinearLayoutManager(this@DetailOrderActivity)
+            rvPaymentOrderList.hasFixedSize()
+            rvPaymentOrderList.adapter = orderAdapter
+
+            btPaymentCancel.setOnClickListener {
+                viewModel.triggerDelete(historyId)
+            }
+        }
+
+    }
+
     private fun getData() {
         val user = Utils.getSharedPref(this)
         binding.tvUserAddress.text = Utils.parseFullAddress(user)
 
         viewModel.historyDetail.observe(this, {data ->
-            Log.d("DETAIL ORDER", """
-                        =============================================================
-                        BASE:
-                        $data
-                        
-                        MESSAGE:
-                        ${data.message}
-                        
-                        MESSAGE RESPONSE:
-                        ${data.data?.message}
-                        
-                        MESSAGE ERROR:
-                        ${data.data?.error}
-                        
-                        DATA:
-                        ${data.data?.data}
-                        =============================================================
-                    """)
             when(data) {
                 is Resource.Loading -> {
-                    Utils.showToast(this, "Memuat data.")
+                    hideView()
+                    showLoading()
                 }
 
                 is Resource.Success -> {
-                    Utils.showToast(this, "Berhasil.")
-
                     val orderList = data.data?.data?.daftarLayanan?.map {
                         LaundryOrderInput(
                                 it.idLayanan.toString(),
@@ -94,13 +91,15 @@ class DetailOrderActivity : AppCompatActivity() {
                         tvPaymentShipment.text = Utils.parseIntToCurrency(Const.SHIPMENT_PRICE)
                         tvPaymentSubTotal.text = Utils.parseIntToCurrency(subTotalPrice)
                         tvPaymentTotalPrice.text = Utils.parseIntToCurrency(totalPrice)
-
-                        Anim.crossFade(root)
                     }
+
+                    clearStatusInformation()
+                    showView()
                 }
 
                 is Resource.Error -> {
-                    Utils.showToast(this, data.message.toString())
+                    hideView()
+                    showMessage(data.message)
                 }
             }
         })
@@ -108,15 +107,15 @@ class DetailOrderActivity : AppCompatActivity() {
         viewModel.deleteData.observe(this, { data ->
             when (data) {
                 is Resource.Loading -> {
-                    Utils.showToast(this, "Mohon tunggu.")
+                    showLoading()
                 }
-                is Resource.Success -> {
-                    Utils.showToast(this, "Berhasil!")
 
+                is Resource.Success -> {
                     val intent = Intent(this, MainActivity::class.java)
                     intent.putExtra(MainActivity.FRAGMENT_ID_KEY, R.id.navigation_history)
                     startActivity(intent)
                 }
+
                 is Resource.Error -> {
                     Utils.showToast(this, data.message.toString())
                 }
@@ -124,20 +123,44 @@ class DetailOrderActivity : AppCompatActivity() {
         })
     }
 
-    private fun setupUI(historyId: String) {
-        orderAdapter = LaundryOrderAdapter()
-
-        with(binding) {
-            root.visibility = View.INVISIBLE
-
-            rvPaymentOrderList.layoutManager = LinearLayoutManager(this@DetailOrderActivity)
-            rvPaymentOrderList.hasFixedSize()
-            rvPaymentOrderList.adapter = orderAdapter
-
-            btPaymentCancel.setOnClickListener {
-                viewModel.triggerDelete(historyId)
-            }
+    private fun hideView() {
+        with(binding){
+            scrollViewDetailOrder.visibility = View.INVISIBLE
+            btPaymentCancel.visibility = View.INVISIBLE
         }
+    }
 
+    private fun showView() {
+        binding.scrollViewDetailOrder.visibility = View.VISIBLE
+        binding.btPaymentCancel.visibility = View.VISIBLE
+        binding.constraintViewDetailOrder.visibility = View.INVISIBLE
+        clearStatusInformation()
+        Anim.crossFade(binding.constraintViewDetailOrder)
+    }
+
+    private fun showLoading() {
+        with(binding.statusDetailOrder){
+            progressBar.visibility = View.VISIBLE
+            tvMessage.visibility = View.INVISIBLE
+            tvRetry.visibility = View.INVISIBLE
+        }
+    }
+
+    private fun showMessage(message: String? = getString(R.string.an_error_occured)) {
+        with(binding.statusDetailOrder){
+            progressBar.visibility = View.INVISIBLE
+            tvMessage.visibility = View.VISIBLE
+            tvRetry.visibility = View.VISIBLE
+
+            tvMessage.text = message
+        }
+    }
+
+    private fun clearStatusInformation() {
+        with(binding.statusDetailOrder){
+            progressBar.visibility = View.INVISIBLE
+            tvMessage.visibility = View.INVISIBLE
+            tvRetry.visibility = View.INVISIBLE
+        }
     }
 }

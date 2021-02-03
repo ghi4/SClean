@@ -45,7 +45,7 @@ class LaundryTopAdapter : RecyclerView.Adapter<LaundryTopAdapter.LaundryTopViewH
                 tvLaundryOpeningHours.text = openingHours
 
                 Picasso.get()
-                    .load(Const.URL_BASE_IMAGE + data.photo)
+                    .load(Const.URL_BASE + data.photo)
                     .placeholder(R.drawable.square_placeholder)
                     .error(R.drawable.square_placeholder)
                     .resize(Const.SQUARE_TARGET_SIZE, Const.SQUARE_TARGET_SIZE)

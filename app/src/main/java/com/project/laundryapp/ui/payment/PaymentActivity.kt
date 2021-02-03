@@ -1,9 +1,8 @@
 package com.project.laundryapp.ui.payment
 
 import android.content.Intent
-import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
-import android.util.Log
+import androidx.appcompat.app.AppCompatActivity
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.project.laundryapp.R
 import com.project.laundryapp.core.adapter.LaundryOrderAdapter
@@ -41,8 +40,6 @@ class PaymentActivity : AppCompatActivity() {
                 }
 
                 is Resource.Success -> {
-                    Utils.showToast(this, "Sukses!")
-
                     val intent = Intent(this, MainActivity::class.java)
                     intent.putExtra(MainActivity.FRAGMENT_ID_KEY, R.id.navigation_history)
                     startActivity(intent)

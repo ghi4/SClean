@@ -67,7 +67,7 @@
                 android:background="@drawable/textview_roundedcorner_blue"
                 android:foregroundGravity="center_vertical"
                 android:gravity="center"
-                android:text="-"
+                android:text="@string/min"
                 android:textColor="@color/white"
                 android:textSize="18sp"
                 android:textStyle="bold" />
@@ -90,7 +90,7 @@
                 android:background="@drawable/textview_roundedcorner_blue"
                 android:foregroundGravity="center_vertical"
                 android:gravity="center"
-                android:text="+"
+                android:text="@string/plus"
                 android:textColor="@color/white"
                 android:textSize="14sp" />
 

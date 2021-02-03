@@ -2,7 +2,6 @@ package com.project.laundryapp.ui.zfragment.home
 
 import android.content.Intent
 import android.os.Bundle
-import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -11,7 +10,6 @@ import androidx.recyclerview.widget.LinearLayoutManager
 import com.project.laundryapp.core.adapter.BannerAdapter
 import com.project.laundryapp.core.adapter.LaundryTopAdapter
 import com.project.laundryapp.core.data.Resource
-import com.project.laundryapp.core.data.local.Laundry
 import com.project.laundryapp.core.data.remote.response.laundry.LaundryDataResponse
 import com.project.laundryapp.core.data.remote.response.promotion.PromotionResponse
 import com.project.laundryapp.databinding.FragmentHomeBinding
@@ -19,7 +17,6 @@ import com.project.laundryapp.ui.MainActivity
 import com.project.laundryapp.ui.detail.laundry.DetailLaundryActivity
 import com.project.laundryapp.utils.Anim
 import com.project.laundryapp.utils.Const
-import com.project.laundryapp.utils.Utils
 import org.koin.android.ext.android.inject
 
 class HomeFragment : Fragment() {
@@ -65,11 +62,15 @@ class HomeFragment : Fragment() {
             dotsIndicatorBanner.setViewPager2(vpHomeBanner)
         }
 
-        //When list data clicked
+        //OnClick Listener
         laundryTopAdapter.onItemClick = {selectedData ->
             val intent = Intent(requireContext(), DetailLaundryActivity::class.java)
             intent.putExtra(Const.KEY_LAUNDRY_ID, selectedData.idLaundry)
             startActivity(intent)
+        }
+
+        MainActivity.getListener().tvRetry.setOnClickListener {
+            viewModel.triggerCall()
         }
     }
 
@@ -92,7 +93,7 @@ class HomeFragment : Fragment() {
 
                 is Resource.Error -> {
                     hideView()
-                    MainActivity.showMessage(data.data?.message ?: data.message)
+                    MainActivity.showMessage(data.message)
                 }
             }
         })
@@ -100,7 +101,7 @@ class HomeFragment : Fragment() {
         viewModel.promotionData.observe(viewLifecycleOwner, {data->
             when(data) {
                 is Resource.Loading -> {
-
+                    //Done by "viewModel.laundryData"
                 }
 
                 is Resource.Success -> {
@@ -109,7 +110,7 @@ class HomeFragment : Fragment() {
                 }
 
                 is Resource.Error -> {
-
+                    //Done by "viewModel.laundryData"
                 }
             }
         })
