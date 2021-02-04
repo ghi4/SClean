@@ -18,13 +18,13 @@ import com.project.laundryapp.ui.MainActivity
 import com.project.laundryapp.ui.detail.laundry.DetailLaundryActivity
 import com.project.laundryapp.utils.Anim
 import com.project.laundryapp.utils.Const
-import org.koin.android.ext.android.inject
+import org.koin.android.viewmodel.ext.android.viewModel
 import java.util.*
 import kotlin.concurrent.timerTask
 
 class HomeFragment : Fragment() {
 
-    private val viewModel: HomeViewModel by inject()
+    private val viewModel: HomeViewModel by viewModel()
     private lateinit var binding: FragmentHomeBinding
     private lateinit var bannerAdapter: BannerAdapter
     private lateinit var laundryTopAdapter: LaundryTopAdapter

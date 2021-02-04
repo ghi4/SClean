@@ -13,10 +13,11 @@ import com.project.laundryapp.ui.address.AddressActivity
 import com.project.laundryapp.ui.login.LoginActivity
 import com.project.laundryapp.utils.Utils
 import org.koin.android.ext.android.inject
+import org.koin.android.viewmodel.ext.android.viewModel
 
 class RegisterActivity : AppCompatActivity() {
 
-    private val viewModel: RegisterViewModel by inject()
+    private val viewModel: RegisterViewModel by viewModel()
     private lateinit var binding: ActivityRegisterBinding
 
     override fun onCreate(savedInstanceState: Bundle?) {

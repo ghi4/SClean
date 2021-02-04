@@ -13,10 +13,11 @@ import com.project.laundryapp.ui.MainActivity
 import com.project.laundryapp.ui.register.RegisterActivity
 import com.project.laundryapp.utils.Utils
 import org.koin.android.ext.android.inject
+import org.koin.android.viewmodel.ext.android.viewModel
 
 class LoginActivity : AppCompatActivity() {
 
-    private val viewModel: LoginViewModel by inject()
+    private val viewModel: LoginViewModel by viewModel()
     private lateinit var binding: ActivityLoginBinding
 
     override fun onCreate(savedInstanceState: Bundle?) {

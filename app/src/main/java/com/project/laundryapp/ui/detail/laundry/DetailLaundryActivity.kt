@@ -17,10 +17,11 @@ import com.project.laundryapp.utils.Const
 import com.project.laundryapp.utils.Utils
 import com.squareup.picasso.Picasso
 import org.koin.android.ext.android.inject
+import org.koin.android.viewmodel.ext.android.viewModel
 
 class DetailLaundryActivity : AppCompatActivity() {
 
-    private val viewModel: DetailLaundryViewModel by inject()
+    private val viewModel: DetailLaundryViewModel by viewModel()
     private lateinit var binding: ActivityDetailLaundryBinding
     private lateinit var serviceAdapter: LaundryServiceAdapter
 

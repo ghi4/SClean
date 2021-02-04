@@ -15,10 +15,11 @@ import com.project.laundryapp.utils.Anim
 import com.project.laundryapp.utils.Const
 import com.project.laundryapp.utils.Utils
 import org.koin.android.ext.android.inject
+import org.koin.android.viewmodel.ext.android.viewModel
 
 class DetailOrderActivity : AppCompatActivity() {
 
-    private val viewModel: DetailOrderViewModel by inject()
+    private val viewModel: DetailOrderViewModel by viewModel()
     private lateinit var binding: ActivityDetailOrderBinding
     private lateinit var orderAdapter: LaundryOrderAdapter
 

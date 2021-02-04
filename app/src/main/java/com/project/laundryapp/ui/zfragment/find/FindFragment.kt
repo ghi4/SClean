@@ -17,10 +17,11 @@ import com.project.laundryapp.ui.detail.laundry.DetailLaundryActivity
 import com.project.laundryapp.utils.Anim
 import com.project.laundryapp.utils.Const
 import org.koin.android.ext.android.inject
+import org.koin.android.viewmodel.ext.android.viewModel
 
 class FindFragment : Fragment() {
 
-    private val viewModel: FindViewModel by inject()
+    private val viewModel: FindViewModel by viewModel()
     private lateinit var binding: FragmentLaundryBinding
     private lateinit var laundrySideAdapter: LaundrySideAdapter
 
