@@ -2,7 +2,6 @@ package com.project.laundryapp.ui.zfragment.history
 
 import android.content.Intent
 import android.os.Bundle
-import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -18,7 +17,6 @@ import com.project.laundryapp.ui.detail.order.DetailOrderActivity
 import com.project.laundryapp.utils.Anim
 import com.project.laundryapp.utils.Const
 import com.project.laundryapp.utils.Utils
-import org.koin.android.ext.android.inject
 import org.koin.android.viewmodel.ext.android.viewModel
 
 class HistoryFragment : Fragment() {
@@ -39,7 +37,7 @@ class HistoryFragment : Fragment() {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
 
-        if(savedInstanceState == null) {
+        if (savedInstanceState == null) {
             val user = Utils.getSharedPref(requireActivity())
             viewModel.triggerCall(user.id.toString())
         }

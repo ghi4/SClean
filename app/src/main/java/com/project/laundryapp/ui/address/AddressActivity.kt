@@ -10,7 +10,6 @@ import com.project.laundryapp.core.data.Resource
 import com.project.laundryapp.databinding.ActivityAddressBinding
 import com.project.laundryapp.ui.MainActivity
 import com.project.laundryapp.utils.Utils
-import org.koin.android.ext.android.inject
 import org.koin.android.viewmodel.ext.android.viewModel
 
 class AddressActivity : AppCompatActivity() {

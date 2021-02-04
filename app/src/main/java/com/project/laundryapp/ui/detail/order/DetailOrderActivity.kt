@@ -14,7 +14,6 @@ import com.project.laundryapp.ui.MainActivity
 import com.project.laundryapp.utils.Anim
 import com.project.laundryapp.utils.Const
 import com.project.laundryapp.utils.Utils
-import org.koin.android.ext.android.inject
 import org.koin.android.viewmodel.ext.android.viewModel
 
 class DetailOrderActivity : AppCompatActivity() {
