@@ -8,7 +8,7 @@ import com.project.laundryapp.core.data.LaundryRepository
 
 class FindViewModel(private val laundryRepository: LaundryRepository) : ViewModel() {
 
-    private var triggerCall = MutableLiveData<Unit>()
+    private var triggerCall = MutableLiveData(Unit)
 
     var laundryData = triggerCall.switchMap {
         laundryRepository.getLaundryList().asLiveData()

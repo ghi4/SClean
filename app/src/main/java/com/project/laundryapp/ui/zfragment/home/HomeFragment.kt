@@ -45,7 +45,6 @@ class HomeFragment : Fragment() {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
 
-        viewModel.triggerCall()
         setupUI()
         getData()
     }
@@ -146,4 +145,5 @@ class HomeFragment : Fragment() {
         MainActivity.clearStatusInformation()
         Anim.crossFade(binding.scrollViewHome)
     }
+
 }
