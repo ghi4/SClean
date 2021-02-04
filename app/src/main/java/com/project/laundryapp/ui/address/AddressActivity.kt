@@ -35,6 +35,37 @@ class AddressActivity : AppCompatActivity() {
     private fun setupUI() {
         clearStatusInformation()
 
+        //Set value if data
+        with(binding) {
+            val user = Utils.getSharedPref(this@AddressActivity)
+
+            val fullAddress = user.alamat.toString()
+            val city = user.kota.toString()
+            val districs = user.kecamatan.toString()
+            val subDistrics = user.kelurahan.toString()
+            val postalCode = user.kodePos.toString()
+            val informationAddress = user.keteranganAlamat.toString()
+
+            if (isAddressValid(fullAddress)) {
+                etAddressFullName.setText(fullAddress)
+            }
+            if (isAddressValid(city)) {
+                etAddressCity.setText(city)
+            }
+            if (isAddressValid(districs)) {
+                etAddressDistricts.setText(districs)
+            }
+            if (isAddressValid(subDistrics)) {
+                etAddressSubDistrict.setText(subDistrics)
+            }
+            if (isAddressValid(postalCode)) {
+                etAddressPostalCode.setText(postalCode)
+            }
+            if (isAddressValid(informationAddress)) {
+                etAddressInformation.setText(informationAddress)
+            }
+        }
+
         //Button Save Address
         binding.btAddressSave.setOnClickListener {
             var validity = true
@@ -172,5 +203,9 @@ class AddressActivity : AppCompatActivity() {
 
     private fun clearStatusInformation() {
         binding.progressBarAddress.visibility = View.INVISIBLE
+    }
+
+    private fun isAddressValid(input: String): Boolean {
+        return !input.contains("Unknown", true) && input.isNotEmpty() && input.isNotBlank()
     }
 }

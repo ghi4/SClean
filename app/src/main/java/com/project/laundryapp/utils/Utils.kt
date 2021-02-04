@@ -60,7 +60,7 @@ object Utils {
                 "Kota ${user.kota}, " +
                 "${user.kodePos}. " +
                 "${user.keteranganAlamat}."
-        val isNotValid = address.contains("Unknown")
+        val isNotValid = address.contains("Unknown", true)
 
         return if (isNotValid) {
             "Alamat tidak valid."
@@ -76,7 +76,7 @@ object Utils {
                 "Kota ${user.kota}, " +
                 "Kode Pos ${user.kodePos}, " +
                 "${user.keteranganAlamat}"
-        return !address.contains("Unknown")
+        return !address.contains("Unknown", true)
     }
 
     fun parseStatus(input: String): String {
@@ -139,7 +139,7 @@ object Utils {
             input.contains("402") -> {
                 "Pastikan email dan password benar."
             }
-            input.contains("Unable to resolve host") -> {
+            input.contains("Unable to resolve host", true) -> {
                 "Masalah koneksi"
             }
             else -> {
