@@ -29,9 +29,9 @@ class HomeFragment : Fragment() {
     private lateinit var bannerAdapter: BannerAdapter
     private lateinit var laundryTopAdapter: LaundryTopAdapter
 
-    private var slide = 0
-    private var delaySlide = 500L
-    private var durationSlide = 3000L
+    private var banner = 0
+    private var delayBanner = 500L
+    private var durationBanner = 3000L
 
     override fun onCreateView(
             inflater: LayoutInflater,
@@ -122,11 +122,11 @@ class HomeFragment : Fragment() {
                     //Banner auto swipe
                     Timer().schedule(timerTask {
                         activity?.runOnUiThread {
-                            if (slide == promotionList.size)
-                                slide = 0
-                            binding.vpHomeBanner.setCurrentItem(slide++, true)
+                            if (banner == promotionList.size)
+                                banner = 0
+                            binding.vpHomeBanner.setCurrentItem(banner++, true)
                         }
-                    }, delaySlide, durationSlide)
+                    }, delayBanner, durationBanner)
                 }
 
                 is Resource.Error -> {
