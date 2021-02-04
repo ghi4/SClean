@@ -76,6 +76,7 @@ class DetailOrderActivity : AppCompatActivity() {
                                 it.idLayanan.toString(),
                                 it.namaLayanan.toString(),
                                 it.estimasi.toString(),
+                                it.satuan.toString(),
                                 it.qty,
                                 it.harga
                         )

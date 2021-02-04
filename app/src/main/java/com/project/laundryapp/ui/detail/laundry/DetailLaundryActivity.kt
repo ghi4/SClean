@@ -61,6 +61,7 @@ class DetailLaundryActivity : AppCompatActivity() {
                     data.idLayanan.toString(),
                     data.namaLayanan.toString(),
                     data.estimasi.toString(),
+                    data.satuan.toString(),
                     data.qty,
                     data.harga
             )

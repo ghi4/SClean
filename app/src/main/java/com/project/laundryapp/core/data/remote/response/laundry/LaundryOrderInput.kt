@@ -19,6 +19,10 @@ data class LaundryOrderInput(
         @Expose(serialize = false)
         var estimasiPengerjaan: String,
 
+        @SerializedName("satuan")
+        @Expose(serialize = false)
+        var satuan: String,
+
         @SerializedName("qty")
         @Expose
         var jumlah: Int? = 0,

@@ -28,7 +28,7 @@ class LaundryOrderAdapter : RecyclerView.Adapter<LaundryOrderAdapter.LaundryOrde
                 val price = data.harga ?: 0
                 val qty = data.jumlah ?: 0
                 val totalPrice = price * qty
-                val orderCount = "$qty Kg x ${Utils.parseIntToCurrency(price)}"
+                val orderCount = "$qty ${data.satuan} x ${Utils.parseIntToCurrency(price)}"
 
                 tvOrderServiceName.text = data.namaLayanan
                 tvOrderTotalPrice.text = Utils.parseIntToCurrency(totalPrice)
