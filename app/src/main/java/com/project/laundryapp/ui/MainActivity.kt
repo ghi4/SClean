@@ -74,8 +74,9 @@ class MainActivity : AppCompatActivity() {
             //Do nothing
         }
 
-        val defaultFragment = R.id.navigation_home
-        val selectedFragment = intent.getIntExtra(FRAGMENT_ID_KEY, defaultFragment)
-        navView.selectedItemId = selectedFragment
+        val selectedFragment = intent.getIntExtra(FRAGMENT_ID_KEY, 0)
+        if (selectedFragment != 0) {
+            navView.selectedItemId = selectedFragment
+        }
     }
 }
