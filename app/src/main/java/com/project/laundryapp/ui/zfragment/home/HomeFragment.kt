@@ -19,6 +19,8 @@ import com.project.laundryapp.ui.detail.laundry.DetailLaundryActivity
 import com.project.laundryapp.utils.Anim
 import com.project.laundryapp.utils.Const
 import org.koin.android.ext.android.inject
+import java.util.*
+import kotlin.concurrent.timerTask
 
 class HomeFragment : Fragment() {
 
@@ -26,6 +28,10 @@ class HomeFragment : Fragment() {
     private lateinit var binding: FragmentHomeBinding
     private lateinit var bannerAdapter: BannerAdapter
     private lateinit var laundryTopAdapter: LaundryTopAdapter
+
+    private var slide = 0
+    private var delaySlide = 500L
+    private var durationSlide = 3000L
 
     override fun onCreateView(
             inflater: LayoutInflater,
@@ -112,6 +118,15 @@ class HomeFragment : Fragment() {
                 is Resource.Success -> {
                     val promotionList = data.data?.data
                     bannerAdapter.setList(promotionList as ArrayList<PromotionResponse>)
+
+                    //Banner auto swipe
+                    Timer().schedule(timerTask {
+                        activity?.runOnUiThread {
+                            if (slide == promotionList.size)
+                                slide = 0
+                            binding.vpHomeBanner.setCurrentItem(slide++, true)
+                        }
+                    }, delaySlide, durationSlide)
                 }
 
                 is Resource.Error -> {
