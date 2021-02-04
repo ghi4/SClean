@@ -1,33 +1,27 @@
 <?xml version="1.0" encoding="utf-8"?>
-<resources xmlns:tools="http://schemas.android.com/tools" tools:ignore="UnusedResources">
+<resources>
     <color name="purple_200">#FFBB86FC</color>
-    <color name="purple_500">#FF6200EE</color>
     <color name="purple_700">#FF3700B3</color>
     <color name="teal_200">#FF03DAC5</color>
     <color name="teal_700">#FF018786</color>
     <color name="black">#FF000000</color>
     <color name="white">#FFFFFFFF</color>
-    <color name="white_ff">#FFFFFF</color>
 
     <color name="black_light">#55000000</color>
 
     <!-- BLUE -->
     <color name="blue_900">#0089a0</color>
     <color name="blue_700">#25b9d1</color>
-    <color name="blue_500">#6cecff</color>
 
     <!-- RED -->
     <color name="red_400_light">#ff867c</color>
-    <color name="red_900">#b71c1c</color>
     <color name="red_700">#d32f2f</color>
 
     <!-- YELLOW -->
     <color name="yellow_400_light">#ffff8b</color>
-    <color name="yellow_900">#f57f17</color>
 
     <!-- LIGHT BLUE -->
     <color name="lighblue_400_light">#73e8ff</color>
-    <color name="lightblue_900">#01579b</color>
 
     <!-- GREEN -->
     <color name="green_400_light">#98ee99</color>
@@ -36,5 +30,4 @@
     <!-- GREY -->
     <color name="grey_400">#bdbdbd</color>
     <color name="grey_400_light">#efefef</color>
-    <color name="grey_900">#212121</color>
 </resources>
