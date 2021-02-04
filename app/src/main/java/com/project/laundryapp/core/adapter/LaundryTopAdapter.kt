@@ -18,8 +18,9 @@ class LaundryTopAdapter(val context: Context) : RecyclerView.Adapter<LaundryTopA
     var onItemClick: ((LaundryDataResponse) -> Unit)? = null
 
     fun setList(data: ArrayList<LaundryDataResponse>) {
+        val dataCount = 3
         dataList.clear()
-        dataList.addAll(data)
+        dataList.addAll(data.take(dataCount))
         notifyDataSetChanged()
     }
 
