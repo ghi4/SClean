@@ -16,7 +16,6 @@ import com.project.laundryapp.utils.Anim
 import com.project.laundryapp.utils.Const
 import com.project.laundryapp.utils.Utils
 import com.squareup.picasso.Picasso
-import org.koin.android.ext.android.inject
 import org.koin.android.viewmodel.ext.android.viewModel
 
 class DetailLaundryActivity : AppCompatActivity() {
@@ -33,13 +32,14 @@ class DetailLaundryActivity : AppCompatActivity() {
         binding = ActivityDetailLaundryBinding.inflate(layoutInflater)
         setContentView(binding.root)
 
-        val laundryId = intent.getStringExtra(Const.KEY_LAUNDRY_ID)
+        val laundryId = intent.getStringExtra(Const.KEY_LAUNDRY_ID).toString()
 
-        if (laundryId != null) {
+        if (savedInstanceState == null) {
             viewModel.triggerCall(laundryId)
-            setupUI(laundryId)
-            getData()
         }
+
+        setupUI(laundryId)
+        getData()
     }
 
     private fun setupUI(laundryId: String) {

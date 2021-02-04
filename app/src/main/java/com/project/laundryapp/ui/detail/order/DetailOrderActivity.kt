@@ -31,7 +31,10 @@ class DetailOrderActivity : AppCompatActivity() {
 
         val historyId = intent.getStringExtra(Const.KEY_LAUNDRY_HISTORY_ID).toString()
 
-        viewModel.triggerCall(historyId)
+        if (savedInstanceState == null) {
+            viewModel.triggerCall(historyId)
+        }
+
         setupUI(historyId)
         getData()
     }
