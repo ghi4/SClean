@@ -47,6 +47,7 @@ class DetailOrderActivity : AppCompatActivity() {
         //Binding
         with(binding) {
             rvPaymentOrderList.layoutManager = LinearLayoutManager(this@DetailOrderActivity)
+            rvPaymentOrderList.isNestedScrollingEnabled = false
             rvPaymentOrderList.hasFixedSize()
             rvPaymentOrderList.adapter = orderAdapter
         }

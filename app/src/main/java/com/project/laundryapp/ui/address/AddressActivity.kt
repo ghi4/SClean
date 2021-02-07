@@ -46,22 +46,22 @@ class AddressActivity : AppCompatActivity() {
             val postalCode = user.kodePos.toString()
             val informationAddress = user.keteranganAlamat.toString()
 
-            if (isAddressValid(fullAddress)) {
+            if (isNotUnknownOrEmpty(fullAddress)) {
                 etAddressFullName.setText(fullAddress)
             }
-            if (isAddressValid(city)) {
+            if (isNotUnknownOrEmpty(city)) {
                 etAddressCity.setText(city)
             }
-            if (isAddressValid(districs)) {
+            if (isNotUnknownOrEmpty(districs)) {
                 etAddressDistricts.setText(districs)
             }
-            if (isAddressValid(subDistrics)) {
+            if (isNotUnknownOrEmpty(subDistrics)) {
                 etAddressSubDistrict.setText(subDistrics)
             }
-            if (isAddressValid(postalCode)) {
+            if (isNotUnknownOrEmpty(postalCode)) {
                 etAddressPostalCode.setText(postalCode)
             }
-            if (isAddressValid(informationAddress)) {
+            if (isNotUnknownOrEmpty(informationAddress)) {
                 etAddressInformation.setText(informationAddress)
             }
         }
@@ -205,7 +205,7 @@ class AddressActivity : AppCompatActivity() {
         binding.progressBarAddress.visibility = View.INVISIBLE
     }
 
-    private fun isAddressValid(input: String): Boolean {
+    private fun isNotUnknownOrEmpty(input: String): Boolean {
         return !input.contains("Unknown", true) && input.isNotEmpty() && input.isNotBlank()
     }
 }
