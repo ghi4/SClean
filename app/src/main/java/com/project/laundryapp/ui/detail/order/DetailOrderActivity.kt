@@ -132,13 +132,13 @@ class DetailOrderActivity : AppCompatActivity() {
     private fun hideView() {
         with(binding) {
             scrollViewDetailOrder.visibility = View.INVISIBLE
-            cardViewDetailOrder.visibility = View.INVISIBLE
+            linearLayout4.visibility = View.INVISIBLE
         }
     }
 
     private fun showView() {
         binding.scrollViewDetailOrder.visibility = View.VISIBLE
-        binding.cardViewDetailOrder.visibility = View.VISIBLE
+        binding.linearLayout4.visibility = View.VISIBLE
         binding.constraintViewDetailOrder.visibility = View.INVISIBLE
         clearStatusInformation()
         Anim.crossFade(binding.constraintViewDetailOrder)
