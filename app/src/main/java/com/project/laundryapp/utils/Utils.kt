@@ -82,7 +82,7 @@ object Utils {
     fun parseStatus(input: String): String {
         val status = listOf(
                 "Menunggu Konfirmasi",
-                "Menerima Pesanan",
+                "Pesanan Diterima",
                 "Pesanan Selesai",
                 "Pesanan Dibatalkan"
         )

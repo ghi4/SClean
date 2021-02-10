@@ -75,7 +75,9 @@ class DetailOrderActivity : AppCompatActivity() {
                 }
 
                 is Resource.Success -> {
-                    val orderList = data.data?.data?.daftarLayanan?.map {
+                    val dataLaundry = data.data?.data
+                    val status = dataLaundry?.status
+                    val orderList = dataLaundry?.daftarLayanan?.map {
                         LaundryOrderInput(
                                 it.idLayanan.toString(),
                                 it.namaLayanan.toString(),
@@ -95,8 +97,11 @@ class DetailOrderActivity : AppCompatActivity() {
                         tvPaymentShipment.text = Utils.parseIntToCurrency(Const.SHIPMENT_PRICE)
                         tvPaymentSubTotal.text = Utils.parseIntToCurrency(subTotalPrice)
                         tvPaymentTotalPrice.text = Utils.parseIntToCurrency(totalPrice)
-                    }
 
+                        if(!canBeCanceled(status))
+                            btPaymentCancel.visibility = View.GONE
+                    }
+                    
                     showView()
                 }
 
@@ -127,6 +132,12 @@ class DetailOrderActivity : AppCompatActivity() {
                 }
             }
         })
+    }
+    
+    private fun canBeCanceled(status: String?): Boolean {
+        if(status == "0")
+            return true
+        return false
     }
 
     private fun hideView() {
