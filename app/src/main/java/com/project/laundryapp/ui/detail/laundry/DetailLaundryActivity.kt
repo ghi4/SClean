@@ -69,21 +69,6 @@ class DetailLaundryActivity : AppCompatActivity() {
 
             //Prevent duplicate data
             duplicatePreventor(serviceData)
-
-            //Prevent "jumlah = 0" in the list
-            zeroQtyPreventor()
-        }
-
-        //Button Order
-        binding.btDetailOrder.setOnClickListener {
-            if (serviceOrdered.isNotEmpty()) {
-                val intent = Intent(this, PaymentActivity::class.java)
-                intent.putExtra(Const.KEY_LAUNDRY_ID, laundryId)
-                intent.putExtra(Const.KEY_SERVICE_ORDERED, serviceOrdered)
-                startActivity(intent)
-            } else {
-                Utils.showToast(this, getString(R.string.no_service_selected))
-            }
         }
 
         //Button Retry
@@ -106,15 +91,34 @@ class DetailLaundryActivity : AppCompatActivity() {
 
                     if (dataLaundry != null) {
                         with(binding) {
+                            val laundryId = dataLaundry.idLaundry.toString()
+                            val shipmentPrice = dataLaundry.biayaPengantaran
                             val open = Utils.parseHours(dataLaundry.jamBuka.toString())
                             val close = Utils.parseHours(dataLaundry.jamTutup.toString())
                             val openingHours = " $open - $close"
+
+                            //Button Order
+                            binding.btDetailOrder.setOnClickListener {
+                                //Prevent "jumlah = 0" in the list
+                                zeroQtyPreventor()
+
+                                if (serviceOrdered.isNotEmpty()) {
+                                    val intent = Intent(this@DetailLaundryActivity, PaymentActivity::class.java)
+                                    intent.putExtra(Const.KEY_LAUNDRY_ID, laundryId)
+                                    intent.putExtra(PaymentActivity.KEY_SHIPMENT_PRICE, shipmentPrice)
+                                    intent.putExtra(Const.KEY_SERVICE_ORDERED, serviceOrdered)
+                                    startActivity(intent)
+                                } else {
+                                    Utils.showToast(this@DetailLaundryActivity, getString(R.string.no_service_selected))
+                                }
+                            }
 
                             with(include) {
                                 tvCardDetailTitle.text = dataLaundry.namaLaundry
                                 tvCardDetailOpeningHours.text = openingHours
                                 tvCardDetailAddress.text = dataLaundry.alamat
                                 tvCardDetailDescription.text = dataLaundry.deskripsi
+                                tvCardDetailShipmenPrice.text = Utils.parseIntToCurrency(shipmentPrice)
                             }
 
                             Picasso.get()

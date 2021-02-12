@@ -41,9 +41,11 @@ class LaundrySideAdapter(val context: Context) : RecyclerView.Adapter<LaundrySid
                 val open = Utils.parseHours(data.jamBuka.toString())
                 val close = Utils.parseHours(data.jamTutup.toString())
                 val openingHours = " $open - $close"
+                val shipmentPrice = Utils.parseIntToCurrency(data.biayaPengantaran)
                 tvLaundryVTitle.text = data.namaLaundry
                 tvLaundryVAddress.text = data.alamat
                 tvLaundryVOpeningHours.text = openingHours
+                tvLaundryVShipmentPrice.text = shipmentPrice
 
                 val circular = Utils.getCircularProgressDrawable(context)
                 Picasso.get()

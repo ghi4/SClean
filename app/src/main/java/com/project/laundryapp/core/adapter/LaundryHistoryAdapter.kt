@@ -36,10 +36,9 @@ class LaundryHistoryAdapter : RecyclerView.Adapter<LaundryHistoryAdapter.Laundry
         private val binding = ItemHistoryLaundryBinding.bind(itemView)
         fun bind(data: LaundryHistoryResponse) {
             with(binding) {
-                val price = data.total?.toDouble() ?: 0
-                val endPrice = price.toInt() + Const.SHIPMENT_PRICE
+                val price = data.total ?: 0
                 tvHistoryTitle.text = data.namaLaundry
-                tvHistoryPrice.text = Utils.parseIntToCurrency(endPrice)
+                tvHistoryPrice.text = Utils.parseIntToCurrency(price)
                 tvHistoryDate.text = data.tglPesan
 
                 val status = data.status.toString()

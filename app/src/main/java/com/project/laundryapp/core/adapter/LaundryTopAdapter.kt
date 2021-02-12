@@ -42,9 +42,11 @@ class LaundryTopAdapter(val context: Context) : RecyclerView.Adapter<LaundryTopA
                 val open = Utils.parseHours(data.jamBuka.toString())
                 val close = Utils.parseHours(data.jamTutup.toString())
                 val openingHours = " $open - $close"
+                val shipmentPrice = Utils.parseIntToCurrency(data.biayaPengantaran)
                 tvLaundryTitle.text = data.namaLaundry
                 tvLaundryAddress.text = data.alamat
                 tvLaundryOpeningHours.text = openingHours
+                tvLaundryShipmentPrice.text = shipmentPrice
 
                 val circular = Utils.getCircularProgressDrawable(context)
                 Picasso.get()

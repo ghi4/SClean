@@ -89,12 +89,13 @@ class DetailOrderActivity : AppCompatActivity() {
                     }
                     orderAdapter.setList(orderList as ArrayList<LaundryOrderInput>)
 
+                    val shipmentPrice = dataLaundry.biayaPengantaran ?: 0
                     val subTotalPrice = Utils.countPrice(orderList)
-                    val totalPrice = subTotalPrice + Const.SHIPMENT_PRICE
+                    val totalPrice = subTotalPrice + shipmentPrice
 
                     with(binding) {
                         tvPaymentEstimationDays.text = Utils.getEstimationDays(orderList)
-                        tvPaymentShipment.text = Utils.parseIntToCurrency(Const.SHIPMENT_PRICE)
+                        tvPaymentShipment.text = Utils.parseIntToCurrency(shipmentPrice)
                         tvPaymentSubTotal.text = Utils.parseIntToCurrency(subTotalPrice)
                         tvPaymentTotalPrice.text = Utils.parseIntToCurrency(totalPrice)
 

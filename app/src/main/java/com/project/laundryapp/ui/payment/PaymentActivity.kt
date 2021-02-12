@@ -23,6 +23,10 @@ class PaymentActivity : AppCompatActivity() {
     private lateinit var binding: ActivityPaymentBinding
     private lateinit var orderAdapter: LaundryOrderAdapter
 
+    companion object {
+        const val KEY_SHIPMENT_PRICE = "key shipment price"
+    }
+
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
 
@@ -38,6 +42,7 @@ class PaymentActivity : AppCompatActivity() {
 
         //Intent
         val laundryId = intent.getStringExtra(Const.KEY_LAUNDRY_ID)
+        val shipmentPrice = intent.getIntExtra(KEY_SHIPMENT_PRICE, 0)
         val orderedService = intent.getParcelableArrayListExtra<LaundryOrderInput>(Const.KEY_SERVICE_ORDERED)
 
         //Base Data
@@ -56,13 +61,13 @@ class PaymentActivity : AppCompatActivity() {
         with(binding) {
             //Counting totalPrice
             val subTotalPrice = Utils.countPrice(orderedService)
-            val totalPrice = subTotalPrice + Const.SHIPMENT_PRICE
+            val totalPrice = subTotalPrice + shipmentPrice
 
             //Initializing value
             tvUserAddress.text = Utils.parseFullAddress(user)
             tvPaymentEstimationDays.text = Utils.getEstimationDays(orderedService)
             tvPaymentSubTotal.text = Utils.parseIntToCurrency(subTotalPrice)
-            tvPaymentShipment.text = Utils.parseIntToCurrency(Const.SHIPMENT_PRICE)
+            tvPaymentShipment.text = Utils.parseIntToCurrency(shipmentPrice)
             tvPaymentTotal.text = Utils.parseIntToCurrency(totalPrice)
 
             //RecyclerView

@@ -74,11 +74,21 @@
             android:layout_marginStart="16dp"
             android:layout_marginTop="8dp"
             android:layout_marginEnd="16dp"
-            android:layout_marginBottom="16dp"
+            android:layout_marginBottom="8dp"
             android:layout_weight="1"
             android:gravity="center_vertical"
             android:text="@string/_09_00_21_00"
             app:drawableStartCompat="@drawable/ic_baseline_access_time_24" />
+
+        <TextView
+            android:id="@+id/tv_laundry_shipmentPrice"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="16dp"
+            android:layout_marginEnd="16dp"
+            android:layout_marginBottom="16dp"
+            android:text="@string/rp_10_000"
+            app:drawableStartCompat="@drawable/ic_baseline_local_shipping_24" />
 
     </LinearLayout>
 </androidx.cardview.widget.CardView>

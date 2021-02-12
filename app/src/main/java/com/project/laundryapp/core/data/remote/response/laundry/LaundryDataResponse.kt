@@ -12,6 +12,9 @@ data class LaundryDataResponse(
         @SerializedName("nomor_telepon")
         val nomorTelepon: String? = "Unknown",
 
+        @SerializedName("biaya_pengantaran")
+        val biayaPengantaran: Int? = 0,
+
         @SerializedName("jam_buka")
         val jamBuka: String? = "Unknown",
 

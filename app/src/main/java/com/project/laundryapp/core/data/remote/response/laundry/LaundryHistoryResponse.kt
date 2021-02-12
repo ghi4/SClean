@@ -18,8 +18,11 @@ data class LaundryHistoryResponse(
         @SerializedName("tgl_pesan")
         val tglPesan: String? = "Unknown",
 
+        @SerializedName("biaya_pengantaran")
+        val biayaPengantaran: Int? = 0,
+
         @SerializedName("total")
-        val total: String? = "Unknown",
+        val total: Int? = 0,
 
         @SerializedName("status")
         val status: String? = "Unknown",
