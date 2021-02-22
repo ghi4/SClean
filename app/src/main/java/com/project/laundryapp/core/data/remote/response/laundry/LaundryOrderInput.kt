@@ -7,27 +7,27 @@ import kotlinx.parcelize.Parcelize
 
 @Parcelize
 data class LaundryOrderInput(
-        @SerializedName("id_layanan")
-        @Expose
-        var idLayanan: String,
+    @SerializedName("id_layanan")
+    @Expose
+    var idLayanan: String,
 
-        @SerializedName("nama_layanan")
-        @Expose(serialize = false)
-        var namaLayanan: String,
+    @SerializedName("nama_layanan")
+    @Expose(serialize = false)
+    var namaLayanan: String,
 
-        @SerializedName("estimasi")
-        @Expose(serialize = false)
-        var estimasiPengerjaan: String,
+    @SerializedName("estimasi")
+    @Expose(serialize = false)
+    var estimasiPengerjaan: String,
 
-        @SerializedName("satuan")
-        @Expose(serialize = false)
-        var satuan: String,
+    @SerializedName("satuan")
+    @Expose(serialize = false)
+    var satuan: String,
 
-        @SerializedName("qty")
-        @Expose
-        var jumlah: Int? = 0,
+    @SerializedName("qty")
+    @Expose
+    var jumlah: Int? = 0,
 
-        @SerializedName("harga")
-        @Expose
-        var harga: Int? = 0
+    @SerializedName("harga")
+    @Expose
+    var harga: Int? = 0
 ) : Parcelable

@@ -3,42 +3,42 @@ package com.project.laundryapp.core.data.remote.response.user
 import com.google.gson.annotations.SerializedName
 
 data class UserDataResponse(
-        @SerializedName("id_user")
-        val idUser: String,
+    @SerializedName("id_user")
+    val idUser: String,
 
-        @SerializedName("nama_lengkap")
-        val namaLengkap: String,
+    @SerializedName("nama_lengkap")
+    val namaLengkap: String,
 
-        @SerializedName("email")
-        val email: String,
+    @SerializedName("email")
+    val email: String,
 
-        @SerializedName("password")
-        val password: String,
+    @SerializedName("password")
+    val password: String,
 
-        @SerializedName("nomor_hp")
-        val nomorHp: String,
+    @SerializedName("nomor_hp")
+    val nomorHp: String,
 
-        @SerializedName("create_date")
-        val createDate: String,
+    @SerializedName("create_date")
+    val createDate: String,
 
-        @SerializedName("photo")
-        var photo: String,
+    @SerializedName("photo")
+    var photo: String,
 
-        @SerializedName("alamat")
-        val alamat: String,
+    @SerializedName("alamat")
+    val alamat: String,
 
-        @SerializedName("kota")
-        val kota: String,
+    @SerializedName("kota")
+    val kota: String,
 
-        @SerializedName("kecamatan")
-        val kecamatan: String,
+    @SerializedName("kecamatan")
+    val kecamatan: String,
 
-        @SerializedName("kelurahan")
-        val kelurahan: String,
+    @SerializedName("kelurahan")
+    val kelurahan: String,
 
-        @SerializedName("kode_pos")
-        val kodePos: String,
+    @SerializedName("kode_pos")
+    val kodePos: String,
 
-        @SerializedName("keterangan_alamat")
-        val keteranganAlamat: String
+    @SerializedName("keterangan_alamat")
+    val keteranganAlamat: String
 )

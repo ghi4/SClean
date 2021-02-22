@@ -9,7 +9,8 @@ import com.project.laundryapp.core.data.remote.response.laundry.LaundryServiceRe
 import com.project.laundryapp.databinding.ItemLaundryServiceBinding
 import com.project.laundryapp.utils.Utils
 
-class LaundryServiceAdapter : RecyclerView.Adapter<LaundryServiceAdapter.LaundryServiceViewHolder>() {
+class LaundryServiceAdapter :
+    RecyclerView.Adapter<LaundryServiceAdapter.LaundryServiceViewHolder>() {
 
     private var dataList = ArrayList<LaundryServiceResponse>()
     var onItemClick: ((LaundryServiceResponse) -> Unit)? = null
@@ -21,7 +22,8 @@ class LaundryServiceAdapter : RecyclerView.Adapter<LaundryServiceAdapter.Laundry
     }
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): LaundryServiceViewHolder {
-        val view = LayoutInflater.from(parent.context).inflate(R.layout.item_laundry_service, parent, false)
+        val view = LayoutInflater.from(parent.context)
+            .inflate(R.layout.item_laundry_service, parent, false)
         return LaundryServiceViewHolder(view)
     }
 

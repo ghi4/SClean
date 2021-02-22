@@ -87,7 +87,11 @@ class LaundryRepository(private val remoteDataSource: RemoteDataSource) {
         }.asFlow()
     }
 
-    fun postOrder(idLaundry: String, idUser: String, serviceList: ArrayList<LaundryOrderInput>): Flow<Resource<LaundryStatusListResponse>> {
+    fun postOrder(
+        idLaundry: String,
+        idUser: String,
+        serviceList: ArrayList<LaundryOrderInput>
+    ): Flow<Resource<LaundryStatusListResponse>> {
         return object : RemoteResource<LaundryStatusListResponse, LaundryStatusListResponse>() {
             override fun createCall(): Flow<ApiResponse<LaundryStatusListResponse>> {
                 return remoteDataSource.postOrder(idLaundry, idUser, serviceList)
@@ -101,7 +105,8 @@ class LaundryRepository(private val remoteDataSource: RemoteDataSource) {
     }
 
     fun getLaundryHistory(userId: String): Flow<Resource<LaundryHistoryStatusListResponse>> {
-        return object : RemoteResource<LaundryHistoryStatusListResponse, LaundryHistoryStatusListResponse>() {
+        return object :
+            RemoteResource<LaundryHistoryStatusListResponse, LaundryHistoryStatusListResponse>() {
             override fun createCall(): Flow<ApiResponse<LaundryHistoryStatusListResponse>> {
                 return remoteDataSource.getLaundryHistoryByIdUser(userId)
             }
@@ -114,7 +119,8 @@ class LaundryRepository(private val remoteDataSource: RemoteDataSource) {
     }
 
     fun getLaundryHistoryDetail(historyId: String): Flow<Resource<LaundryHistoryStatusResponse>> {
-        return object : RemoteResource<LaundryHistoryStatusResponse, LaundryHistoryStatusResponse>() {
+        return object :
+            RemoteResource<LaundryHistoryStatusResponse, LaundryHistoryStatusResponse>() {
             override fun createCall(): Flow<ApiResponse<LaundryHistoryStatusResponse>> {
                 return remoteDataSource.getLaundryHistoryDetailByHistoryId(historyId)
             }

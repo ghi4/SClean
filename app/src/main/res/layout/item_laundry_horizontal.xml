@@ -59,6 +59,7 @@
             android:layout_gravity="center_vertical"
             android:layout_marginStart="16dp"
             android:layout_marginEnd="16dp"
+            android:drawablePadding="3dp"
             android:ellipsize="end"
             android:gravity="center_vertical"
             android:maxLines="1"
@@ -76,6 +77,7 @@
             android:layout_marginEnd="16dp"
             android:layout_marginBottom="8dp"
             android:layout_weight="1"
+            android:drawablePadding="3dp"
             android:gravity="center_vertical"
             android:text="@string/_09_00_21_00"
             app:drawableStartCompat="@drawable/ic_baseline_access_time_24" />
@@ -87,6 +89,7 @@
             android:layout_marginStart="16dp"
             android:layout_marginEnd="16dp"
             android:layout_marginBottom="16dp"
+            android:drawablePadding="3dp"
             android:text="@string/rp_10_000"
             app:drawableStartCompat="@drawable/ic_baseline_local_shipping_24" />
 

@@ -7,10 +7,10 @@ import androidx.recyclerview.widget.RecyclerView
 import com.project.laundryapp.R
 import com.project.laundryapp.core.data.remote.response.laundry.LaundryHistoryResponse
 import com.project.laundryapp.databinding.ItemHistoryLaundryBinding
-import com.project.laundryapp.utils.Const
 import com.project.laundryapp.utils.Utils
 
-class LaundryHistoryAdapter : RecyclerView.Adapter<LaundryHistoryAdapter.LaundryHistoryResponseTopViewHolder>() {
+class LaundryHistoryAdapter :
+    RecyclerView.Adapter<LaundryHistoryAdapter.LaundryHistoryResponseTopViewHolder>() {
 
     private var dataList = ArrayList<LaundryHistoryResponse>()
     var onItemClick: ((LaundryHistoryResponse) -> Unit)? = null
@@ -21,8 +21,12 @@ class LaundryHistoryAdapter : RecyclerView.Adapter<LaundryHistoryAdapter.Laundry
         notifyDataSetChanged()
     }
 
-    override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): LaundryHistoryResponseTopViewHolder {
-        val view = LayoutInflater.from(parent.context).inflate(R.layout.item_history_laundry, parent, false)
+    override fun onCreateViewHolder(
+        parent: ViewGroup,
+        viewType: Int
+    ): LaundryHistoryResponseTopViewHolder {
+        val view = LayoutInflater.from(parent.context)
+            .inflate(R.layout.item_history_laundry, parent, false)
         return LaundryHistoryResponseTopViewHolder(view)
     }
 
@@ -32,7 +36,8 @@ class LaundryHistoryAdapter : RecyclerView.Adapter<LaundryHistoryAdapter.Laundry
 
     override fun getItemCount(): Int = dataList.size
 
-    inner class LaundryHistoryResponseTopViewHolder(itemView: View) : RecyclerView.ViewHolder(itemView) {
+    inner class LaundryHistoryResponseTopViewHolder(itemView: View) :
+        RecyclerView.ViewHolder(itemView) {
         private val binding = ItemHistoryLaundryBinding.bind(itemView)
         fun bind(data: LaundryHistoryResponse) {
             with(binding) {

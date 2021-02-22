@@ -29,13 +29,13 @@ val networkModule = module {
         httpClient.interceptors().add(interceptor)
 
         val gson = GsonBuilder()
-                .setLenient()
-                .create()
+            .setLenient()
+            .create()
         val retrofit = Retrofit.Builder()
-                .baseUrl("https://testingsclean.000webhostapp.com/api/v1/")
-                .addConverterFactory(GsonConverterFactory.create(gson))
-                .client(httpClient.build())
-                .build()
+            .baseUrl("https://testingsclean.000webhostapp.com/api/v1/")
+            .addConverterFactory(GsonConverterFactory.create(gson))
+            .client(httpClient.build())
+            .build()
         retrofit.create(RetrofitInterface::class.java)
     }
 }

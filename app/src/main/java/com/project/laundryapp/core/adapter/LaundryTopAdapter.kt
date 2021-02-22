@@ -12,20 +12,22 @@ import com.project.laundryapp.utils.Const
 import com.project.laundryapp.utils.Utils
 import com.squareup.picasso.Picasso
 
-class LaundryTopAdapter(val context: Context) : RecyclerView.Adapter<LaundryTopAdapter.LaundryTopViewHolder>() {
+class LaundryTopAdapter(val context: Context) :
+    RecyclerView.Adapter<LaundryTopAdapter.LaundryTopViewHolder>() {
 
     private var dataList = ArrayList<LaundryDataResponse>()
     var onItemClick: ((LaundryDataResponse) -> Unit)? = null
 
     fun setList(data: ArrayList<LaundryDataResponse>) {
-        val dataCount = 3
+        val recommendedLaundry = data.filter { it.isRecommend == 1 }
         dataList.clear()
-        dataList.addAll(data.take(dataCount))
+        dataList.addAll(recommendedLaundry)
         notifyDataSetChanged()
     }
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): LaundryTopViewHolder {
-        val view = LayoutInflater.from(parent.context).inflate(R.layout.item_laundry_horizontal, parent, false)
+        val view = LayoutInflater.from(parent.context)
+            .inflate(R.layout.item_laundry_horizontal, parent, false)
         return LaundryTopViewHolder(view)
     }
 
@@ -41,7 +43,7 @@ class LaundryTopAdapter(val context: Context) : RecyclerView.Adapter<LaundryTopA
             with(binding) {
                 val open = Utils.parseHours(data.jamBuka.toString())
                 val close = Utils.parseHours(data.jamTutup.toString())
-                val openingHours = " $open - $close"
+                val openingHours = "$open - $close"
                 val shipmentPrice = Utils.parseIntToCurrency(data.biayaPengantaran)
                 tvLaundryTitle.text = data.namaLaundry
                 tvLaundryAddress.text = data.alamat
@@ -50,11 +52,11 @@ class LaundryTopAdapter(val context: Context) : RecyclerView.Adapter<LaundryTopA
 
                 val circular = Utils.getCircularProgressDrawable(context)
                 Picasso.get()
-                        .load(Const.URL_BASE + data.photo)
-                        .placeholder(circular)
-                        .error(R.drawable.square_placeholder)
-                        .resize(Const.SQUARE_TARGET_SIZE, Const.SQUARE_TARGET_SIZE)
-                        .into(ivLaundryImage)
+                    .load(Const.URL_BASE + data.photo)
+                    .placeholder(circular)
+                    .error(R.drawable.square_placeholder)
+                    .resize(Const.SQUARE_TARGET_SIZE, Const.SQUARE_TARGET_SIZE)
+                    .into(ivLaundryImage)
             }
         }
 

@@ -93,10 +93,10 @@ class RegisterActivity : AppCompatActivity() {
 
             if (validity) {
                 val userRegister = User(
-                        namaLengkap = binding.etFullName.text.toString().trim(),
-                        email = binding.etRegisterEmail.text.toString().trim(),
-                        password = binding.etRegisterPassword.text.toString().trim(),
-                        nomorHp = binding.etRegisterPhone.text.toString().trim()
+                    namaLengkap = binding.etFullName.text.toString().trim(),
+                    email = binding.etRegisterEmail.text.toString().trim(),
+                    password = binding.etRegisterPassword.text.toString().trim(),
+                    nomorHp = binding.etRegisterPhone.text.toString().trim()
                 )
                 viewModel.registerUser(userRegister)
             } else {

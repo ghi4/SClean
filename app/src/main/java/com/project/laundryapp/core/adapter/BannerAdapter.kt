@@ -24,7 +24,8 @@ class BannerAdapter(val context: Context) : RecyclerView.Adapter<BannerAdapter.B
     }
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): BannerViewHolder {
-        val view = LayoutInflater.from(parent.context).inflate(R.layout.item_laundry_banner, parent, false)
+        val view =
+            LayoutInflater.from(parent.context).inflate(R.layout.item_laundry_banner, parent, false)
         return BannerViewHolder(view)
     }
 
@@ -42,11 +43,11 @@ class BannerAdapter(val context: Context) : RecyclerView.Adapter<BannerAdapter.B
                 val circular = Utils.getCircularProgressDrawable(context)
                 //Banner Image
                 Picasso.get()
-                        .load(Const.URL_BASE + promotion.photoURL)
-                        .placeholder(circular)
-                        .error(R.drawable.banner_placeholder)
-                        .resize(Const.BANNER_TARGET_WIDTH, Const.BANNER_TARGET_HEIGHT)
-                        .into(ivBanner)
+                    .load(Const.URL_BASE + promotion.photoURL)
+                    .placeholder(circular)
+                    .error(R.drawable.banner_placeholder)
+                    .resize(Const.BANNER_TARGET_WIDTH, Const.BANNER_TARGET_HEIGHT)
+                    .into(ivBanner)
             }
 
         }

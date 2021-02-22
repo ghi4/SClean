@@ -10,9 +10,9 @@ object Anim {
             visibility = View.VISIBLE
 
             animate()
-                    .alpha(1f)
-                    .setDuration(shortAnimationDuration)
-                    .setListener(null)
+                .alpha(1f)
+                .setDuration(shortAnimationDuration)
+                .setListener(null)
         }
     }
 }

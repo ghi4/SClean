@@ -38,9 +38,9 @@ class MainActivity : AppCompatActivity() {
 
         fun clearStatusInformation() {
             with(binding.statusMain) {
-                progressBar.visibility = View.INVISIBLE
-                tvMessage.visibility = View.INVISIBLE
-                tvRetry.visibility = View.INVISIBLE
+                progressBar.visibility = View.GONE
+                tvMessage.visibility = View.GONE
+                tvRetry.visibility = View.GONE
             }
         }
 
@@ -58,14 +58,17 @@ class MainActivity : AppCompatActivity() {
         val navView: BottomNavigationView = binding.navView
 
         val navHostFragment =
-                supportFragmentManager.findFragmentById(R.id.nav_host_fragment) as NavHostFragment
+            supportFragmentManager.findFragmentById(R.id.nav_host_fragment) as NavHostFragment
         val navController = navHostFragment.navController
         // Passing each menu ID as a set of Ids because each
         // menu should be considered as top level destinations.
         val appBarConfiguration = AppBarConfiguration(
-                setOf(
-                        R.id.navigation_home, R.id.navigation_laundry, R.id.navigation_history, R.id.navigation_profile
-                )
+            setOf(
+                R.id.navigation_home,
+                R.id.navigation_laundry,
+                R.id.navigation_history,
+                R.id.navigation_profile
+            )
         )
         setupActionBarWithNavController(navController, appBarConfiguration)
         navView.setupWithNavController(navController)

@@ -4,12 +4,12 @@ import com.google.gson.annotations.SerializedName
 import com.project.laundryapp.core.data.remote.response.ErrorResponse
 
 data class PromotionStatusResponse(
-        @SerializedName("message")
-        var message: String,
+    @SerializedName("message")
+    var message: String,
 
-        @SerializedName("data")
-        var data: List<PromotionResponse>? = null,
+    @SerializedName("data")
+    var data: List<PromotionResponse>? = null,
 
-        @SerializedName("error")
-        var error: ErrorResponse
+    @SerializedName("error")
+    var error: ErrorResponse
 )

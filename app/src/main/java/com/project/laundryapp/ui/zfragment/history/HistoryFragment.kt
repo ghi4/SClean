@@ -26,9 +26,9 @@ class HistoryFragment : Fragment() {
     private lateinit var historyAdapter: LaundryHistoryAdapter
 
     override fun onCreateView(
-            inflater: LayoutInflater,
-            container: ViewGroup?,
-            savedInstanceState: Bundle?
+        inflater: LayoutInflater,
+        container: ViewGroup?,
+        savedInstanceState: Bundle?
     ): View {
         binding = FragmentHistoryBinding.inflate(inflater, container, false)
         return binding.root

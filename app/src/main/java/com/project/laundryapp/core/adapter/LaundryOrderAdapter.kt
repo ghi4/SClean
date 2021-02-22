@@ -45,7 +45,8 @@ class LaundryOrderAdapter : RecyclerView.Adapter<LaundryOrderAdapter.LaundryOrde
     }
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): LaundryOrderViewHolder {
-        val view = LayoutInflater.from(parent.context).inflate(R.layout.item_laundry_order, parent, false)
+        val view =
+            LayoutInflater.from(parent.context).inflate(R.layout.item_laundry_order, parent, false)
         return LaundryOrderViewHolder(view)
     }
 

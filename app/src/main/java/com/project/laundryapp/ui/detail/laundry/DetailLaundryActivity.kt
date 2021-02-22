@@ -2,6 +2,7 @@ package com.project.laundryapp.ui.detail.laundry
 
 import android.content.Intent
 import android.os.Bundle
+import android.util.Log
 import android.view.View
 import androidx.appcompat.app.AppCompatActivity
 import androidx.recyclerview.widget.LinearLayoutManager
@@ -86,19 +87,50 @@ class DetailLaundryActivity : AppCompatActivity() {
                 }
 
                 is Resource.Success -> {
+                    showView()
                     val dataStatus = data.data
                     val dataLaundry = dataStatus?.data
 
                     if (dataLaundry != null) {
+                        val laundryId = dataLaundry.idLaundry.toString()
+                        val laundryName = dataLaundry.namaLaundry
+                        val open = Utils.parseHours(dataLaundry.jamBuka.toString())
+                        val close = Utils.parseHours(dataLaundry.jamTutup.toString())
+                        val openingHours = "$open - $close"
+                        val laundryAddress = dataLaundry.alamat
+                        val laundryDescription = dataLaundry.deskripsi
+                        val shipmentPrice = dataLaundry.biayaPengantaran
+                        val shipmentPriceCurrency = Utils.parseIntToCurrency(shipmentPrice)
+
+                        serviceAdapter.setList(dataLaundry.laundryService as ArrayList<LaundryServiceResponse>)
+
+                        Log.d("PEcEL LELE", """
+                            ID: $laundryId
+                            NAME: $laundryName
+                            OPEN: $openingHours
+                            ADDRESS: $laundryAddress
+                            DESC: $laundryDescription
+                            SHIPMENT: $shipmentPriceCurrency
+                        """.trimIndent())
+
                         with(binding) {
-                            val laundryId = dataLaundry.idLaundry.toString()
-                            val shipmentPrice = dataLaundry.biayaPengantaran
-                            val open = Utils.parseHours(dataLaundry.jamBuka.toString())
-                            val close = Utils.parseHours(dataLaundry.jamTutup.toString())
-                            val openingHours = " $open - $close"
+                            with(include) {
+                                tvCardDetailTitle.text = laundryName
+                                tvCardDetailOpeningHours.text = openingHours
+                                tvCardDetailAddress.text = laundryAddress
+                                tvCardDetailDescription.text = laundryDescription
+                                tvCardDetailShipmentPrice.text = shipmentPriceCurrency
+                            }
+
+                            Picasso.get()
+                                    .load(Const.URL_BASE + Const.URL_SPECIFIED_IMAGE + dataLaundry.photo)
+                                    .placeholder(R.drawable.wide_image_placeholder)
+                                    .error(R.drawable.wide_image_placeholder)
+                                    .resize(Const.SQUARE_TARGET_SIZE, Const.SQUARE_TARGET_SIZE)
+                                    .into(ivDetailImage)
 
                             //Button Order
-                            binding.btDetailOrder.setOnClickListener {
+                            btDetailOrder.setOnClickListener {
                                 //Prevent "jumlah = 0" in the list
                                 zeroQtyPreventor()
 
@@ -112,26 +144,7 @@ class DetailLaundryActivity : AppCompatActivity() {
                                     Utils.showToast(this@DetailLaundryActivity, getString(R.string.no_service_selected))
                                 }
                             }
-
-                            with(include) {
-                                tvCardDetailTitle.text = dataLaundry.namaLaundry
-                                tvCardDetailOpeningHours.text = openingHours
-                                tvCardDetailAddress.text = dataLaundry.alamat
-                                tvCardDetailDescription.text = dataLaundry.deskripsi
-                                tvCardDetailShipmenPrice.text = Utils.parseIntToCurrency(shipmentPrice)
-                            }
-
-                            Picasso.get()
-                                    .load(Const.URL_BASE + Const.URL_SPECIFIED_IMAGE + dataLaundry.photo)
-                                    .placeholder(R.drawable.wide_image_placeholder)
-                                    .error(R.drawable.wide_image_placeholder)
-                                    .resize(Const.SQUARE_TARGET_SIZE, Const.SQUARE_TARGET_SIZE)
-                                    .into(ivDetailImage)
-
-                            serviceAdapter.setList(dataLaundry.laundryService as ArrayList<LaundryServiceResponse>)
                         }
-
-                        showView()
                     }
                 }
 
@@ -202,9 +215,9 @@ class DetailLaundryActivity : AppCompatActivity() {
 
     private fun clearStatusInformation() {
         with(binding.statusDetailLaundry) {
-            progressBar.visibility = View.INVISIBLE
-            tvMessage.visibility = View.INVISIBLE
-            tvRetry.visibility = View.INVISIBLE
+            progressBar.visibility = View.GONE
+            tvMessage.visibility = View.GONE
+            tvRetry.visibility = View.GONE
         }
     }
 }

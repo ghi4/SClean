@@ -42,6 +42,7 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_gravity="center_vertical"
+            android:drawablePadding="3dp"
             android:gravity="center_vertical"
             android:text="@string/_09_00_21_00"
             app:drawableStartCompat="@drawable/ic_baseline_access_time_24" />
@@ -51,14 +52,16 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_marginTop="8dp"
+            android:drawablePadding="3dp"
             android:text="@string/alamat"
             app:drawableStartCompat="@drawable/ic_baseline_location_on_24_grey" />
 
         <TextView
-            android:id="@+id/tv_cardDetail_shipmenPrice"
+            android:id="@+id/tv_cardDetail_shipmentPrice"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_marginTop="8dp"
+            android:drawablePadding="3dp"
             android:text="@string/rp_10_000"
             app:drawableStartCompat="@drawable/ic_baseline_local_shipping_24" />
 

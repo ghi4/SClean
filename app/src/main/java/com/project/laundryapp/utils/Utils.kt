@@ -81,10 +81,10 @@ object Utils {
 
     fun parseStatus(input: String): String {
         val status = listOf(
-                "Menunggu Konfirmasi",
-                "Pesanan Diterima",
-                "Pesanan Selesai",
-                "Pesanan Dibatalkan"
+            "Menunggu Konfirmasi",
+            "Pesanan Diterima",
+            "Pesanan Selesai",
+            "Pesanan Dibatalkan"
         )
 
         return try {
@@ -96,10 +96,10 @@ object Utils {
 
     fun colorBackgroundByStatus(input: String): Int {
         val backgroundColor = listOf(
-                R.drawable.textview_roundedcorner_yellow,
-                R.drawable.textview_roundedcorner_lightblue,
-                R.drawable.textview_roundedcorner_green,
-                R.drawable.textview_roundedcorner_red
+            R.drawable.textview_roundedcorner_yellow,
+            R.drawable.textview_roundedcorner_lightblue,
+            R.drawable.textview_roundedcorner_green,
+            R.drawable.textview_roundedcorner_red
         )
 
         return try {
@@ -121,10 +121,10 @@ object Utils {
 
     fun colorTextByStatus(input: String): Int {
         val textColor = listOf(
-                "#f57f17",
-                "#01579b",
-                "#1b5e20",
-                "#b71c1c"
+            "#f57f17",
+            "#01579b",
+            "#1b5e20",
+            "#b71c1c"
         )
 
         return try {

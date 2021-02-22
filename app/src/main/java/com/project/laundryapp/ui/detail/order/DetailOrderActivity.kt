@@ -79,12 +79,12 @@ class DetailOrderActivity : AppCompatActivity() {
                     val status = dataLaundry?.status
                     val orderList = dataLaundry?.daftarLayanan?.map {
                         LaundryOrderInput(
-                                it.idLayanan.toString(),
-                                it.namaLayanan.toString(),
-                                it.estimasi.toString(),
-                                it.satuan.toString(),
-                                it.qty,
-                                it.harga
+                            it.idLayanan.toString(),
+                            it.namaLayanan.toString(),
+                            it.estimasi.toString(),
+                            it.satuan.toString(),
+                            it.qty,
+                            it.harga
                         )
                     }
                     orderAdapter.setList(orderList as ArrayList<LaundryOrderInput>)
@@ -99,10 +99,10 @@ class DetailOrderActivity : AppCompatActivity() {
                         tvPaymentSubTotal.text = Utils.parseIntToCurrency(subTotalPrice)
                         tvPaymentTotalPrice.text = Utils.parseIntToCurrency(totalPrice)
 
-                        if(!canBeCanceled(status))
+                        if (!canBeCanceled(status))
                             btPaymentCancel.visibility = View.GONE
                     }
-                    
+
                     showView()
                 }
 
@@ -134,9 +134,9 @@ class DetailOrderActivity : AppCompatActivity() {
             }
         })
     }
-    
+
     private fun canBeCanceled(status: String?): Boolean {
-        if(status == "0")
+        if (status == "0")
             return true
         return false
     }

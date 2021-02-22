@@ -41,8 +41,8 @@ class LoginActivity : AppCompatActivity() {
             //Check input validity
             if (isInputValid()) {
                 val user = User(
-                        email = binding.etEmail.text.toString(),
-                        password = binding.etPassword.text.toString()
+                    email = binding.etEmail.text.toString(),
+                    password = binding.etPassword.text.toString()
                 )
                 viewModel.loginUser(user)
             } else {
