@@ -102,25 +102,12 @@ class DetailLaundryActivity : AppCompatActivity() {
                         val shipmentPrice = dataLaundry.biayaPengantaran
                         val shipmentPriceCurrency = Utils.parseIntToCurrency(shipmentPrice)
 
-                        serviceAdapter.setList(dataLaundry.laundryService as ArrayList<LaundryServiceResponse>)
-
-                        Log.d("PEcEL LELE", """
-                            ID: $laundryId
-                            NAME: $laundryName
-                            OPEN: $openingHours
-                            ADDRESS: $laundryAddress
-                            DESC: $laundryDescription
-                            SHIPMENT: $shipmentPriceCurrency
-                        """.trimIndent())
-
                         with(binding) {
-                            with(include) {
-                                tvCardDetailTitle.text = laundryName
-                                tvCardDetailOpeningHours.text = openingHours
-                                tvCardDetailAddress.text = laundryAddress
-                                tvCardDetailDescription.text = laundryDescription
-                                tvCardDetailShipmentPrice.text = shipmentPriceCurrency
-                            }
+                            include.tvCardDetailTitle.text = laundryName
+                            include.tvCardDetailOpeningHours.text = openingHours
+                            include.tvCardDetailAddress.text = laundryAddress
+                            include.tvCardDetailDescription.text = laundryDescription
+                            include.tvCardDetailShipmentPrice.text = shipmentPriceCurrency
 
                             Picasso.get()
                                     .load(Const.URL_BASE + Const.URL_SPECIFIED_IMAGE + dataLaundry.photo)
@@ -128,6 +115,8 @@ class DetailLaundryActivity : AppCompatActivity() {
                                     .error(R.drawable.wide_image_placeholder)
                                     .resize(Const.SQUARE_TARGET_SIZE, Const.SQUARE_TARGET_SIZE)
                                     .into(ivDetailImage)
+
+                            serviceAdapter.setList(dataLaundry.laundryService as ArrayList<LaundryServiceResponse>)
 
                             //Button Order
                             btDetailOrder.setOnClickListener {
