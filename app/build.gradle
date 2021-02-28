@@ -5,6 +5,10 @@ plugins {
     id 'kotlin-parcelize'
 }
 
+def STRING = 'String'
+def BASE_URL = '"https://testingsclean.000webhostapp.com/"'
+def IMAGE_PATH_URL = '"assets/images/produk/"'
+
 android {
     compileSdkVersion 30
     buildToolsVersion "30.0.3"
@@ -17,6 +21,9 @@ android {
         versionName "1.0"
 
         testInstrumentationRunner "androidx.test.runner.AndroidJUnitRunner"
+
+        buildConfigField STRING, 'BASE_URL', BASE_URL
+        buildConfigField STRING, 'IMAGE_PATH_URL', IMAGE_PATH_URL
     }
 
     buildTypes {

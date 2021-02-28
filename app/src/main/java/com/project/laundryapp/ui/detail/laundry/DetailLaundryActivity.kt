@@ -2,10 +2,10 @@ package com.project.laundryapp.ui.detail.laundry
 
 import android.content.Intent
 import android.os.Bundle
-import android.util.Log
 import android.view.View
 import androidx.appcompat.app.AppCompatActivity
 import androidx.recyclerview.widget.LinearLayoutManager
+import com.project.laundryapp.BuildConfig
 import com.project.laundryapp.R
 import com.project.laundryapp.core.adapter.LaundryServiceAdapter
 import com.project.laundryapp.core.data.Resource
@@ -110,7 +110,7 @@ class DetailLaundryActivity : AppCompatActivity() {
                             include.tvCardDetailShipmentPrice.text = shipmentPriceCurrency
 
                             Picasso.get()
-                                    .load(Const.URL_BASE + Const.URL_SPECIFIED_IMAGE + dataLaundry.photo)
+                                    .load(BuildConfig.BASE_URL + BuildConfig.IMAGE_PATH_URL + dataLaundry.photo)
                                     .placeholder(R.drawable.wide_image_placeholder)
                                     .error(R.drawable.wide_image_placeholder)
                                     .resize(Const.SQUARE_TARGET_SIZE, Const.SQUARE_TARGET_SIZE)

@@ -5,6 +5,7 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import androidx.recyclerview.widget.RecyclerView
+import com.project.laundryapp.BuildConfig
 import com.project.laundryapp.R
 import com.project.laundryapp.core.data.remote.response.laundry.LaundryDataResponse
 import com.project.laundryapp.databinding.ItemLaundryHorizontalBinding
@@ -52,7 +53,7 @@ class LaundryTopAdapter(val context: Context) :
 
                 val circular = Utils.getCircularProgressDrawable(context)
                 Picasso.get()
-                    .load(Const.URL_BASE + data.photo)
+                    .load(BuildConfig.BASE_URL + data.photo)
                     .placeholder(circular)
                     .error(R.drawable.square_placeholder)
                     .resize(Const.SQUARE_TARGET_SIZE, Const.SQUARE_TARGET_SIZE)

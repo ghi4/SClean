@@ -5,6 +5,7 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import androidx.recyclerview.widget.RecyclerView
+import com.project.laundryapp.BuildConfig
 import com.project.laundryapp.R
 import com.project.laundryapp.core.data.remote.response.promotion.PromotionResponse
 import com.project.laundryapp.databinding.ItemLaundryBannerBinding
@@ -43,7 +44,7 @@ class BannerAdapter(val context: Context) : RecyclerView.Adapter<BannerAdapter.B
                 val circular = Utils.getCircularProgressDrawable(context)
                 //Banner Image
                 Picasso.get()
-                    .load(Const.URL_BASE + promotion.photoURL)
+                    .load(BuildConfig.BASE_URL + promotion.photoURL)
                     .placeholder(circular)
                     .error(R.drawable.banner_placeholder)
                     .resize(Const.BANNER_TARGET_WIDTH, Const.BANNER_TARGET_HEIGHT)

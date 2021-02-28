@@ -1,6 +1,7 @@
 package com.project.laundryapp.core.di
 
 import com.google.gson.GsonBuilder
+import com.project.laundryapp.BuildConfig
 import com.project.laundryapp.core.data.LaundryRepository
 import com.project.laundryapp.core.data.remote.RemoteDataSource
 import com.project.laundryapp.core.data.remote.retrofit.RetrofitInterface
@@ -14,6 +15,7 @@ import com.project.laundryapp.ui.zfragment.find.FindViewModel
 import com.project.laundryapp.ui.zfragment.history.HistoryViewModel
 import com.project.laundryapp.ui.zfragment.home.HomeViewModel
 import com.project.laundryapp.ui.zfragment.profile.ProfileViewModel
+import com.project.laundryapp.utils.Const
 import okhttp3.OkHttpClient
 import okhttp3.logging.HttpLoggingInterceptor
 import org.koin.android.viewmodel.dsl.viewModel
@@ -32,7 +34,7 @@ val networkModule = module {
             .setLenient()
             .create()
         val retrofit = Retrofit.Builder()
-            .baseUrl("https://testingsclean.000webhostapp.com/api/v1/")
+            .baseUrl(BuildConfig.BASE_URL)
             .addConverterFactory(GsonConverterFactory.create(gson))
             .client(httpClient.build())
             .build()
