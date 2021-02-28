@@ -43,14 +43,15 @@ class PaymentActivity : AppCompatActivity() {
         //Intent
         val laundryId = intent.getStringExtra(Const.KEY_LAUNDRY_ID)
         val shipmentPrice = intent.getIntExtra(KEY_SHIPMENT_PRICE, 0)
-        val orderedService = intent.getParcelableArrayListExtra<LaundryOrderInput>(Const.KEY_SERVICE_ORDERED)
+        val orderedService =
+            intent.getParcelableArrayListExtra<LaundryOrderInput>(Const.KEY_SERVICE_ORDERED)
 
         //Base Data
         val user = Utils.getSharedPref(this)
         val data = LaundryServiceResponse(
-                idLayanan = user.id,
-                idLaundry = laundryId,
-                daftarLayanan = orderedService
+            idLayanan = user.id,
+            idLaundry = laundryId,
+            daftarLayanan = orderedService
         )
 
         //Adapter

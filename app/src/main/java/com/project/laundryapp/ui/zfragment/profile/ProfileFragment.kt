@@ -22,8 +22,8 @@ class ProfileFragment : Fragment() {
     private lateinit var user: User
 
     override fun onCreateView(
-            inflater: LayoutInflater, container: ViewGroup?,
-            savedInstanceState: Bundle?
+        inflater: LayoutInflater, container: ViewGroup?,
+        savedInstanceState: Bundle?
     ): View {
         binding = FragmentProfileBinding.inflate(inflater, container, false)
         return binding.root
@@ -51,11 +51,11 @@ class ProfileFragment : Fragment() {
                 etProfileAddress.error = getString(R.string.correct_your_address)
 
             Picasso.get()
-                    .load(user.photo)
-                    .noFade()
-                    .error(R.drawable.gravatar)
-                    .placeholder(R.drawable.gravatar)
-                    .into(binding.ivProfileImage)
+                .load(user.photo)
+                .noFade()
+                .error(R.drawable.gravatar)
+                .placeholder(R.drawable.gravatar)
+                .into(binding.ivProfileImage)
 
             //Button Edit Address
             btProfileEditAddress.setOnClickListener {

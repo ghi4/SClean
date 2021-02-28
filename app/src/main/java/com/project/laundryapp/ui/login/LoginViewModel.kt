@@ -13,10 +13,10 @@ class LoginViewModel(private val laundryRepository: LaundryRepository) : ViewMod
 
     var userData = loginUser.switchMap {
         laundryRepository.postLogin(
-                User(
-                        email = it.email,
-                        password = it.password,
-                )
+            User(
+                email = it.email,
+                password = it.password,
+            )
         ).asLiveData()
     }
 

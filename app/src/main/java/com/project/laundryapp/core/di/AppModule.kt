@@ -15,7 +15,6 @@ import com.project.laundryapp.ui.zfragment.find.FindViewModel
 import com.project.laundryapp.ui.zfragment.history.HistoryViewModel
 import com.project.laundryapp.ui.zfragment.home.HomeViewModel
 import com.project.laundryapp.ui.zfragment.profile.ProfileViewModel
-import com.project.laundryapp.utils.Const
 import okhttp3.OkHttpClient
 import okhttp3.logging.HttpLoggingInterceptor
 import org.koin.android.viewmodel.dsl.viewModel

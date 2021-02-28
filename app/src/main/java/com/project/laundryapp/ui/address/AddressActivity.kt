@@ -178,7 +178,10 @@ class AddressActivity : AppCompatActivity() {
                             }
                             1 -> {
                                 val intent = Intent(this, MainActivity::class.java)
-                                intent.putExtra(MainActivity.FRAGMENT_ID_KEY, R.id.navigation_profile)
+                                intent.putExtra(
+                                    MainActivity.FRAGMENT_ID_KEY,
+                                    R.id.navigation_profile
+                                )
                                 startActivity(intent)
                             }
                             else -> {

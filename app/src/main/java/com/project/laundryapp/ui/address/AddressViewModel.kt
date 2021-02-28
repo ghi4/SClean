@@ -13,15 +13,15 @@ class AddressViewModel(private val laundryRepository: LaundryRepository) : ViewM
 
     var userData = user.switchMap {
         laundryRepository.postAddress(
-                User(
-                        alamat = it.alamat,
-                        kota = it.kota,
-                        kecamatan = it.kecamatan,
-                        kelurahan = it.kelurahan,
-                        kodePos = it.kodePos,
-                        keteranganAlamat = it.keteranganAlamat,
-                        id = it.id
-                )
+            User(
+                alamat = it.alamat,
+                kota = it.kota,
+                kecamatan = it.kecamatan,
+                kelurahan = it.kelurahan,
+                kodePos = it.kodePos,
+                keteranganAlamat = it.keteranganAlamat,
+                id = it.id
+            )
         ).asLiveData()
     }
 

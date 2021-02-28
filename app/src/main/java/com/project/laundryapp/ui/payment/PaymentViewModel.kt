@@ -14,9 +14,9 @@ class PaymentViewModel(private val laundryRepository: LaundryRepository) : ViewM
 
     var orderResponse = triggerPayment.switchMap {
         laundryRepository.postOrder(
-                it.idLaundry.toString(),
-                it.idLayanan.toString(),
-                (it.daftarLayanan ?: ArrayList()) as ArrayList<LaundryOrderInput>
+            it.idLaundry.toString(),
+            it.idLayanan.toString(),
+            (it.daftarLayanan ?: ArrayList()) as ArrayList<LaundryOrderInput>
         ).asLiveData()
     }
 

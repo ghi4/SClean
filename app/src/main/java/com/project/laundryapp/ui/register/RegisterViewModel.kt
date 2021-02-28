@@ -13,12 +13,12 @@ class RegisterViewModel(private val laundryRepository: LaundryRepository) : View
 
     var userData = registerUser.switchMap {
         laundryRepository.postRegister(
-                User(
-                        email = it.email,
-                        namaLengkap = it.namaLengkap,
-                        nomorHp = it.nomorHp,
-                        password = it.password,
-                )
+            User(
+                email = it.email,
+                namaLengkap = it.namaLengkap,
+                nomorHp = it.nomorHp,
+                password = it.password,
+            )
         ).asLiveData()
     }
 

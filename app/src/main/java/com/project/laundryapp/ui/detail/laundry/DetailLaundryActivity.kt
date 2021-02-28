@@ -60,12 +60,12 @@ class DetailLaundryActivity : AppCompatActivity() {
         //When "layanan list" is clicked
         serviceAdapter.onItemClick = { data ->
             val serviceData = LaundryOrderInput(
-                    data.idLayanan.toString(),
-                    data.namaLayanan.toString(),
-                    data.estimasi.toString(),
-                    data.satuan.toString(),
-                    data.qty,
-                    data.harga
+                data.idLayanan.toString(),
+                data.namaLayanan.toString(),
+                data.estimasi.toString(),
+                data.satuan.toString(),
+                data.qty,
+                data.harga
             )
 
             //Prevent duplicate data
@@ -110,11 +110,11 @@ class DetailLaundryActivity : AppCompatActivity() {
                             include.tvCardDetailShipmentPrice.text = shipmentPriceCurrency
 
                             Picasso.get()
-                                    .load(BuildConfig.BASE_URL + BuildConfig.IMAGE_PATH_URL + dataLaundry.photo)
-                                    .placeholder(R.drawable.wide_image_placeholder)
-                                    .error(R.drawable.wide_image_placeholder)
-                                    .resize(Const.SQUARE_TARGET_SIZE, Const.SQUARE_TARGET_SIZE)
-                                    .into(ivDetailImage)
+                                .load(BuildConfig.BASE_URL + BuildConfig.IMAGE_PATH_URL + dataLaundry.photo)
+                                .placeholder(R.drawable.wide_image_placeholder)
+                                .error(R.drawable.wide_image_placeholder)
+                                .resize(Const.SQUARE_TARGET_SIZE, Const.SQUARE_TARGET_SIZE)
+                                .into(ivDetailImage)
 
                             serviceAdapter.setList(dataLaundry.laundryService as ArrayList<LaundryServiceResponse>)
 
@@ -124,13 +124,22 @@ class DetailLaundryActivity : AppCompatActivity() {
                                 zeroQtyPreventor()
 
                                 if (serviceOrdered.isNotEmpty()) {
-                                    val intent = Intent(this@DetailLaundryActivity, PaymentActivity::class.java)
+                                    val intent = Intent(
+                                        this@DetailLaundryActivity,
+                                        PaymentActivity::class.java
+                                    )
                                     intent.putExtra(Const.KEY_LAUNDRY_ID, laundryId)
-                                    intent.putExtra(PaymentActivity.KEY_SHIPMENT_PRICE, shipmentPrice)
+                                    intent.putExtra(
+                                        PaymentActivity.KEY_SHIPMENT_PRICE,
+                                        shipmentPrice
+                                    )
                                     intent.putExtra(Const.KEY_SERVICE_ORDERED, serviceOrdered)
                                     startActivity(intent)
                                 } else {
-                                    Utils.showToast(this@DetailLaundryActivity, getString(R.string.no_service_selected))
+                                    Utils.showToast(
+                                        this@DetailLaundryActivity,
+                                        getString(R.string.no_service_selected)
+                                    )
                                 }
                             }
                         }

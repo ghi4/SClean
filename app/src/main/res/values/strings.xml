@@ -4,7 +4,6 @@
     <string name="login">Login</string>
     <string name="password">Password</string>
     <string name="masukkan_password">Masukkan Password</string>
-    <string name="belum_memiliki_akun_registrasi">Belum memiliki akun? Registrasi</string>
     <string name="title_activity_main">MainActivity</string>
     <string name="banner_image">Banner image</string>
     <string name="rekomendasi">Rekomendasi</string>
@@ -53,7 +52,6 @@
     <string name="masukkan_email">Masukkan Email</string>
     <string name="ulangi_password">Ulangi Password</string>
     <string name="masukkan_ulang_password">Masukkan Ulang Password</string>
-    <string name="sudah_memiliki_akun_masuk">Sudah memiliki akun? Masuk</string>
     <string name="estimasi_selesai">Estimasi Selesai</string>
     <string name="_5_hari">5 Hari</string>
     <string name="sub_total">Sub Total</string>
