@@ -11,5 +11,5 @@ data class UserStatusResponse(
     var userData: UserDataResponse,
 
     @SerializedName("error")
-    var error: ErrorResponse
+    var error: String
 )

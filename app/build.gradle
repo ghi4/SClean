@@ -7,6 +7,7 @@ plugins {
 
 def STRING = 'String'
 def BASE_URL = '"https://testingsclean.000webhostapp.com/"'
+def BASE_URL_II = '"https://testingsclean.000webhostapp.com/api/v1/"'
 def IMAGE_PATH_URL = '"assets/images/produk/"'
 
 android {
@@ -23,6 +24,7 @@ android {
         testInstrumentationRunner "androidx.test.runner.AndroidJUnitRunner"
 
         buildConfigField STRING, 'BASE_URL', BASE_URL
+        buildConfigField STRING, 'BASE_URL_II', BASE_URL_II
         buildConfigField STRING, 'IMAGE_PATH_URL', IMAGE_PATH_URL
     }
 
