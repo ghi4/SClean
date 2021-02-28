@@ -97,4 +97,7 @@
     <string name="minimum_5_characters">Minimal 5 karakter.</string>
     <string name="password_not_match">Password tidak cocok.</string>
     <string name="correct_your_address">Perbaiki alamat anda.</string>
+    <string name="belum_memiliki_akun">Belum memiliki akun?</string>
+    <string name="sudah_memiliki_akun">Sudah memiliki akun?</string>
+    <string name="masuk">Masuk</string>
 </resources>
