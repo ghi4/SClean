@@ -3,12 +3,12 @@
 
 ## Screenshots
 <p align="center">
-  <img scr="screenshots/home_page.jpeg"
+  <img src="screenshots/home_page.jpeg"
        width="210"/>
-  <img scr="screenshots/find_page.jpeg"
+  <img src="screenshots/find_page.jpeg"
        width="210"/>
-  <img scr="screenshots/history_page.jpeg"
+  <img src="screenshots/history_page.jpeg"
        width="210"/>
-  <img scr="screenshots/order_page.jpeg"
+  <img src="screenshots/order_page.jpeg"
        width="210"/>
 </p>
